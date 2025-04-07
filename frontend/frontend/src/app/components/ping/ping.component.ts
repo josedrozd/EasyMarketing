@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'; // Importa OnInit
 import { PingService } from '../../services/ping.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ping',
@@ -9,10 +10,18 @@ import { PingService } from '../../services/ping.service';
 export class PingComponent implements OnInit {
   response: string = '';
 
-  constructor(private pingService: PingService) {}
+  constructor(
+    private pingService: PingService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.checkPing();
+  }
+
+  irAMercadoPago() {
+    const timestamp = Date.now();
+    this.router.navigate(['/mp'], { queryParams: { t: timestamp } });
   }
 
   checkPing() {
