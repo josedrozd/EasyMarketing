@@ -3,9 +3,10 @@ import { PingComponent } from './components/ping/ping.component';
 import { SuccessComponent } from './components/success/success.component';
 import { importProvidersFrom } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MercadoPagoButtonComponent } from './components/mp-checkout/mp-checkout.component';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 
 export const routes: Routes = [
+    { path: 'unauthorized', component: UnauthorizedComponent },
     { path: 'ping', component: PingComponent, runGuardsAndResolvers: 'always' },
     { path: 'success', component: SuccessComponent},
     { path: 'mp', 

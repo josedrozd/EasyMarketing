@@ -1,10 +1,10 @@
 package com.easymarketing.easymarketing.services.interfaces;
 
+import com.easymarketing.easymarketing.model.domain.PreferenceRequestData;
 import com.easymarketing.easymarketing.model.dto.PurchaseDTO;
-import com.mercadopago.resources.preference.Preference;
 
 import java.util.function.Function;
 
 @FunctionalInterface
-public interface ICreateMPPreference extends Function<PurchaseDTO, Preference> {
+public interface ICreatePurchase extends Function<PurchaseDTO, PreferenceRequestData> {
 }
