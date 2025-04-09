@@ -4,9 +4,11 @@ import com.easymarketing.easymarketing.model.entity.Purchase;
 import com.easymarketing.easymarketing.repository.jpa.PurchaseRepository;
 import com.easymarketing.easymarketing.services.interfaces.ICompletePurchase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class DefaultCompletePurchase implements ICompletePurchase {
 
     @Autowired

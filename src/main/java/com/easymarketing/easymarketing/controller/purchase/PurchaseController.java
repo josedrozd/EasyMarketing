@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Validated
+@CrossOrigin
 @RestController
 @RequestMapping("/purchases")
 public class PurchaseController {

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class HonestSMMClient {
+public class HonestSMMClient implements IHonestSMMClient{
 
     @Autowired
     private RestTemplate restTemplate;
@@ -19,7 +19,7 @@ public class HonestSMMClient {
     private String API_URL;
 
 
-    public Boolean createOrder(IHonestSMMClient.Model model) {
+    public Boolean apply(IHonestSMMClient.Model model) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 

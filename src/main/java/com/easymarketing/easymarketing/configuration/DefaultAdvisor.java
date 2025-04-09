@@ -1,5 +1,6 @@
 package com.easymarketing.easymarketing.configuration;
 
+import com.easymarketing.easymarketing.exception.NotFoundException;
 import com.easymarketing.easymarketing.exception.UnauthorizedException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,11 @@ public class DefaultAdvisor {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGeneralException(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<String> handleNotFoundException(Exception ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
     @ExceptionHandler(UnauthorizedException.class)
