@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'; // Importa OnInit
-import { PingService } from '../../services/ping.service';
+import { PingService } from '../../services/backend/ping.service';
 import { Router } from '@angular/router';
 
 @Component({

@@ -1,5 +1,6 @@
 package com.easymarketing.easymarketing.controller.ping;
 
+import com.easymarketing.easymarketing.exception.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

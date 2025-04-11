@@ -41,4 +41,12 @@ public class Purchase {
         status = PurchaseStatusEnum.COMPLETED;
     }
 
+    public boolean pay(){
+        if(!PurchaseStatusEnum.COMPLETED.equals(status) && !PurchaseStatusEnum.PAYED.equals(status)){
+            status = PurchaseStatusEnum.PAYED;
+            return true;
+        }
+        return false;
+    }
+
 }

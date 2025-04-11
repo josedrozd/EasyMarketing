@@ -1,6 +1,7 @@
 package com.easymarketing.easymarketing.services;
 
 import com.easymarketing.easymarketing.model.domain.PreferenceRequestData;
+import com.easymarketing.easymarketing.model.dto.CartItemDTO;
 import com.easymarketing.easymarketing.model.dto.PurchaseDTO;
 import com.easymarketing.easymarketing.model.entity.Cart;
 import com.easymarketing.easymarketing.model.entity.Purchase;
@@ -11,6 +12,7 @@ import com.mercadopago.client.preference.PreferenceItemRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -24,6 +26,17 @@ public class DefaultCreatePurchase implements ICreatePurchase {
 
     @Override
     public PreferenceRequestData apply(PurchaseDTO purchaseDTO) {
+        purchaseDTO = PurchaseDTO.builder()
+                .email("test@email.com")
+                .totalPrice(450.00)
+                .cartItems(List.of(
+                        CartItemDTO.builder()
+                                .serviceId(123)
+                                .servicePrice(BigDecimal.valueOf(450.00))
+                                .urls(List.of())
+                                .build()
+                ))
+                .build();
         String token = UUID.randomUUID().toString();
         Purchase purchase = buildPurchaseEntity(purchaseDTO, token, OffsetDateTime.now());
         purchaseRepository.save(purchase);

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { MpPreferenceService } from "../../services/mp-preference.service";
+import { MpPreferenceService } from "../../services/backend/mp/mp-preference.service";
 
 @Component({
   selector: 'app-mercado-pago-button',

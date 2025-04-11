@@ -11,8 +11,12 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) {
+        if(error.status === 400) {
+          this.router.navigate(['/bad-request']);
+        } else if (error.status === 401) {
           this.router.navigate(['/unauthorized']);
+        } else if (error.status === 404) {
+          this.router.navigate(['/404']);
         }
         return throwError(() => error);
       })
