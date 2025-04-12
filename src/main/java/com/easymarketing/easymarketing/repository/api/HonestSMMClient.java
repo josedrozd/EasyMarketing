@@ -30,6 +30,8 @@ public class HonestSMMClient implements IHonestSMMClient{
 
         ResponseEntity<String> response = restTemplate.exchange(API_URL, HttpMethod.POST, request, String.class);
 
+        if (response.getBody().contains("\"error\": \"Not enough funds on balance\"")) return false;
+
         return response.getStatusCode().is2xxSuccessful();
     }
 

@@ -1,14 +1,12 @@
 package com.easymarketing.easymarketing.controller.purchase;
 
 import com.easymarketing.easymarketing.model.domain.PurchaseProcessData;
+import com.easymarketing.easymarketing.model.dto.PurchaseDTO;
 import com.easymarketing.easymarketing.model.dto.PurchaseStatusDTO;
-import com.easymarketing.easymarketing.services.interfaces.IProcessPurchaseCart;
-import com.easymarketing.easymarketing.services.interfaces.IRetrievePurchaseByToken;
-import com.easymarketing.easymarketing.services.interfaces.IUpdatePurchaseStatus;
+import com.easymarketing.easymarketing.services.interfaces.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -26,6 +24,13 @@ public class PurchaseController {
     private IProcessPurchaseCart processPurchaseCart;
     @Autowired
     private IUpdatePurchaseStatus updatePurchaseStatus;
+    @Autowired
+    private ITemporaryCreatePurchase temporaryCreatePurchase;
+
+    @PostMapping
+    public ResponseEntity<Long> temporaryCreatePurchase(@Valid @NotNull PurchaseDTO purchaseDTO){
+        return ResponseEntity.ok(temporaryCreatePurchase.apply(purchaseDTO));
+    }
 
     @GetMapping("/tokens/{tokenId}")
     public ResponseEntity<Long> getIdByToken(@Valid @NotBlank @PathVariable String tokenId){
