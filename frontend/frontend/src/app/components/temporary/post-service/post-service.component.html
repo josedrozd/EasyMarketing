@@ -1,0 +1,38 @@
+<div>
+    <label for="serviceId">Service Id:</label>
+    <input id="serviceId" type="text" [(ngModel)]="serviceId" placeholder="1234" />
+  </div>
+  <div>
+    <label for="quantity">Cantidad por post:</label>
+    <input id="quantity" type="text" [(ngModel)]="quantity" placeholder="10" />
+  </div>
+  
+  <div class="container mt-4">
+    <div class="row">
+      <div *ngFor="let post of mediaPosts" class="col-3 mb-4">
+        <div
+          class="selection-card border rounded p-2 position-relative"
+          (click)="toggleSelection(post.url)"
+          [ngClass]="{'border-primary': isSelected(post.url)}"
+        >
+          <input type="checkbox" 
+                 class="selection-checkbox position-absolute"
+                 [checked]="isSelected(post.url)" 
+                 (click)="$event.stopPropagation()" />
+          <img
+            [src]="'data:image/jpeg;base64,' + post.picUrl"
+            alt="Imagen"
+            class="d-block mx-auto"
+            style="width: 100px; height: 100px; object-fit: contain;"
+          />
+        </div>
+      </div>
+    </div>
+    
+    <div class="text-center mt-4" *ngIf="hasMore()">
+      <button class="btn btn-primary" (click)="loadMedia()">Cargar más</button>
+    </div>
+  </div>
+  
+  <button (click)="createPurchase()">Añadir</button>
+  

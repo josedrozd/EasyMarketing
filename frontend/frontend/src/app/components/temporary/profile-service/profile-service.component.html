@@ -1,0 +1,10 @@
+<div>
+    <label for="serviceId">Service Id:</label>
+    <input id="serviceId" type="text" [(ngModel)]="serviceId" placeholder="1234" />
+</div>
+<div>
+    <label for="quantity">Cantidad:</label>
+    <input id="quantity" type="text" [(ngModel)]="quantity" placeholder="10" />
+</div>
+
+<button (click)="createPurchase()">Añadir</button>

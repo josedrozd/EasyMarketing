@@ -1,0 +1,9 @@
+<div>
+    <label for="username">Perfil de Instagram:</label>
+    <input id="username" type="text" [(ngModel)]="username" (ngModelChange)="onUsernameChange($event)" placeholder="username" [disabled]="locked"/>
+    <button (click)="verifyIG()" [disabled]="locked">Verificar IG</button>
+</div>
+<div *ngIf="message"><p>{{ message }}</p></div>
+<div *ngIf="profilePicUrl">
+    <img [src]="profilePicUrl" alt="Foto de perfil" width="150" />
+</div>

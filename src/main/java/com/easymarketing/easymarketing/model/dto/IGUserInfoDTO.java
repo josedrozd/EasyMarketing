@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import static com.easymarketing.easymarketing.utils.TransformImageUrlIntoBytes.transform;
+
 @Getter
 @Builder
 @NoArgsConstructor
@@ -19,5 +21,9 @@ public class IGUserInfoDTO {
     private String profilePicUrl;
     @JsonProperty("is_private")
     private Boolean isPrivate;
+
+    public void convertImage() {
+        profilePicUrl = transform(profilePicUrl);
+    }
 
 }

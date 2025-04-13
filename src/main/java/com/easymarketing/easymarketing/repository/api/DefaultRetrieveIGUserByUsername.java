@@ -55,7 +55,9 @@ public class DefaultRetrieveIGUserByUsername implements IRetrieveIGUserByUsernam
                     .path("data")
                     .path("user");
 
-            return mapper.treeToValue(userNode, IGUserInfoDTO.class);
+            IGUserInfoDTO igUserInfoDTO = mapper.treeToValue(userNode, IGUserInfoDTO.class);
+            igUserInfoDTO.convertImage();
+            return igUserInfoDTO;
         } catch (Exception e) {
             return new IGUserInfoDTO();
         }

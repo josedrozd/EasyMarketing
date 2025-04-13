@@ -27,9 +27,10 @@
               }
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
-            "scripts": ["./src/app/scripts/mp-checkout.js"],
+            "scripts": ["./src/assets/scripts/mp-checkout.js"],
             "server": "src/main.server.ts",
             "prerender": true,
             "ssr": {

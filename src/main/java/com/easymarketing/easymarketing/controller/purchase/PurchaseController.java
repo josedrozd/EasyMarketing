@@ -28,7 +28,7 @@ public class PurchaseController {
     private ITemporaryCreatePurchase temporaryCreatePurchase;
 
     @PostMapping
-    public ResponseEntity<Long> temporaryCreatePurchase(@Valid @NotNull PurchaseDTO purchaseDTO){
+    public ResponseEntity<Long> temporaryCreatePurchase(@Valid @NotNull @RequestBody PurchaseDTO purchaseDTO){
         return ResponseEntity.ok(temporaryCreatePurchase.apply(purchaseDTO));
     }
 

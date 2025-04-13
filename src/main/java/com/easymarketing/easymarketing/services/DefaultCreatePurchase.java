@@ -60,10 +60,12 @@ public class DefaultCreatePurchase implements ICreatePurchase {
                         .stream()
                         .flatMap(cartItem -> cartItem.getUrls().stream()
                                 .map(url -> Cart.builder()
+                                        .purchase(purchase)
                                         .serviceId(cartItem.getServiceId())
                                         .url(url)
                                         .quantity(cartItem.getUnitQuantity())
                                         .urlType(cartItem.getUrlType())
+                                        .processed(Boolean.FALSE)
                                         .build()))
                         .toList());
 

@@ -20,6 +20,9 @@ public class TemporaryCreatePurchase implements ITemporaryCreatePurchase {
 
     @Override
     public Long apply(PurchaseDTO purchaseDTO) {
+        System.out.println(purchaseDTO.getEmail());
+        System.out.println(purchaseDTO.getTotalPrice());
+        System.out.println(purchaseDTO.getCartItems());
         String token = UUID.randomUUID().toString();
         Purchase purchase = buildPurchaseEntity(purchaseDTO, token, OffsetDateTime.now());
         purchaseRepository.save(purchase);
@@ -40,10 +43,12 @@ public class TemporaryCreatePurchase implements ITemporaryCreatePurchase {
                         .stream()
                         .flatMap(cartItem -> cartItem.getUrls().stream()
                                 .map(url -> Cart.builder()
+                                        .purchase(purchase)
                                         .serviceId(cartItem.getServiceId())
                                         .url(url)
                                         .quantity(cartItem.getUnitQuantity())
                                         .urlType(cartItem.getUrlType())
+                                        .processed(Boolean.FALSE)
                                         .build()))
                         .toList());
 
