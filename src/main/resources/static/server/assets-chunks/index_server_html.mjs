@@ -2,14 +2,17 @@ export default `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Frontend</title>
-  <base href="/">
+  <title>EasyMarketing</title>
+  <base href="/browser/">
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
+  <script src="assets/scripts/mp-checkout.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ775/9FAt9VY3R7N8Wv+6n9u6O9wChRS7fN" crossorigin="anonymous"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-<link rel="stylesheet" href="styles-5INURTSO.css"></head>
+<link rel="stylesheet" href="styles-DPQ53L3S.css"></head>
 <body><script type="text/javascript" id="ng-event-dispatch-contract">(()=>{function p(t,n,r,o,e,i,f,m){return{eventType:t,event:n,targetElement:r,eic:o,timeStamp:e,eia:i,eirp:f,eiack:m}}function u(t){let n=[],r=e=>{n.push(e)};return{c:t,q:n,et:[],etc:[],d:r,h:e=>{r(p(e.type,e,e.target,t,Date.now()))}}}function s(t,n,r){for(let o=0;o<n.length;o++){let e=n[o];(r?t.etc:t.et).push(e),t.c.addEventListener(e,t.h,r)}}function c(t,n,r,o,e=window){let i=u(t);e._ejsas||(e._ejsas={}),e._ejsas[n]=i,s(i,r),s(i,o,!0)}window.__jsaction_bootstrap=c;})();
 </script>
   <app-root></app-root>
-<script src="polyfills-FFHMD2TL.js" type="module"></script><script src="main-RAF3FDI4.js" type="module"></script></body>
+<link rel="modulepreload" href="chunk-3V3A4KMB.js"><script src="polyfills-FFHMD2TL.js" type="module"></script><script src="scripts-KYH3WMV5.js" defer=""></script><script src="main-5WDZRNLF.js" type="module"></script></body>
 </html>
 `;

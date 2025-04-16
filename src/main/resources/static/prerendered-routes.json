@@ -1,5 +1,12 @@
 {
   "routes": {
-    "/": {}
+    "/browser/404": {},
+    "/browser/add-service": {},
+    "/browser/bad-request": {},
+    "/browser/manual-processing": {},
+    "/browser/mp": {},
+    "/browser/ping": {},
+    "/browser/success": {},
+    "/browser/unauthorized": {}
   }
 }
