@@ -3,7 +3,7 @@
     height: auto;
     background: 
         radial-gradient(circle, rgba(59, 14, 94, 0.633) 35%, transparent 100%),
-        url('/bgpattern2.jpg');
+        url('/browser/bgpattern2.jpg');
     background-size: 100% auto; 
     background-position: top center;
     display: flex;
