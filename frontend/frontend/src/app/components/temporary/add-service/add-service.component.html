@@ -1,8 +1,10 @@
-<button routerLink="/manual-processing" class="btn btn-primary">Atras</button>
-<app-profile-check (igVerified)="becomeVisible()"></app-profile-check>
-<div *ngIf="visible">
-    <button (click)="addProfileService()">Servicio perfil IG</button>
-    <button (click)="addPostService()">Servicio posts IG</button>
-    <app-post-service *ngIf="postServiceVisible"></app-post-service>
-    <app-profile-service *ngIf="profileServiceVisible"></app-profile-service>
+<div class="container-box">
+    <button routerLink="/manual-processing" class="btn btn-primary">Atras</button>
+    <app-profile-check (igVerified)="becomeVisible()"></app-profile-check>
+    <div *ngIf="visible">
+        <button (click)="addProfileService()">Servicio perfil IG</button>
+        <button (click)="addPostService()">Servicio posts IG</button>
+        <app-post-service *ngIf="postServiceVisible"></app-post-service>
+        <app-profile-service *ngIf="profileServiceVisible"></app-profile-service>
+    </div>
 </div>

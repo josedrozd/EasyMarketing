@@ -5,6 +5,8 @@ import com.easymarketing.easymarketing.model.dto.FailedCartItemDTO;
 import com.easymarketing.easymarketing.model.entity.Cart;
 import com.easymarketing.easymarketing.model.enums.UrlTypeEnum;
 import com.easymarketing.easymarketing.repository.api.IHonestSMMClient;
+import com.easymarketing.easymarketing.repository.api.ISMMCostClient;
+import com.easymarketing.easymarketing.repository.api.SMMCostClient;
 import com.easymarketing.easymarketing.repository.jpa.CartRepository;
 import com.easymarketing.easymarketing.services.interfaces.ICompletePurchase;
 import com.easymarketing.easymarketing.services.interfaces.IProcessPurchaseCart;
@@ -16,6 +18,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
+import static com.easymarketing.easymarketing.model.enums.ServiceProviderEnum.SMMCOST;
+
 @Slf4j
 @Service
 public class DefaultProcessPurchaseCart implements IProcessPurchaseCart {
@@ -26,6 +30,8 @@ public class DefaultProcessPurchaseCart implements IProcessPurchaseCart {
     private CartRepository cartRepository;
     @Autowired
     private IHonestSMMClient honestSMMClient;
+    @Autowired
+    private SMMCostClient smmCostClient;
 
     @Override
     public PurchaseProcessData apply(Long purchaseId) {
@@ -51,11 +57,7 @@ public class DefaultProcessPurchaseCart implements IProcessPurchaseCart {
     private void callUrl(Cart cart, PurchaseProcessData purchaseProcessData) {
         try {
             String link = buildLink(cart.getUrl(), cart.getUrlType());
-            Boolean ok = honestSMMClient.apply(IHonestSMMClient.Model.builder()
-                    .serviceId(cart.getServiceId())
-                    .link(link)
-                    .quantity(cart.getQuantity())
-                    .build());
+            Boolean ok = callProvider(cart, link);
             if (ok) cart.process();
             else purchaseProcessData.getFailedItems()
                     .add(FailedCartItemDTO.builder()
@@ -66,6 +68,28 @@ public class DefaultProcessPurchaseCart implements IProcessPurchaseCart {
         } catch (Exception e) {
             log.error(String.format("❌ ERROR procesando servicio: %s para la purchase con id: %s. Exception error: ",
                     cart.getServiceId(), cart.getPurchase().getId()) + e.getMessage());
+        }
+    }
+
+    private Boolean callProvider(Cart cart, String link) {
+        switch (cart.getProvider()){
+            case SMMCOST -> {
+                return smmCostClient.apply(ISMMCostClient.Model.builder()
+                        .serviceId(cart.getServiceId())
+                        .link(link)
+                        .quantity(cart.getQuantity())
+                        .username(cart.getPurchase().getUsername())
+                        .build());
+            }
+            case HONEST -> {
+                return honestSMMClient.apply(IHonestSMMClient.Model.builder()
+                        .serviceId(cart.getServiceId())
+                        .link(link)
+                        .quantity(cart.getQuantity())
+                        .username(cart.getPurchase().getUsername())
+                        .build());
+            }
+            default -> throw new RuntimeException(String.format("No provider defined in the purchase: %s", cart.getPurchase().getId()));
         }
     }
 

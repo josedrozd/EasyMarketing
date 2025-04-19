@@ -1,1 +1,70 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+    background-color: #ededee;
+    color: #e6e4ea;
+    font-size: 25px; 
+    font-family: "Jaldi", sans-serif;
+    font-weight: 400;
+}
+
+.btn-custom {
+    /*background: radial-gradient(circle, 
+    rgba(204, 28, 110, 0.8) 45%,
+    transparent 100%);*/
+    background: radial-gradient(circle, 
+    rgba(111, 21, 150, 0.8) 45%,
+    transparent 100%);
+    color: #413657;               /* Color del texto */
+    -webkit-text-stroke: 0.56px rgb(231, 219, 219);
+    font-family: "Jaldi", sans-serif;
+    font-weight: 700;
+    border-radius: 16px;       
+    padding: 7px 11px;         
+    font-size: 35px;        
+    cursor: pointer;           /* Cambia el cursor al pasar por encima */
+    transition: background-color 1.2s ease; 
+    border: 2px solid transparent;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.btn-custom:hover {
+    background-color: rgba(124, 23, 168, 0.564);
+    color: rgb(240, 223, 225);               /* Color del texto */
+    -webkit-text-stroke: 1.3px rgb(52, 52, 59);
+    font-family: "Jaldi", sans-serif;
+    font-weight: 700;
+    border: 2px solid #867f86;
+}
+
+.btn-custom:active {
+    background-color: rgb(35, 34, 85);  /* Color de fondo al pasar el mouse */
+    color: rgb(240, 223, 225);               /* Color del texto */
+    -webkit-text-stroke: 1.3px rgb(52, 52, 59);
+    font-family: "Jaldi", sans-serif;
+    font-weight: 700;
+    border: 2px solid #867f86;
+    transform: scale(0.98);
+}
+
+.container-box {
+    background-color: #201840;
+    color: #e6e4ea;
+    font-family: "Jaldi", sans-serif;
+    font-weight: 700;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    margin-left: 60px;
+    margin-right: 60px;
+    border-radius: 16px;
+}
+
+.right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+}
+

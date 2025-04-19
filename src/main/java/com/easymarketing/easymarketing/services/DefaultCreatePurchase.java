@@ -28,11 +28,11 @@ public class DefaultCreatePurchase implements ICreatePurchase {
     public PreferenceRequestData apply(PurchaseDTO purchaseDTO) {
         purchaseDTO = PurchaseDTO.builder()
                 .email("test@email.com")
-                .totalPrice(450.00)
+                .totalPrice(150.00)
                 .cartItems(List.of(
                         CartItemDTO.builder()
                                 .serviceId(123)
-                                .servicePrice(BigDecimal.valueOf(450.00))
+                                .servicePrice(BigDecimal.valueOf(150.00))
                                 .urls(List.of())
                                 .build()
                 ))
@@ -50,6 +50,8 @@ public class DefaultCreatePurchase implements ICreatePurchase {
         Purchase purchase = Purchase.builder()
                 .token(token)
                 .mail(purchaseDTO.getEmail())
+                .name(purchaseDTO.getName())
+                .lastName(purchaseDTO.getLastName())
                 .totalPrice(purchaseDTO.getTotalPrice())
                 .status(PurchaseStatusEnum.CREATED)
                 .date(now)
@@ -65,6 +67,7 @@ public class DefaultCreatePurchase implements ICreatePurchase {
                                         .url(url)
                                         .quantity(cartItem.getUnitQuantity())
                                         .urlType(cartItem.getUrlType())
+                                        .provider(cartItem.getProvider())
                                         .processed(Boolean.FALSE)
                                         .build()))
                         .toList());

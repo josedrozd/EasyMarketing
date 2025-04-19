@@ -1,16 +1,15 @@
-<div class="container" *ngIf="visible">
+<div class="container-box" *ngIf="visible">
     <h2>Carrito de Servicios</h2>
-  
     <button routerLink="/add-service" class="btn btn-primary">Añadir servicio</button>
   
     <div *ngFor="let item of cartItems">
-      <div *ngFor="let url of item.urls" class="card mt-3 p-3">
-        <p><strong>Service ID:</strong> {{ item.serviceId }} <strong>Path:</strong> {{ url }} <strong>Cantidad:</strong> {{ item.unitQuantity }}</p>
+      <div *ngFor="let url of item.urls" class="card purple m-3">
+        <p class="item"><strong>Service ID:</strong> {{ item.serviceId }} <strong>Path:</strong> {{ url }} <strong>Cantidad:</strong> {{ item.unitQuantity }}</p>
       </div>
     </div>
   
-    <div>
-      <button class="btn btn-success mt-4" (click)="vaciarCarrito()">Vaciar carrito</button>
-      <button class="btn btn-success mt-4" (click)="procesarCarrito()">Procesar compra</button>
+    <div class="right">
+      <button class="btn btn-custom mt-4" (click)="vaciarCarrito()">Vaciar carrito</button>
+      <button class="btn btn-custom mt-4" style="margin-right: 40px;" (click)="procesarCarrito()">Procesar compra</button>
     </div>
 </div>

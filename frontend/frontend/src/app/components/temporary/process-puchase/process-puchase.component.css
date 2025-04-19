@@ -1,0 +1,16 @@
+.item {
+    font-family: initial;
+}
+
+.container-box h2 {
+    text-align: center;
+}
+  
+.container-box > .btn-primary {
+    display: block;
+    margin: auto;
+}
+
+.purple{
+    background-color: rgb(202, 205, 225);
+}

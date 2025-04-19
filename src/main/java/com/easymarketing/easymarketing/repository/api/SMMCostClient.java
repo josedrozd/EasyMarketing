@@ -1,21 +1,21 @@
 package com.easymarketing.easymarketing.repository.api;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class HonestSMMClient implements IHonestSMMClient{
+public class SMMCostClient implements ISMMCostClient{
 
     @Autowired
     private RestTemplate restTemplate;
 
-    @Value("${honestsmm.api.key}")
+    @Value("${smmcost.api.key}")
     private String API_KEY;
 
-    @Value("${honestsmm.api.url}")
+    @Value("${smmcost.api.url}")
     private String API_URL;
 
 
@@ -31,8 +31,8 @@ public class HonestSMMClient implements IHonestSMMClient{
         ResponseEntity<String> response = restTemplate.exchange(API_URL, HttpMethod.POST, request, String.class);
 
         if (response.getBody().contains("\"error\":\"Not enough funds on balance\"")
-            || response.getBody().contains("\"error\":\"Incorrect service ID\"")
-            || response.getBody().contains("error\":\"Quantity more than maximum 10000\""))
+                || response.getBody().contains("\"error\":\"Incorrect service ID\"")
+                || response.getBody().contains("error\":\"Quantity more than maximum 10000\""))
             return false;
 
         return response.getStatusCode().is2xxSuccessful();

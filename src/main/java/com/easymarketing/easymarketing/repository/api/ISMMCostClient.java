@@ -5,8 +5,7 @@ import lombok.Getter;
 
 import java.util.function.Function;
 
-@FunctionalInterface
-public interface IHonestSMMClient extends Function<IHonestSMMClient.Model, Boolean> {
+public interface ISMMCostClient extends Function<ISMMCostClient.Model, Boolean> {
 
     @Getter
     @Builder

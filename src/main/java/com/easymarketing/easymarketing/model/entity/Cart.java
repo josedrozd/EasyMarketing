@@ -1,6 +1,7 @@
 package com.easymarketing.easymarketing.model.entity;
 
 import com.easymarketing.easymarketing.model.entity.compositekey.CartId;
+import com.easymarketing.easymarketing.model.enums.ServiceProviderEnum;
 import com.easymarketing.easymarketing.model.enums.UrlTypeEnum;
 import jakarta.persistence.*;
 import lombok.*;
@@ -32,6 +33,9 @@ public class Cart {
     @Column(name = "url_type")
     @Enumerated(EnumType.STRING)
     private UrlTypeEnum urlType;
+
+    @Enumerated(EnumType.STRING)
+    private ServiceProviderEnum provider;
 
     private Boolean processed;
 

@@ -23,7 +23,14 @@ public class Purchase {
 
     private String token;
 
+    private String username;
+
     private String mail;
+
+    private String name;
+
+    @Column(name = "last_name")
+    private String lastName;
 
     @Column(name = "total_price")
     private Double totalPrice;

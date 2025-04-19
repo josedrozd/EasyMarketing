@@ -1,5 +1,6 @@
 package com.easymarketing.easymarketing.model.dto;
 
+import com.easymarketing.easymarketing.model.enums.ServiceProviderEnum;
 import com.easymarketing.easymarketing.model.enums.UrlTypeEnum;
 import lombok.*;
 
@@ -17,6 +18,7 @@ public class CartItemDTO {
     private String serviceName;
     private List<String> urls;
     private UrlTypeEnum urlType;
+    private ServiceProviderEnum provider;
     private Integer unitQuantity;
     private BigDecimal servicePrice;
 
