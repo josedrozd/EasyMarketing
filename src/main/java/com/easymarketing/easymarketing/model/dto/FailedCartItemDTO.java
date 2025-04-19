@@ -14,5 +14,6 @@ public class FailedCartItemDTO {
     private Integer serviceId;
     private String url;
     private Integer quantity;
+    private String provider;
 
 }

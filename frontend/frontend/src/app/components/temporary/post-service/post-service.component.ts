@@ -24,6 +24,7 @@ export class PostServiceComponent {
   selectedUrls: string[] = [];
   serviceId!: number;
   quantity!: number;
+  provider!: string;
 
   constructor(private igMediaService: IGMediaService) {}
 
@@ -59,14 +60,15 @@ export class PostServiceComponent {
   }
 
   createPurchase(){
-    if (this.serviceId == null || this.quantity == null || this.quantity < 10) 
+    if (this.serviceId == null || this.quantity == null || this.quantity < 10 || this.provider == null) 
           return;
     this.cartService.addItem(
       new CartItem(
         this.serviceId,
         "POST SERVICE", 
         this.selectedUrls, 
-        "POST", 
+        "POST",
+        this.provider,
         this.quantity, 
         0)
     );

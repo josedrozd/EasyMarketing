@@ -7,6 +7,7 @@ import { CreatePurchaseService } from '../../../services/backend/purchases/creat
 import { FailedCartItemDTO, ProcessPurchaseService, PurchaseProcessData } from '../../../services/backend/purchases/process-purchase.service';
 import { PurchaseDTO } from '../../../services/backend/purchases/create-purchase.service';
 import { CheckPasswordService } from '../../../services/backend/security/check-password.service';
+import { UserInfoService } from '../../../services/temporary/user-info.service';
 
 const AUTH_KEY = makeStateKey<boolean>('auth');
 
@@ -23,14 +24,15 @@ export class ProcessPuchaseComponent {
   cartItems: CartItem[] = [];
   visible: boolean = false;
   purchaseId!: number | null;
+  username!: string;
   
   constructor(
+    private userinfoService: UserInfoService,
     private checkPassword: CheckPasswordService,
     private cartService: CartService,
     private createPurchase: CreatePurchaseService,
     private processPurchase: ProcessPurchaseService,
-    private router: Router,
-    private transferState: TransferState
+    private router: Router
   ) {
     if (isPlatformBrowser(this.platformId)) {
       const authPassed = localStorage.getItem('auth_passed') === 'true';
@@ -55,12 +57,18 @@ export class ProcessPuchaseComponent {
 
   ngOnInit() {
     this.cartItems = this.cartService.getCartItems();
+    this.userinfoService.username$.subscribe((value) => {
+      this.username = value;
+    });
   }
   
   procesarCarrito(){
     console.log("Purchase id: " + this.purchaseId);
     if(!this.purchaseId){
       this.createPurchase.create({
+        username: this.username,
+        name: "Pepe",
+        lastName: "Argento",
         email: "testing@mail.com",
         totalPrice: 0,
         cartItems: this.cartItems
@@ -84,6 +92,7 @@ export class ProcessPuchaseComponent {
         next: (response: PurchaseProcessData) => {
           if(!response || !response.completed){
             this.cartService.replaceCart(this.convertFailedItemsToCartItems(response.failedItems));
+            this.cartItems = this.cartService.getCartItems();
             alert("Hubo problemas al procesar algunos de los servicios. Vuelva a hacer click en procesar.");
           } else {
             this.vaciarCarrito();
@@ -110,6 +119,7 @@ export class ProcessPuchaseComponent {
         "SERVICE",
         [failedItem.url],
         "",
+        failedItem.provider,
         failedItem.quantity,
         0
       );  

@@ -7,4 +7,15 @@
     <input id="quantity" type="text" [(ngModel)]="quantity" placeholder="10" />
 </div>
 
+<div>
+    <label>
+      <input type="radio" name="opcion" value="HONEST" [(ngModel)]="provider" />
+      HONESTSMM
+    </label>
+    <label style="margin-left: 20px;">
+      <input type="radio" name="opcion" value="SMMCOST" [(ngModel)]="provider" />
+      SMMCOST
+    </label>
+</div>
+
 <button class="btn btn-custom" (click)="createPurchase()">Añadir</button>

@@ -18,8 +18,6 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
-import static com.easymarketing.easymarketing.model.enums.ServiceProviderEnum.SMMCOST;
-
 @Slf4j
 @Service
 public class DefaultProcessPurchaseCart implements IProcessPurchaseCart {
@@ -64,6 +62,7 @@ public class DefaultProcessPurchaseCart implements IProcessPurchaseCart {
                             .serviceId(cart.getServiceId())
                             .url(link)
                             .quantity(cart.getQuantity())
+                            .provider(cart.getProvider().toString())
                             .build());
         } catch (Exception e) {
             log.error(String.format("❌ ERROR procesando servicio: %s para la purchase con id: %s. Exception error: ",

@@ -4,7 +4,7 @@
   
     <div *ngFor="let item of cartItems">
       <div *ngFor="let url of item.urls" class="card purple m-3">
-        <p class="item"><strong>Service ID:</strong> {{ item.serviceId }} <strong>Path:</strong> {{ url }} <strong>Cantidad:</strong> {{ item.unitQuantity }}</p>
+        <p class="item"><strong>Service ID:</strong> {{ item.serviceId }} <strong>Path:</strong> {{ url }} <strong>Cantidad:</strong> {{ item.unitQuantity }} <strong>Proveedor:</strong> {{item.provider}}</p>
       </div>
     </div>
   

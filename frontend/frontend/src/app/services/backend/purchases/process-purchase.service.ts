@@ -7,6 +7,7 @@ export interface FailedCartItemDTO {
   serviceId: number;
   url: string;
   quantity: number;
+  provider: string;
 }
 
 export interface PurchaseProcessData {

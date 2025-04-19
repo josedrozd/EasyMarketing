@@ -5,6 +5,9 @@ import { IgUserInfo } from '../../../core/models/ig-user-info';
 import { CartItem } from '../../../core/models/cart-item';
 
 export interface PurchaseDTO {
+  username: string;
+  name: string;
+  lastName: string;
   email: string;
   totalPrice: number;
   cartItems: CartItem[];
