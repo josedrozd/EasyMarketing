@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { PurchaseDTO } from "./create-purchase.service";
+import { environment } from "../../../../environments/environment";
 
 export interface FailedCartItemDTO {
   serviceId: number;
@@ -19,7 +20,10 @@ export interface PurchaseProcessData {
   providedIn: 'root'
 })
 export class ProcessPurchaseService {
-  private apiUrl = '/purchases';
+  
+  private baseUrl = environment.apiUrl;
+
+  private apiUrl = `${this.baseUrl}/purchases`;
 
   constructor(private http: HttpClient) {}
 

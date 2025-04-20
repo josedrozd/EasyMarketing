@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { IgUserInfo } from '../../../core/models/ig-user-info';
 import { CartItem } from '../../../core/models/cart-item';
+import { environment } from '../../../../environments/environment';
 
 export interface PurchaseDTO {
   username: string;
@@ -18,10 +18,12 @@ export interface PurchaseDTO {
 })
 export class CreatePurchaseService {
 
+  private baseUrl = environment.apiUrl;
+
   constructor(private http: HttpClient) {}
 
   create(purchase: PurchaseDTO): Observable<number> {
-    const apiUrl = `/purchases`;
+    const apiUrl = `${this.baseUrl}/purchases`;
     return this.http.post<number>(apiUrl, purchase);
   }
 }

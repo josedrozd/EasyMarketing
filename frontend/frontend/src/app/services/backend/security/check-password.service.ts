@@ -1,13 +1,16 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CheckPasswordService {
 
-  private apiUrl = '/security';
+  private baseUrl = environment.apiUrl;
+  
+  private apiUrl = `${this.baseUrl}/security`;
 
   constructor(private http: HttpClient) {}
 

@@ -1,6 +1,7 @@
 import { Injectable, makeStateKey, TransferState } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 export interface PurchaseStatus {
   id: number;
@@ -15,13 +16,16 @@ const MESSAGE_KEY = makeStateKey<string>('purchaseMessage');
 })
 export class StatusService {
 
+  private baseUrl = environment.apiUrl;
+  
   constructor(
     private http: HttpClient,
     private state: TransferState
   ) {}
 
   updatePurchaseStatus(tokenId: string, paymentId: number): Observable<PurchaseStatus> {
-    const url = `/purchases/tokens/${tokenId}/status`;
+
+    const url = `${this.baseUrl}/purchases/tokens/${tokenId}/status`;
 
     return this.http.put<PurchaseStatus>(url, {}, { params: { paymentId } }).pipe(
       tap((status) => {
