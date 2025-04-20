@@ -14,6 +14,7 @@ export class PingService {
   constructor(private http: HttpClient) {}
 
   getPing(): Observable<string> {
+    console.log(this.baseUrl);
     return this.http.get(this.apiUrl, { responseType: 'text' });
   }
 }
