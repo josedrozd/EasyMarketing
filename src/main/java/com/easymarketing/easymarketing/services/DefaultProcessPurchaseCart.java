@@ -6,7 +6,6 @@ import com.easymarketing.easymarketing.model.entity.Cart;
 import com.easymarketing.easymarketing.model.enums.UrlTypeEnum;
 import com.easymarketing.easymarketing.repository.api.IHonestSMMClient;
 import com.easymarketing.easymarketing.repository.api.ISMMCostClient;
-import com.easymarketing.easymarketing.repository.api.SMMCostClient;
 import com.easymarketing.easymarketing.repository.jpa.CartRepository;
 import com.easymarketing.easymarketing.services.interfaces.ICompletePurchase;
 import com.easymarketing.easymarketing.services.interfaces.IProcessPurchaseCart;
@@ -29,7 +28,7 @@ public class DefaultProcessPurchaseCart implements IProcessPurchaseCart {
     @Autowired
     private IHonestSMMClient honestSMMClient;
     @Autowired
-    private SMMCostClient smmCostClient;
+    private ISMMCostClient smmCostClient;
 
     @Override
     public PurchaseProcessData apply(Long purchaseId) {
