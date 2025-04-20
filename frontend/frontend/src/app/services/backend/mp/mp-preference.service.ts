@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 })
 export class MpPreferenceService {
   
-  private apiUrl = 'http://localhost:8080/mp/preferences/create';
+  private apiUrl = '/mp/preferences/create';
 
   constructor(private http: HttpClient) {}
 

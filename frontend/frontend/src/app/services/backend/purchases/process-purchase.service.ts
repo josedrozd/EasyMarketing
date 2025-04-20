@@ -19,7 +19,7 @@ export interface PurchaseProcessData {
   providedIn: 'root'
 })
 export class ProcessPurchaseService {
-  private apiUrl = 'http://localhost:8080/purchases';
+  private apiUrl = '/purchases';
 
   constructor(private http: HttpClient) {}
 

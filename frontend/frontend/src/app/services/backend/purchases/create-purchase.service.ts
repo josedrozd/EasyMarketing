@@ -21,7 +21,7 @@ export class CreatePurchaseService {
   constructor(private http: HttpClient) {}
 
   create(purchase: PurchaseDTO): Observable<number> {
-    const apiUrl = `http://localhost:8080/purchases`;
+    const apiUrl = `/purchases`;
     return this.http.post<number>(apiUrl, purchase);
   }
 }

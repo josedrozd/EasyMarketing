@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PingService {
-  private apiUrl = 'http://localhost:8080/api/ping';
+  private apiUrl = '/api/ping';
 
   constructor(private http: HttpClient) {}
 

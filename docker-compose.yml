@@ -18,7 +18,9 @@ services:
       HONEST_API_KEY: ${HONEST_API_KEY}
       SMMCOST_API_KEY: ${SMMCOST_API_KEY}
       MP_ACCESS_TOKEN: ${MP_ACCESS_TOKEN}
+      DONWEB_DOMAIN: ${DONWEB_DOMAIN}
       ADMIN_PASS: ${ADMIN_PASS}
+      APP_PORT: ${APP_PORT}
     depends_on:
       - db
     restart: unless-stopped

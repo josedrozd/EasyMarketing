@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class CheckPasswordService {
 
-  private apiUrl = 'http://localhost:8080/security';
+  private apiUrl = '/security';
 
   constructor(private http: HttpClient) {}
 
