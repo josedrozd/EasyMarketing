@@ -6,6 +6,7 @@ import { UserInfoService } from '../../../services/temporary/user-info.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { IGMediaService } from '../../../services/backend/instagram/retrieve-media.service';
 
 @Component({
   selector: 'app-profile-service',
@@ -18,6 +19,7 @@ export class ProfileServiceComponent implements OnInit{
   private router = inject(Router);
   private cartService = inject(CartService);
   private userinfoService = inject(UserInfoService);
+  private igMediaService = inject(IGMediaService);
   username!: string;
   serviceId!: number;
   quantity!: number;
@@ -36,6 +38,7 @@ export class ProfileServiceComponent implements OnInit{
         this.quantity, 
         0)
     );
+    this.igMediaService.clearMediaPosts();
     this.router.navigate(["/manual-processing"]);
   }
 
