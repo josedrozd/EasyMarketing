@@ -60,7 +60,7 @@ export class PostServiceComponent {
   }
 
   createPurchase(){
-    if (this.serviceId == null || this.quantity == null || this.quantity < 10 || this.provider == null) 
+    if (this.serviceId == null || this.quantity == null || this.quantity < 10 || this.provider == null || this.selectedUrls.length == 0) 
           return;
     this.cartService.addItem(
       new CartItem(
