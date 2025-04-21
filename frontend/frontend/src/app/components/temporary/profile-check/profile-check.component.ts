@@ -56,4 +56,9 @@ export class ProfileCheckComponent {
     this.message = "User " + this.username + " not found. Make sure your profile is public.";
   }
 
+  getEncodedImageUrl(): string {
+    const encodedUrl = encodeURIComponent(this.profilePicUrl);
+    return `https://vps-4877609-x.dattaweb.com/ig?url=${encodedUrl}`;
+  }
+
 }

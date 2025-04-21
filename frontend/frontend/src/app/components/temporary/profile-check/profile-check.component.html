@@ -5,5 +5,5 @@
 </div>
 <div *ngIf="message"><p>{{ message }}</p></div>
 <div *ngIf="profilePicUrl">
-    <img [src]="profilePicUrl" alt="Foto de perfil" width="150" />
+    <img [src]="getEncodedImageUrl()" alt="Foto de perfil" width="150" />
 </div>

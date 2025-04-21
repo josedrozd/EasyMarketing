@@ -30,7 +30,7 @@
                 [checked]="isSelected(post.url)" 
                 (click)="$event.stopPropagation()" />
         <img
-          [src]="post.picUrl"
+          [src]="getEncodedImageUrl(post.picUrl)"
           alt="Imagen"
           class="d-block mx-auto"
           style="width: 100px; height: 100px; object-fit: contain;"

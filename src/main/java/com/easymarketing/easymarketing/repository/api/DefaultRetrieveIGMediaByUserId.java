@@ -17,7 +17,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
-import static com.easymarketing.easymarketing.utils.TransformImageUrlIntoBytes.transform;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Component
@@ -84,7 +83,7 @@ public class DefaultRetrieveIGMediaByUserId implements IRetrieveIGMediaByUserId{
             CompletableFuture<IGMediaPostDTO> future = CompletableFuture.supplyAsync(() -> {
                 JsonNode candidates = item.path("image_versions2").path("candidates");
                 if (candidates.isArray() && candidates.size() > 0) {
-                    String picUrl = transform(candidates.get(0).path("url").asText(null));
+                    String picUrl = candidates.get(0).path("url").asText(null);
                     String url = item.path("code").asText(null);
                     if (isNotBlank(picUrl) && isNotBlank(url)) {
                         return IGMediaPostDTO.builder()
