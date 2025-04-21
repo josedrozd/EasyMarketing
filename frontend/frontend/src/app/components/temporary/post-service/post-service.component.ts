@@ -77,9 +77,8 @@ export class PostServiceComponent {
     this.router.navigate(["/manual-processing"]);
   }
 
-  getEncodedImageUrl(picUrl: string): string {
-    const encodedUrl = encodeURIComponent(picUrl);
-    return `https://vps-4877609-x.dattaweb.com/ig?url=${encodedUrl}`;
+  getImageUrl(picUrl: string): string {
+    return `https://vps-4877609-x.dattaweb.com/ig/`+picUrl;
   }
 
 }
