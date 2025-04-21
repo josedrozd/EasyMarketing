@@ -6,7 +6,7 @@ export default `<!doctype html>
   <base href="/browser/">
   <script src="https://sdk.mercadopago.com/js/v2"></script>
   <script src="assets/scripts/mp-checkout.js"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ775/9FAt9VY3R7N8Wv+6n9u6O9wChRS7fN" crossorigin="anonymous">
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
