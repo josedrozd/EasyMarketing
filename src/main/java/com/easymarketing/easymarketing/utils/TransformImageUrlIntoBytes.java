@@ -1,20 +1,11 @@
 package com.easymarketing.easymarketing.utils;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.time.OffsetDateTime;
-import java.util.Base64;
-
 public class TransformImageUrlIntoBytes {
 
+    private static final String PROXY_URL = "https://vps-4877609-x.dattaweb.com/ig?url=";
+
     public static String transform(String url){
-        try (InputStream in = new URL(url).openStream()) {
-            byte[] imageBytes = in.readAllBytes();
-            return Base64.getEncoder().encodeToString(imageBytes);
-        } catch (IOException e) {
-            return null;
-        }
+        return PROXY_URL + url;
     }
 
 }

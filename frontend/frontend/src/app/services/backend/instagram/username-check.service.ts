@@ -18,7 +18,7 @@ export class UsernameCheckService {
     return this.http.get<any>(apiUrl).pipe(
       map(response => ({
         id: response.id,
-        profilePicUrl: `data:image/jpeg;base64,${response.profile_pic_url}`,
+        profilePicUrl: `${response.profile_pic_url}`,
         isPrivate: response.is_private
       }))
     );
