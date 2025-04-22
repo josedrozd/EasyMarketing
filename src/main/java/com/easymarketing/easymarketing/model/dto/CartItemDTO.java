@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CartItemDTO {
 
+    private String username;
     private Integer serviceId;
     private String serviceName;
     private List<String> urls;

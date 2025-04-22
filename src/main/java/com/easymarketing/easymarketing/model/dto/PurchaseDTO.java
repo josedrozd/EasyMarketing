@@ -11,7 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 public class PurchaseDTO {
 
-    private String username;
     private String email;
     private String name;
     private String lastName;

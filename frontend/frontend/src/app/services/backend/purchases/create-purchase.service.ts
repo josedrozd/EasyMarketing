@@ -5,7 +5,6 @@ import { CartItem } from '../../../core/models/cart-item';
 import { environment } from '../../../../environments/environment';
 
 export interface PurchaseDTO {
-  username: string;
   name: string;
   lastName: string;
   email: string;

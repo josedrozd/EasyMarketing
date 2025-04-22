@@ -40,6 +40,7 @@ export class ProfileCheckComponent {
         this.userinfoService.updateId(this.igUserInfo.id);
         console.log(this.userinfoService.userId$ + " " + this.igUserInfo.id);
         this.locked = true;
+        console.log("Username" + this.userinfoService.username$)
         this.message = "IG verified!";
       },
       error: (err) => {

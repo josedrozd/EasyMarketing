@@ -27,7 +27,6 @@ public class TemporaryCreatePurchase implements ITemporaryCreatePurchase {
 
     private Purchase buildPurchaseEntity(PurchaseDTO purchaseDTO, String token, OffsetDateTime now) {
         Purchase purchase = Purchase.builder()
-                .username(purchaseDTO.getUsername())
                 .token(token)
                 .mail(purchaseDTO.getEmail())
                 .name(purchaseDTO.getName())
@@ -43,6 +42,7 @@ public class TemporaryCreatePurchase implements ITemporaryCreatePurchase {
                         .flatMap(cartItem -> cartItem.getUrls().stream()
                                 .map(url -> Cart.builder()
                                         .purchase(purchase)
+                                        .username(cartItem.getUsername())
                                         .serviceId(cartItem.getServiceId())
                                         .url(url)
                                         .quantity(cartItem.getUnitQuantity())

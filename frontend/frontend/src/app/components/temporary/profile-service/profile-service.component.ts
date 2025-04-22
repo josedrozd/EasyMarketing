@@ -26,10 +26,11 @@ export class ProfileServiceComponent implements OnInit{
   provider!: string;
 
   createPurchase() {
-    if (this.serviceId == null || this.quantity == null || this.quantity < 10 || this.provider == null) 
+    if (this.username == null || this.serviceId == null || this.quantity == null || this.quantity < 10 || this.provider == null) 
       return;
     this.cartService.addItem(
       new CartItem(
+        this.username,
         this.serviceId,
         "PROFILE SERVICE", 
         [this.username], 

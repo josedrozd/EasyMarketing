@@ -1,6 +1,5 @@
 package com.easymarketing.easymarketing.model.entity;
 
-import com.easymarketing.easymarketing.model.entity.compositekey.CartId;
 import com.easymarketing.easymarketing.model.enums.ServiceProviderEnum;
 import com.easymarketing.easymarketing.model.enums.UrlTypeEnum;
 import jakarta.persistence.*;
@@ -10,22 +9,24 @@ import lombok.*;
 @Entity
 @Builder
 @Table(name = "cart")
-@IdClass(CartId.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
 public class Cart {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     @ManyToOne
     @JoinColumn(name = "purchase_id")
     private Purchase purchase;
 
-    @Id
+    private String username;
+
     @Column(name = "service_id")
     private Integer serviceId;
 
-    @Id
     private String url;
 
     private Integer quantity;

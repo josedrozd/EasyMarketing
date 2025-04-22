@@ -52,21 +52,16 @@ public class DefaultProcessPurchaseCart implements IProcessPurchaseCart {
     }
 
     private void callUrl(Cart cart, PurchaseProcessData purchaseProcessData) {
-        try {
-            String link = buildLink(cart.getUrl(), cart.getUrlType());
-            Boolean ok = callProvider(cart, link);
-            if (ok) cart.process();
-            else purchaseProcessData.getFailedItems()
-                    .add(FailedCartItemDTO.builder()
-                            .serviceId(cart.getServiceId())
-                            .url(link)
-                            .quantity(cart.getQuantity())
-                            .provider(cart.getProvider().toString())
-                            .build());
-        } catch (Exception e) {
-            log.error(String.format("❌ ERROR procesando servicio: %s para la purchase con id: %s. Exception error: ",
-                    cart.getServiceId(), cart.getPurchase().getId()) + e.getMessage());
-        }
+        String link = buildLink(cart.getUrl(), cart.getUrlType());
+        Boolean ok = callProvider(cart, link);
+        if (ok) cart.process();
+        else purchaseProcessData.getFailedItems()
+                .add(FailedCartItemDTO.builder()
+                        .serviceId(cart.getServiceId())
+                        .url(link)
+                        .quantity(cart.getQuantity())
+                        .provider(cart.getProvider().toString())
+                        .build());
     }
 
     private Boolean callProvider(Cart cart, String link) {
@@ -76,7 +71,7 @@ public class DefaultProcessPurchaseCart implements IProcessPurchaseCart {
                         .serviceId(cart.getServiceId())
                         .link(link)
                         .quantity(cart.getQuantity())
-                        .username(cart.getPurchase().getUsername())
+                        .username(cart.getUsername())
                         .build());
             }
             case HONEST -> {
@@ -84,7 +79,7 @@ public class DefaultProcessPurchaseCart implements IProcessPurchaseCart {
                         .serviceId(cart.getServiceId())
                         .link(link)
                         .quantity(cart.getQuantity())
-                        .username(cart.getPurchase().getUsername())
+                        .username(cart.getUsername())
                         .build());
             }
             default -> throw new RuntimeException(String.format("No provider defined in the purchase: %s", cart.getPurchase().getId()));

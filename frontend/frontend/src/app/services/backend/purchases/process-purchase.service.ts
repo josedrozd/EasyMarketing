@@ -5,6 +5,7 @@ import { PurchaseDTO } from "./create-purchase.service";
 import { environment } from "../../../../environments/environment";
 
 export interface FailedCartItemDTO {
+  username: string;
   serviceId: number;
   url: string;
   quantity: number;

@@ -66,7 +66,6 @@ export class ProcessPuchaseComponent {
     console.log("Purchase id: " + this.purchaseId);
     if(!this.purchaseId){
       this.createPurchase.create({
-        username: this.username,
         name: "Pepe",
         lastName: "Argento",
         email: "testing@mail.com",
@@ -115,6 +114,7 @@ export class ProcessPuchaseComponent {
   convertFailedItemsToCartItems(failedItems: FailedCartItemDTO[]): CartItem[] {
     return failedItems.map(failedItem => {
       const cartItem = new CartItem(
+        failedItem.username,
         failedItem.serviceId,
         "SERVICE",
         [failedItem.url],

@@ -1,4 +1,5 @@
 export class CartItem {
+    username!: string;
     serviceId!: number;
     serviceName!: string;
     urls!: string[];
@@ -8,6 +9,7 @@ export class CartItem {
     price!: number;
 
     constructor(
+        username: string,
         serviceId: number,
         serviceName: string,
         urls: string[],
@@ -16,6 +18,7 @@ export class CartItem {
         unitQuantity: number,
         price: number
     ){
+        this.username = username;
         this.serviceId = serviceId;
         this.serviceName = serviceName;
         this.urls = urls;

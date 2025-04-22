@@ -23,8 +23,6 @@ public class Purchase {
 
     private String token;
 
-    private String username;
-
     private String mail;
 
     private String name;

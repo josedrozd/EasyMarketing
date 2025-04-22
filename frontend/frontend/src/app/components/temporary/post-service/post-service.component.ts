@@ -25,6 +25,7 @@ export class PostServiceComponent {
   serviceId!: number;
   quantity!: number;
   provider!: string;
+  username!: string;
 
   constructor(private igMediaService: IGMediaService) {}
 
@@ -32,6 +33,9 @@ export class PostServiceComponent {
     this.userinfoService.userId$.subscribe((value) => {
       console.log("updating with: "+value);
       if(value) this.userId = Number(value);
+    });
+    this.userinfoService.username$.subscribe((value) => {
+      this.username = value;
     });
     this.loadMedia();
   }
@@ -60,12 +64,14 @@ export class PostServiceComponent {
   }
 
   createPurchase(){
-    if (this.serviceId == null || this.quantity == null || this.quantity < 10 || this.provider == null || this.selectedUrls.length == 0) 
+    if (this.username == null || this.serviceId == null || this.quantity == null || this.quantity < 10 || this.provider == null || this.selectedUrls.length == 0) 
           return;
+    console.log("POST username: "+ this.username);
     this.cartService.addItem(
       new CartItem(
+        this.username,
         this.serviceId,
-        "POST SERVICE", 
+        "POST SERVICE",
         this.selectedUrls, 
         "POST",
         this.provider,
