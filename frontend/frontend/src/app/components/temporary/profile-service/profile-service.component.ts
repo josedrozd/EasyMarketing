@@ -19,7 +19,6 @@ export class ProfileServiceComponent implements OnInit{
   private router = inject(Router);
   private cartService = inject(CartService);
   private userinfoService = inject(UserInfoService);
-  private igMediaService = inject(IGMediaService);
   username!: string;
   serviceId!: number;
   quantity!: number;
@@ -39,7 +38,6 @@ export class ProfileServiceComponent implements OnInit{
         this.quantity, 
         0)
     );
-    this.igMediaService.clearMediaPosts();
     this.router.navigate(["/manual-processing"]);
   }
 

@@ -22,7 +22,6 @@ import { IGMediaService } from '../../../services/backend/instagram/retrieve-med
 })
 export class AddServiceComponent {
 
-  private igMediaService = inject(IGMediaService);
   postServiceVisible: boolean = false;
   profileServiceVisible: boolean = false;
   visible: boolean = false;
@@ -39,10 +38,6 @@ export class AddServiceComponent {
 
   becomeVisible() {
     this.visible = true;
-  }
-
-  clearMedia() {
-    this.igMediaService.clearMediaPosts();
   }
 
 }

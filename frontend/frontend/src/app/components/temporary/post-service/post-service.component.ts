@@ -78,13 +78,16 @@ export class PostServiceComponent {
         this.quantity, 
         0)
     );
-    this.igMediaService.clearMediaPosts();
-    this.selectedUrls = [];
     this.router.navigate(["/manual-processing"]);
   }
 
   getImageUrl(picUrl: string): string {
     return `https://vps-4877609-x.dattaweb.com/ig/`+picUrl;
+  }
+
+  ngOnDestroy() {
+    this.igMediaService.clearMediaPosts();
+    this.selectedUrls = [];
   }
 
 }

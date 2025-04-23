@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -15,6 +16,8 @@ public class HonestSMMClient implements IHonestSMMClient{
 
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+    private RetryTemplate retryTemplate;
 
     @Value("${honestsmm.api.key}")
     private String API_KEY;
@@ -25,22 +28,24 @@ public class HonestSMMClient implements IHonestSMMClient{
 
     public Boolean apply(Model model) {
         try {
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+            return retryTemplate.execute(context -> {
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-            String body = String.format("key=%s&action=add&service=%s&link=%s&quantity=%d&username=%s",
-                    API_KEY, model.getServiceId(), model.getLink(), model.getQuantity(), model.getUsername());
+                String body = String.format("key=%s&action=add&service=%s&link=%s&quantity=%d&username=%s",
+                        API_KEY, model.getServiceId(), model.getLink(), model.getQuantity(), model.getUsername());
 
-            HttpEntity<String> request = new HttpEntity<>(body, headers);
+                HttpEntity<String> request = new HttpEntity<>(body, headers);
 
-            ResponseEntity<String> response = restTemplate.exchange(API_URL, HttpMethod.POST, request, String.class);
+                ResponseEntity<String> response = restTemplate.exchange(API_URL, HttpMethod.POST, request, String.class);
 
-            if (response.getBody().contains("\"error\":\"Not enough funds on balance\"")
-                    || response.getBody().contains("\"error\":\"Incorrect service ID\"")
-                    || response.getBody().contains("error\":\"Quantity more than maximum 10000\""))
-                return false;
+                if (response.getBody().contains("\"error\":\"Not enough funds on balance\"")
+                        || response.getBody().contains("\"error\":\"Incorrect service ID\"")
+                        || response.getBody().contains("error\":\"Quantity more than maximum 10000\""))
+                    return false;
 
-            return response.getStatusCode().is2xxSuccessful();
+                return response.getStatusCode().is2xxSuccessful();
+            });
         } catch (Exception e) {
             log.error(String.format("❌ ERROR procesando servicio: %s, link: %s, cantidad: %s y proveedor: %s. Exception error: ",
                     model.getServiceId(), model.getLink(), model.getQuantity(), HONEST) + e.getMessage());
