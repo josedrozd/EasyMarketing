@@ -47,8 +47,8 @@ public class HonestSMMClient implements IHonestSMMClient{
                 return response.getStatusCode().is2xxSuccessful();
             });
         } catch (Exception e) {
-            log.error(String.format("❌ ERROR procesando servicio: %s, link: %s, cantidad: %s y proveedor: %s. Exception error: ",
-                    model.getServiceId(), model.getLink(), model.getQuantity(), HONEST) + e.getMessage());
+            log.error(String.format("❌ ERROR procesando servicio: %s, link: %s, cantidad: %s y proveedor: %s. Exception error: %s Exception class: %s.",
+                    model.getServiceId(), model.getLink(), model.getQuantity(), HONEST, e.getMessage(), e.getClass()));
             return false;
         }
     }
