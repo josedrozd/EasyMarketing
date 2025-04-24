@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -17,7 +18,7 @@ public class PurchaseProcessData {
 
     private Boolean completed;
     @Builder.Default
-    private List<FailedCartItemDTO> failedItems = new ArrayList<>();
+    private List<FailedCartItemDTO> failedItems = Collections.synchronizedList(new ArrayList<>());
 
     public void finish(){
         completed = Boolean.TRUE;

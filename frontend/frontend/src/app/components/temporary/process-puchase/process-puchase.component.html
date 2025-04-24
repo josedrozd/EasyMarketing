@@ -10,6 +10,13 @@
   
     <div class="right">
       <button class="btn btn-custom mt-4" (click)="vaciarCarrito()">Vaciar carrito</button>
-      <button class="btn btn-custom mt-4" style="margin-right: 40px;" (click)="procesarCarrito()">Procesar compra</button>
+      <button class="btn btn-custom mt-4" style="margin-right: 40px;" (click)="procesarCarrito()" [disabled]="processing">
+        <ng-container *ngIf="!processing; else loading">
+          Procesar compra
+        </ng-container>
+        <ng-template #loading>
+          <img src="loading.gif" alt="Cargando..." style="height: 20px;" />
+        </ng-template>
+      </button>
     </div>
 </div>

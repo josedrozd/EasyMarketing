@@ -42,9 +42,10 @@ public class DefaultProcessPurchaseCart implements IProcessPurchaseCart {
 
         CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 
-        if (response.getFailedItems().isEmpty()) response.finish();
-
-        if (response.getCompleted()) completePurchase.accept(purchaseId);
+        if (response.getFailedItems().isEmpty()) {
+            response.finish();
+            completePurchase.accept(purchaseId);
+        }
 
         cartRepository.saveAll(cartList);
 
@@ -65,7 +66,7 @@ public class DefaultProcessPurchaseCart implements IProcessPurchaseCart {
     }
 
     private Boolean callProvider(Cart cart, String link) {
-        switch (cart.getProvider()){
+        switch (cart.getProvider()) {
             case SMMCOST -> {
                 return smmCostClient.apply(ISMMCostClient.Model.builder()
                         .serviceId(cart.getServiceId())

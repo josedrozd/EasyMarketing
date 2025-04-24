@@ -5,11 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.retry.backoff.FixedBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.*;
 
+import java.io.IOException;
 import java.util.Map;
 
 @Configuration
@@ -27,7 +25,9 @@ public class AppConfig {
         SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy(3, Map.of(
                 HttpServerErrorException.class, true,
                 HttpClientErrorException.class, false,
-                RestClientException.class, true
+                RestClientException.class, true,
+                IOException.class, true,
+                ResourceAccessException.class, true
         ));
 
         FixedBackOffPolicy backOffPolicy = new FixedBackOffPolicy();

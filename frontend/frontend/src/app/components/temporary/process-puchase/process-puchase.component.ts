@@ -8,6 +8,7 @@ import { FailedCartItemDTO, ProcessPurchaseService, PurchaseProcessData } from '
 import { PurchaseDTO } from '../../../services/backend/purchases/create-purchase.service';
 import { CheckPasswordService } from '../../../services/backend/security/check-password.service';
 import { UserInfoService } from '../../../services/temporary/user-info.service';
+import { firstValueFrom } from 'rxjs';
 
 const AUTH_KEY = makeStateKey<boolean>('auth');
 
@@ -25,7 +26,8 @@ export class ProcessPuchaseComponent {
   visible: boolean = false;
   purchaseId!: number | null;
   username!: string;
-  
+  processing: boolean = false;
+
   constructor(
     private userinfoService: UserInfoService,
     private checkPassword: CheckPasswordService,
@@ -61,48 +63,54 @@ export class ProcessPuchaseComponent {
       this.username = value;
     });
   }
-  
-  procesarCarrito(){
-    console.log("Purchase id: " + this.purchaseId);
-    if(!this.purchaseId){
-      this.createPurchase.create({
-        name: "Pepe",
-        lastName: "Argento",
-        email: "testing@mail.com",
-        totalPrice: 0,
-        cartItems: this.cartItems
-      }).subscribe({
-        next: (response) => {
-          this.purchaseId = response;
-          this.procesarCompra(this.purchaseId);
-        },
-        error: (err) => {
-          console.error('Error creating purchase: ', err);
-        }
-      });
-    } else {
-      this.procesarCompra(this.purchaseId);
+
+  async procesarCarrito(): Promise<void> {
+    this.processing = true;
+
+    try {
+      if (!this.purchaseId) {
+        await this.crearCompra();
+      } else {
+        await this.procesarCompra(this.purchaseId!);
+      }
+    } finally {
+      this.processing = false;
     }
   }
 
-  procesarCompra(id: number){
-    this.processPurchase.process(id).subscribe(
-      {
-        next: (response: PurchaseProcessData) => {
-          if(!response || !response.completed){
-            this.cartService.replaceCart(this.convertFailedItemsToCartItems(response.failedItems));
-            this.cartItems = this.cartService.getCartItems();
-            alert("Hubo problemas al procesar algunos de los servicios. Vuelva a hacer click en procesar.");
-          } else {
-            this.vaciarCarrito();
-            alert("La compra fue procesada.");
-          }},
-        error: (err) => {
-          alert("Error al procesar la compra.");
-          console.log("Error al procesar la compra: " + this.purchaseId);
-        }
+  private async crearCompra(): Promise<void> {
+    try {
+      const newPurchaseId = await firstValueFrom(
+        this.createPurchase.create({
+          name: 'Pepe',
+          lastName: 'Argento',
+          email: 'testing@mail.com',
+          totalPrice: 0,
+          cartItems: this.cartItems,
+        })
+      );
+      this.purchaseId = newPurchaseId;
+      await this.procesarCompra(this.purchaseId!);
+    } catch (error) {
+      console.error('Error al crear la compra:', error);
+    }
+  }
+
+  private async procesarCompra(id: number): Promise<void> {
+    try {
+      const response = await firstValueFrom(this.processPurchase.process(id));
+
+      if (!response?.completed) {
+        this.cartService.replaceCart(this.convertFailedItemsToCartItems(response.failedItems));
+        this.cartItems = this.cartService.getCartItems();
+        alert('Hubo problemas al procesar algunos servicios. Vuelva a hacer click en procesar.');
+      } else {
+        this.vaciarCarrito();
+        alert('La compra fue procesada.');
       }
-    );
+    } catch (error) {
+      console.error('Error al procesar compra:', error);
+    }
   }
 
   vaciarCarrito() {
@@ -122,7 +130,7 @@ export class ProcessPuchaseComponent {
         failedItem.provider,
         failedItem.quantity,
         0
-      );  
+      );
       return cartItem;
     });
   }
