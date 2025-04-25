@@ -92,6 +92,8 @@ public class DefaultProcessPurchaseCart implements IProcessPurchaseCart {
             return String.format("https://www.instagram.com/p/%s/", url);
         } else if (type == UrlTypeEnum.PROFILE){
             return String.format("https://www.instagram.com/%s/", url);
+        } else if (type == UrlTypeEnum.REEL){
+            return String.format("https://www.instagram.com/reel/%s/", url);
         } else {
             throw new RuntimeException("Invalid urlType");
         }

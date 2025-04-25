@@ -5,13 +5,14 @@ import { CommonModule } from '@angular/common';
 import { ProfileCheckComponent } from '../profile-check/profile-check.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { IGMediaService } from '../../../services/backend/instagram/retrieve-media.service';
+import { ReelServiceComponent } from '../reel-service/reel-service.component';
 
 @Component({
   selector: 'app-add-service',
   imports: [
     PostServiceComponent, 
-    ProfileServiceComponent, 
+    ProfileServiceComponent,
+    ReelServiceComponent,
     CommonModule,
     ProfileCheckComponent,
     FormsModule,
@@ -24,16 +25,25 @@ export class AddServiceComponent {
 
   postServiceVisible: boolean = false;
   profileServiceVisible: boolean = false;
+  reelServiceVisible: boolean = false;
   visible: boolean = false;
 
   addProfileService(){
     this.profileServiceVisible = true;
     this.postServiceVisible = false;
+    this.reelServiceVisible = false;
   }
 
   addPostService(){
     this.profileServiceVisible = false;
     this.postServiceVisible = true;
+    this.reelServiceVisible = false;
+  }
+
+  addReelService(){
+    this.reelServiceVisible = true;
+    this.profileServiceVisible = false;
+    this.postServiceVisible = false;
   }
 
   becomeVisible() {

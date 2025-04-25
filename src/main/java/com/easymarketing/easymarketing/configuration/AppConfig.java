@@ -22,7 +22,7 @@ public class AppConfig {
     public RetryTemplate retryTemplate() {
         RetryTemplate retryTemplate = new RetryTemplate();
 
-        SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy(3, Map.of(
+        SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy(13, Map.of(
                 HttpServerErrorException.class, true,
                 HttpClientErrorException.class, false,
                 RestClientException.class, true,
@@ -31,7 +31,7 @@ public class AppConfig {
         ));
 
         FixedBackOffPolicy backOffPolicy = new FixedBackOffPolicy();
-        backOffPolicy.setBackOffPeriod(700);
+        backOffPolicy.setBackOffPeriod(550);
 
         retryTemplate.setRetryPolicy(retryPolicy);
         retryTemplate.setBackOffPolicy(backOffPolicy);

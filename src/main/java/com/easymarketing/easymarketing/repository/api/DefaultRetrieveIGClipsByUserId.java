@@ -1,10 +1,9 @@
 package com.easymarketing.easymarketing.repository.api;
 
-import com.easymarketing.easymarketing.model.dto.IGMediaPostDTO;
-import com.easymarketing.easymarketing.model.dto.IGUserMediaDTO;
+import com.easymarketing.easymarketing.model.dto.IGReelClipDTO;
+import com.easymarketing.easymarketing.model.dto.IGUserClipsDTO;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -20,9 +19,8 @@ import java.util.stream.Collectors;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
-@Slf4j
 @Component
-public class DefaultRetrieveIGMediaByUserId implements IRetrieveIGMediaByUserId{
+public class DefaultRetrieveIGClipsByUserId implements IRetrieveIGClipsByUserId{
 
     @Value("${rocket.api.url}")
     private String API_URL;
@@ -31,7 +29,7 @@ public class DefaultRetrieveIGMediaByUserId implements IRetrieveIGMediaByUserId{
     private final Integer count = 12;
 
     @Override
-    public IGUserMediaDTO apply(Model model) {
+    public IGUserClipsDTO apply(IRetrieveIGClipsByUserId.Model model) {
 
         try {
             HttpClient client = HttpClient.newHttpClient();
@@ -46,7 +44,7 @@ public class DefaultRetrieveIGMediaByUserId implements IRetrieveIGMediaByUserId{
             requestBodyBuilder.append("}");
 
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(API_URL + "/instagram/user/get_media"))
+                    .uri(URI.create(API_URL + "/instagram/user/get_clips"))
                     .header("Content-Type", "application/json")
                     .header("x-rapidapi-host", "rocketapi-for-developers.p.rapidapi.com")
                     .header("x-rapidapi-key", API_KEY)
@@ -59,50 +57,40 @@ public class DefaultRetrieveIGMediaByUserId implements IRetrieveIGMediaByUserId{
             JsonNode root = mapper.readTree(response.body());
 
             JsonNode bodyNode = root.path("response").path("body");
-            boolean moreAvailable = bodyNode.path("more_available").asBoolean(false);
-            String nextMaxId = bodyNode.has("next_max_id") ? bodyNode.path("next_max_id").asText(null) : null;
+            boolean moreAvailable = bodyNode.path("paging_info").path("more_available").asBoolean(false);
+            String nextMaxId = bodyNode.path("paging_info").has("max_id") ? bodyNode.path("paging_info").path("max_id").asText(null) : null;
 
-            List<IGMediaPostDTO> mediaPosts = processMediaPosts(bodyNode);
+            List<IGReelClipDTO> reelClips = processreelClips(bodyNode);
 
-            return IGUserMediaDTO.builder()
+            return IGUserClipsDTO.builder()
                     .moreAvailable(moreAvailable)
                     .nextMaxId(nextMaxId)
-                    .mediaPosts(mediaPosts)
+                    .reelClips(reelClips)
                     .build();
 
         } catch (Exception e) {
-            return IGUserMediaDTO.builder().moreAvailable(false).mediaPosts(List.of()).build();
+            return IGUserClipsDTO.builder().moreAvailable(false).reelClips(List.of()).build();
         }
     }
 
-    public List<IGMediaPostDTO> processMediaPosts(JsonNode bodyNode) throws InterruptedException, ExecutionException {
-        List<IGMediaPostDTO> mediaPosts = new ArrayList<>();
+    public List<IGReelClipDTO> processreelClips(JsonNode bodyNode) throws InterruptedException, ExecutionException {
+        List<IGReelClipDTO> reelClips = new ArrayList<>();
         JsonNode items = bodyNode.path("items");
 
-        List<CompletableFuture<IGMediaPostDTO>> futures = new ArrayList<>();
+        List<CompletableFuture<IGReelClipDTO>> futures = new ArrayList<>();
 
         for (JsonNode item : items) {
-            CompletableFuture<IGMediaPostDTO> future = CompletableFuture.supplyAsync(() -> {
-                try {
-                    JsonNode candidates;
-
-                    if (item.has("carousel_media") && item.path("carousel_media").isArray() && item.path("carousel_media").size() > 0) {
-                        candidates = item.path("carousel_media").get(0).path("image_versions2").path("candidates");
-                    } else {
-                        candidates = item.path("image_versions2").path("candidates");
+            CompletableFuture<IGReelClipDTO> future = CompletableFuture.supplyAsync(() -> {
+                JsonNode candidates = item.path("media").path("image_versions2").path("candidates");
+                if (candidates.isArray() && candidates.size() > 0) {
+                    String picUrl = candidates.get(0).path("url").asText(null);
+                    String url = item.path("media").path("code").asText(null);
+                    if (isNotBlank(picUrl) && isNotBlank(url)) {
+                        return IGReelClipDTO.builder()
+                                .picUrl(picUrl)
+                                .url(url)
+                                .build();
                     }
-                    if (candidates.isArray() && candidates.size() > 0) {
-                        String picUrl = candidates.get(0).path("url").asText(null);
-                        String url = item.path("code").asText(null);
-                        if (isNotBlank(picUrl) && isNotBlank(url)) {
-                            return IGMediaPostDTO.builder()
-                                    .picUrl(picUrl)
-                                    .url(url)
-                                    .build();
-                        }
-                    }
-                } catch (Exception e){
-                    log.error("ERROR: RocketAPI body path changed for POSTS.");
                 }
                 return null;
             });
@@ -110,7 +98,7 @@ public class DefaultRetrieveIGMediaByUserId implements IRetrieveIGMediaByUserId{
             futures.add(future);
         }
 
-        List<IGMediaPostDTO> result = CompletableFuture.allOf(
+        List<IGReelClipDTO> result = CompletableFuture.allOf(
                         futures.toArray(new CompletableFuture[0])
                 ).thenApply(v -> futures.stream()
                         .map(CompletableFuture::join)
