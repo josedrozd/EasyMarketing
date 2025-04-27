@@ -82,7 +82,7 @@ export class PostServiceComponent {
   }
 
   getImageUrl(picUrl: string): string {
-    return `https://vps-4877609-x.dattaweb.com/ig/`+picUrl;
+    return `https://vps-4877609-x.dattaweb.com/proxy/`+picUrl;
   }
 
   ngOnDestroy() {

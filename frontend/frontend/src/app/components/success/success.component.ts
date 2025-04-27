@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injector, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PurchaseStatus, StatusService } from '../../services/backend/purchases/status.service';
-import { CommonModule } from '@angular/common';
+import { StatusService } from '../../services/backend/purchases/status.service';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-success',
@@ -12,19 +12,25 @@ import { CommonModule } from '@angular/common';
 export class SuccessComponent implements OnInit {
 
   msg: string = "Loading...";
+  platformId: Object;
   
   constructor(
     private route: ActivatedRoute,
-    private statusService: StatusService
-  ) {}
+    private statusService: StatusService,
+    private injector: Injector
+  ) {
+    this.platformId = this.injector.get(PLATFORM_ID);
+  }
 
   ngOnInit(): void {
-    this.msg = this.statusService.getMessageFromState();
+    if (isPlatformBrowser(this.platformId)) {
+      this.msg = this.statusService.getMessageFromState();
 
-    this.statusService.updatePurchaseStatus(
-      this.route.snapshot.queryParamMap.get('external_reference')!, 
-      +this.route.snapshot.queryParamMap.get('payment_id')!
-    ).subscribe();
+      this.statusService.updatePurchaseStatus(
+        this.route.snapshot.queryParamMap.get('external_reference')!, 
+        +this.route.snapshot.queryParamMap.get('payment_id')!
+      ).subscribe();
+    }
   }
   
 }

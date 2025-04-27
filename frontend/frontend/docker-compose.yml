@@ -1,0 +1,10 @@
+services:
+  frontend:
+    build:
+      context: .
+    container_name: angular-frontend-ssr
+    ports:
+      - "4000:4000"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
