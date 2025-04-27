@@ -5,7 +5,6 @@ import { CartService } from '../../../services/cart.service';
 import { Router, RouterModule } from '@angular/router';
 import { CreatePurchaseService } from '../../../services/backend/purchases/create-purchase.service';
 import { FailedCartItemDTO, ProcessPurchaseService, PurchaseProcessData } from '../../../services/backend/purchases/process-purchase.service';
-import { PurchaseDTO } from '../../../services/backend/purchases/create-purchase.service';
 import { CheckPasswordService } from '../../../services/backend/security/check-password.service';
 import { UserInfoService } from '../../../services/temporary/user-info.service';
 import { firstValueFrom } from 'rxjs';
@@ -37,13 +36,13 @@ export class ProcessPuchaseComponent {
     private router: Router
   ) {
     if (isPlatformBrowser(this.platformId)) {
-      const authPassed = localStorage.getItem('auth_passed') === 'true';
+      const authPassed = sessionStorage.getItem('auth_passed') === 'true';
       if (!authPassed) {
         const pass = prompt('Contraseña:');
         this.checkPassword.checkPassword(pass!).subscribe({
           next: (result) => {
             if (result) {
-              localStorage.setItem('auth_passed', 'true');
+              sessionStorage.setItem('auth_passed', 'true');
               this.visible = true;
             } else {
               alert('Acceso denegado');

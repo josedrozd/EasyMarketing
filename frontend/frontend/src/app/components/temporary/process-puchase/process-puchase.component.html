@@ -1,6 +1,6 @@
 <div class="container-box" *ngIf="visible">
     <h2>Carrito de Servicios</h2>
-    <button routerLink="/add-service" class="btn btn-primary">Añadir servicio</button>
+    <button routerLink="/add-service" class="btn btn-primary" [disabled]="processing">Añadir servicio</button>
   
     <div *ngFor="let item of cartItems">
       <div *ngFor="let url of item.urls" class="card purple m-3">
@@ -9,7 +9,7 @@
     </div>
   
     <div class="right">
-      <button class="btn btn-custom mt-4" (click)="vaciarCarrito()">Vaciar carrito</button>
+      <button class="btn btn-custom mt-4" (click)="vaciarCarrito()" [disabled]="processing">Vaciar carrito</button>
       <button class="btn btn-custom mt-4" style="margin-right: 40px;" (click)="procesarCarrito()" [disabled]="processing">
         <ng-container *ngIf="!processing; else loading">
           Procesar compra
