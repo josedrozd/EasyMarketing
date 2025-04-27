@@ -10,7 +10,7 @@ export class CheckPasswordService {
 
   private baseUrl = environment.apiUrl;
   
-  private apiUrl = `${this.baseUrl}/security`;
+  private apiUrl = `${this.baseUrl}/api/security`;
 
   constructor(private http: HttpClient) {}
 

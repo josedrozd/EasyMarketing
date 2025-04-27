@@ -32,7 +32,7 @@ export class IGClipsService {
       params = params.set('maxId', this.nextMaxId);
     }
 
-    return this.http.get<IGUserClipsDTO>(`${this.baseUrl}/instagram/users/${userId}/clips`, { params }).pipe(
+    return this.http.get<IGUserClipsDTO>(`${this.baseUrl}/api/instagram/users/${userId}/clips`, { params }).pipe(
       tap((response: IGUserClipsDTO) => {
         this.reelClips = [...this.reelClips, ...response.reelClips];
         this.nextMaxId = response.nextMaxId;

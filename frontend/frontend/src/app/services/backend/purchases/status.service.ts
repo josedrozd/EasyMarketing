@@ -25,7 +25,7 @@ export class StatusService {
 
   updatePurchaseStatus(tokenId: string, paymentId: number): Observable<PurchaseStatus> {
 
-    const url = `${this.baseUrl}/purchases/tokens/${tokenId}/status`;
+    const url = `${this.baseUrl}/api/purchases/tokens/${tokenId}/status`;
 
     return this.http.put<PurchaseStatus>(url, {}, { params: { paymentId } }).pipe(
       tap((status) => {

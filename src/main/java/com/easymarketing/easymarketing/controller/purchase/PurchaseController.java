@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 @CrossOrigin
 @RestController
-@RequestMapping("/purchases")
+@RequestMapping("/api/purchases")
 public class PurchaseController {
 
     @Autowired

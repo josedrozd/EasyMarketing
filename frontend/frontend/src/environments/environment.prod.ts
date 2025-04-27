@@ -1,3 +1,3 @@
 export const environment = {
-    apiUrl: 'http://easymarketing-app:8080'
+    apiUrl: 'https://vps-4877609-x.dattaweb.com'
 };

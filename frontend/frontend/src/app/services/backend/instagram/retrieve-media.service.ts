@@ -32,7 +32,7 @@ export class IGMediaService {
       params = params.set('maxId', this.nextMaxId);
     }
 
-    return this.http.get<IGUserMediaDTO>(`${this.baseUrl}/instagram/users/${userId}/media`, { params }).pipe(
+    return this.http.get<IGUserMediaDTO>(`${this.baseUrl}/api/instagram/users/${userId}/media`, { params }).pipe(
       tap((response: IGUserMediaDTO) => {
         this.mediaPosts = [...this.mediaPosts, ...response.mediaPosts];
         this.nextMaxId = response.nextMaxId;

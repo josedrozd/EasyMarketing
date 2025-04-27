@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 @CrossOrigin
 @RestController
-@RequestMapping("/instagram")
+@RequestMapping("/api/instagram")
 public class InstagramController {
 
     @Autowired

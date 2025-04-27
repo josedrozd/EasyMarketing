@@ -9,7 +9,7 @@ import { environment } from '../../../../environments/environment';
 export class MpPreferenceService {
   
   private baseUrl = environment.apiUrl;
-  private apiUrl = `${this.baseUrl}/mp/preferences/create`;
+  private apiUrl = `${this.baseUrl}/api/mp/preferences/create`;
 
   constructor(private http: HttpClient) {}
 

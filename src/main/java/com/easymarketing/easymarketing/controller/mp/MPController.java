@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/mp")
+@RequestMapping("/api/mp")
 public class MPController {
 
     @Autowired

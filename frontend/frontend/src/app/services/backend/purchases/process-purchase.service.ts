@@ -24,7 +24,7 @@ export class ProcessPurchaseService {
   
   private baseUrl = environment.apiUrl;
 
-  private apiUrl = `${this.baseUrl}/purchases`;
+  private apiUrl = `${this.baseUrl}/api/purchases`;
 
   constructor(private http: HttpClient) {}
 

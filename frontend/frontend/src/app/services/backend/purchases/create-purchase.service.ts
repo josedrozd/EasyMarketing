@@ -22,7 +22,7 @@ export class CreatePurchaseService {
   constructor(private http: HttpClient) {}
 
   create(purchase: PurchaseDTO): Observable<number> {
-    const apiUrl = `${this.baseUrl}/purchases`;
+    const apiUrl = `${this.baseUrl}/api/purchases`;
     return this.http.post<number>(apiUrl, purchase);
   }
 }
