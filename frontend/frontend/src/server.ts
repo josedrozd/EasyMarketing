@@ -12,12 +12,16 @@ const indexHtml = join(serverDistFolder, 'index.server.html');
 const app = express();
 const commonEngine = new CommonEngine();
 
-console.log('Browser Dist Folder:', browserDistFolder);
-console.log('Server Dist Folder:', serverDistFolder);
-
 (globalThis as any).mpCheckout = {
   initializeMercadoPago: (preferenceId: string) => {}
 };
+
+app.use((req, res, next) => {
+  if (req.path.endsWith('.html')) {
+    res.setHeader('Cache-Control', 'no-store');
+  }
+  next();
+});
 
 /**
  * Example Express Rest API endpoints can be defined here.
