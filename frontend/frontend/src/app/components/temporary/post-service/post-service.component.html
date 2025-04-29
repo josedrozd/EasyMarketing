@@ -17,23 +17,24 @@
   </label>
 </div>
   
-<div class="container mt-4">
+<div class="container mt-4" style="max-width: 420px;">
   <div class="row">
-    <div *ngFor="let post of mediaPosts" class="col-3 mb-4">
+    <div *ngFor="let post of mediaPosts" class="col-4 col-sm-4 col-md-4 mb-4 d-flex justify-content-center">
       <div
-        class="selection-card border rounded p-2 position-relative"
+        class="selection-card"
         (click)="toggleSelection(post.url)"
         [ngClass]="{'border-primary': isSelected(post.url)}"
       >
         <input type="checkbox" 
-                class="selection-checkbox position-absolute"
-                [checked]="isSelected(post.url)" 
-                (click)="$event.stopPropagation()" />
+          class="card-check"
+          [checked]="isSelected(post.url)" 
+          tabindex="-1"
+          readonly />
         <img
           [src]="getImageUrl(post.picUrl)"
           alt="Imagen"
           class="d-block mx-auto"
-          style="width: 100px; height: 100px; object-fit: contain;"
+          style="width: 115px; height: 115px; object-fit: contain;"
         />
       </div>
     </div>
