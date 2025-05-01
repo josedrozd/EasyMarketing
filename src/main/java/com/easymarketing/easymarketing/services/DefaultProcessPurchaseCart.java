@@ -1,5 +1,6 @@
 package com.easymarketing.easymarketing.services;
 
+import com.easymarketing.easymarketing.exception.UnauthorizedException;
 import com.easymarketing.easymarketing.model.domain.PurchaseProcessData;
 import com.easymarketing.easymarketing.model.dto.FailedCartItemDTO;
 import com.easymarketing.easymarketing.model.entity.Cart;
@@ -17,10 +18,14 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
+import static com.easymarketing.easymarketing.utils.PublicMethodsUtil.buildLink;
+
 @Slf4j
 @Service
 public class DefaultProcessPurchaseCart implements IProcessPurchaseCart {
 
+    @Autowired
+    private RedisService redisService;
     @Autowired
     private ICompletePurchase completePurchase;
     @Autowired
@@ -32,8 +37,12 @@ public class DefaultProcessPurchaseCart implements IProcessPurchaseCart {
 
     @Override
     public PurchaseProcessData apply(Long purchaseId) {
+        if(redisService.isProcessing(purchaseId))
+            throw new UnauthorizedException(String.format("Another process is being executed for purchase id: %s.", purchaseId));
+
         PurchaseProcessData response = PurchaseProcessData.builder().completed(Boolean.FALSE).build();
         List<Cart> cartList = cartRepository.findByPurchase_IdAndProcessed(purchaseId, Boolean.FALSE);
+        redisService.setProcessing(purchaseId);
 
         List<CompletableFuture<Void>> futures = cartList
                 .stream()
@@ -45,6 +54,9 @@ public class DefaultProcessPurchaseCart implements IProcessPurchaseCart {
         if (response.getFailedItems().isEmpty()) {
             response.finish();
             completePurchase.accept(purchaseId);
+            redisService.removeKey(purchaseId);
+        } else {
+            redisService.removeProcessing(purchaseId);
         }
 
         cartRepository.saveAll(cartList);
@@ -84,18 +96,6 @@ public class DefaultProcessPurchaseCart implements IProcessPurchaseCart {
                         .build());
             }
             default -> throw new RuntimeException(String.format("No provider defined in the purchase: %s", cart.getPurchase().getId()));
-        }
-    }
-
-    private String buildLink(String url, UrlTypeEnum type){
-        if (type == UrlTypeEnum.POST){
-            return String.format("https://www.instagram.com/p/%s/", url);
-        } else if (type == UrlTypeEnum.PROFILE){
-            return String.format("https://www.instagram.com/%s/", url);
-        } else if (type == UrlTypeEnum.REEL){
-            return String.format("https://www.instagram.com/reel/%s/", url);
-        } else {
-            throw new RuntimeException("Invalid urlType");
         }
     }
 

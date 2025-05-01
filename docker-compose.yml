@@ -19,6 +19,7 @@ services:
       DONWEB_DOMAIN: ${DONWEB_DOMAIN}
       ADMIN_PASS: ${ADMIN_PASS}
       APP_PORT: ${APP_PORT}
+      REDIS_HOST: redis
     depends_on:
       - db
     restart: unless-stopped
@@ -34,6 +35,12 @@ services:
       - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
 
 volumes:
   db_data:

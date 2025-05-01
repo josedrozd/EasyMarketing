@@ -1,1 +1,37 @@
-<p>{{ msg }}</p>
+<div class="container-box">
+    <div style="text-align: right;">
+        <button routerLink="/manual-processing" class="btn btn-primary">Nueva Compra</button>
+    </div>
+    
+    <p>{{ msg }}</p>
+
+    <div *ngIf="purchaseStatus">
+        <div (click)="toggle()" class="header">
+            <h3>{{ expanded ? '▼' : '▶' }} Servicios procesados: ({{ itemsProcessed() }}/{{ itemsLength() }})</h3>
+            
+            <div *ngIf="expanded" class="details">
+                <ul>
+                    <li *ngFor="let item of purchaseStatus.items" class="item-row">
+                        <span>
+                            <strong>Nombre servicio:</strong> {{ item.serviceName }} 
+                            <strong>Url:</strong> {{ item.url }} 
+                            <strong>Cantidad:</strong> {{ item.quantity }}
+                        </span>
+                        <span style="text-align: right;">{{getItemUnitState(item.processed)}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div *ngIf="!purchaseStatus.isCompleted">
+            <button class="btn btn-custom" (click)="processPurchase()" [disabled]="processing">
+                <ng-container *ngIf="!processing; else loading">
+                    Procesar compra
+                </ng-container>
+                <ng-template #loading>
+                    <img src="loading.gif" alt="Cargando..." style="height: 20px;" />
+                </ng-template>
+            </button>
+        </div>
+    </div>
+</div>
+

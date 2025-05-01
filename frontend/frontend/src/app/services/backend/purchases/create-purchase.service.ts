@@ -21,8 +21,8 @@ export class CreatePurchaseService {
 
   constructor(private http: HttpClient) {}
 
-  create(purchase: PurchaseDTO): Observable<number> {
+  create(purchase: PurchaseDTO): Observable<string> {
     const apiUrl = `${this.baseUrl}/api/purchases`;
-    return this.http.post<number>(apiUrl, purchase);
+    return this.http.post(apiUrl, purchase, { responseType: 'text' as const });
   }
 }

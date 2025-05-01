@@ -19,10 +19,11 @@ public class TemporaryCreatePurchase implements ITemporaryCreatePurchase {
     private PurchaseRepository purchaseRepository;
 
     @Override
-    public Long apply(PurchaseDTO purchaseDTO) {
-        Purchase purchase = buildPurchaseEntity(purchaseDTO, UUID.randomUUID().toString(), OffsetDateTime.now());
+    public String apply(PurchaseDTO purchaseDTO) {
+        String token = UUID.randomUUID().toString();
+        Purchase purchase = buildPurchaseEntity(purchaseDTO, token, OffsetDateTime.now());
         purchaseRepository.save(purchase);
-        return purchase.getId();
+        return token;
     }
 
     private Purchase buildPurchaseEntity(PurchaseDTO purchaseDTO, String token, OffsetDateTime now) {

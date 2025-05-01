@@ -26,9 +26,11 @@ public class PurchaseController {
     private IUpdatePurchaseStatus updatePurchaseStatus;
     @Autowired
     private ITemporaryCreatePurchase temporaryCreatePurchase;
+    @Autowired
+    private IRetrievePurchaseStatus retrievePurchaseStatus;
 
     @PostMapping
-    public ResponseEntity<Long> temporaryCreatePurchase(@Valid @NotNull @RequestBody PurchaseDTO purchaseDTO){
+    public ResponseEntity<String> temporaryCreatePurchase(@Valid @NotNull @RequestBody PurchaseDTO purchaseDTO){
         return ResponseEntity.ok(temporaryCreatePurchase.apply(purchaseDTO));
     }
 
@@ -49,6 +51,11 @@ public class PurchaseController {
     @PostMapping("/{purchaseId}/process")
     public ResponseEntity<PurchaseProcessData> processPurchaseById(@Valid @NotNull @PathVariable Long purchaseId){
         return ResponseEntity.ok(processPurchaseCart.apply(purchaseId));
+    }
+
+    @GetMapping("/{purchaseId}/status")
+    public ResponseEntity<PurchaseStatusDTO> getStatusById(@Valid @NotNull @PathVariable Long purchaseId){
+        return ResponseEntity.ok(retrievePurchaseStatus.apply(purchaseId));
     }
 
 }

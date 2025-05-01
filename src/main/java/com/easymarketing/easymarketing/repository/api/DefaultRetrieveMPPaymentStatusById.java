@@ -19,7 +19,8 @@ public class DefaultRetrieveMPPaymentStatusById implements IRetrieveMPPaymentSta
 
     @Override
     public Boolean apply(Model model) {
-        String url = "https://api.mercadopago.com/v1/payments/" + model.getPaymentId();
+        return Boolean.TRUE;
+        /*String url = "https://api.mercadopago.com/v1/payments/" + model.getPaymentId();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(accessToken);
@@ -38,7 +39,7 @@ public class DefaultRetrieveMPPaymentStatusById implements IRetrieveMPPaymentSta
                     && model.getToken().equals(body.getExternalReference());
         }
 
-        return Boolean.FALSE;
+        return Boolean.FALSE;*/
     }
 
 }

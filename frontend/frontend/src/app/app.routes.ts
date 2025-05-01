@@ -14,7 +14,7 @@ export const routes: Routes = [
     { path: '404', component: NotFoundComponent },
     { path: 'unauthorized', component: UnauthorizedComponent },
     { path: 'ping', component: PingComponent, runGuardsAndResolvers: 'always' },
-    { path: 'success', component: SuccessComponent},
+    { path: 'process-purchase', component: SuccessComponent},
     { path: 'mp', 
         loadComponent: () => import('./components/mp-checkout/mp-checkout.component').then(m => m.MercadoPagoButtonComponent), 
         providers: [importProvidersFrom(CommonModule)]

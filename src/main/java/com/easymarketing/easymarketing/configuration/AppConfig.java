@@ -2,6 +2,10 @@ package com.easymarketing.easymarketing.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.retry.backoff.FixedBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
@@ -9,6 +13,7 @@ import org.springframework.web.client.*;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Properties;
 
 @Configuration
 public class AppConfig {
@@ -22,7 +27,7 @@ public class AppConfig {
     public RetryTemplate retryTemplate() {
         RetryTemplate retryTemplate = new RetryTemplate();
 
-        SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy(13, Map.of(
+        SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy(1000, Map.of(
                 HttpServerErrorException.class, true,
                 HttpClientErrorException.class, false,
                 RestClientException.class, true,
@@ -31,12 +36,38 @@ public class AppConfig {
         ));
 
         FixedBackOffPolicy backOffPolicy = new FixedBackOffPolicy();
-        backOffPolicy.setBackOffPeriod(550);
+        backOffPolicy.setBackOffPeriod(1200);
 
         retryTemplate.setRetryPolicy(retryPolicy);
         retryTemplate.setBackOffPolicy(backOffPolicy);
 
         return retryTemplate;
+    }
+
+    @Bean
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
+        template.setConnectionFactory(connectionFactory);
+        return template;
+    }
+
+    @Bean
+    public JavaMailSender javaMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+
+        mailSender.setUsername("loenawhite@gmail.com");
+        mailSender.setPassword("yhwp sgfl nwdb bdud");
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.debug", "true");
+
+        return mailSender;
     }
 
 }

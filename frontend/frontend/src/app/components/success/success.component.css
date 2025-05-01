@@ -1,0 +1,30 @@
+.header {
+    cursor: pointer;
+    user-select: none;
+    background-color: #3d8391;
+    padding: 10px;
+    border-radius: 8px;
+    width: 95%;
+    margin: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+  
+.details {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #a2aaab;
+}
+
+.btn-custom {
+    display: block;
+    margin: auto;
+}
+
+.item-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    border: 1px solid #161616;
+}

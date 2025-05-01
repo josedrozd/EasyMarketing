@@ -23,7 +23,6 @@ export class ProcessPuchaseComponent {
   processData!: PurchaseProcessData;
   cartItems: CartItem[] = [];
   visible: boolean = false;
-  purchaseId!: number | null;
   username!: string;
   processing: boolean = false;
 
@@ -32,7 +31,6 @@ export class ProcessPuchaseComponent {
     private checkPassword: CheckPasswordService,
     private cartService: CartService,
     private createPurchase: CreatePurchaseService,
-    private processPurchase: ProcessPurchaseService,
     private router: Router
   ) {
     if (isPlatformBrowser(this.platformId)) {
@@ -64,14 +62,13 @@ export class ProcessPuchaseComponent {
   }
 
   async procesarCarrito(): Promise<void> {
+    if(this.cartItems.length <= 0) {
+      alert("La compra debe tener al menos un servicio.")
+      return;
+    }
     this.processing = true;
-
     try {
-      if (!this.purchaseId) {
-        await this.crearCompra();
-      } else {
-        await this.procesarCompra(this.purchaseId!);
-      }
+      await this.crearCompra();
     } finally {
       this.processing = false;
     }
@@ -79,7 +76,7 @@ export class ProcessPuchaseComponent {
 
   private async crearCompra(): Promise<void> {
     try {
-      const newPurchaseId = await firstValueFrom(
+      const token = await firstValueFrom(
         this.createPurchase.create({
           name: 'Pepe',
           lastName: 'Argento',
@@ -88,34 +85,21 @@ export class ProcessPuchaseComponent {
           cartItems: this.cartItems,
         })
       );
-      this.purchaseId = newPurchaseId;
-      await this.procesarCompra(this.purchaseId!);
-    } catch (error) {
-      console.error('Error al crear la compra:', error);
-    }
-  }
-
-  private async procesarCompra(id: number): Promise<void> {
-    try {
-      const response = await firstValueFrom(this.processPurchase.process(id));
-
-      if (!response?.completed) {
-        this.cartService.replaceCart(this.convertFailedItemsToCartItems(response.failedItems));
-        this.cartItems = this.cartService.getCartItems();
-        alert('Hubo problemas al procesar algunos servicios. Vuelva a hacer click en procesar.');
-      } else {
+      if(token){
+        console.log(token)
         this.vaciarCarrito();
-        alert('La compra fue procesada.');
+        this.router.navigate(['/process-purchase'], { queryParams: { external_reference: token, payment_id: 1 } });
+      } else {
+        alert('Error al crear la compra.');
       }
     } catch (error) {
-      console.error('Error al procesar compra:', error);
+      console.error('Error al crear la compra:', error);
     }
   }
 
   vaciarCarrito() {
     this.cartService.clearCart();
     this.cartItems = this.cartService.getCartItems();
-    this.purchaseId = null;
   }
 
   convertFailedItemsToCartItems(failedItems: FailedCartItemDTO[]): CartItem[] {
