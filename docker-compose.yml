@@ -37,7 +37,7 @@ services:
       - db_data:/var/lib/mysql
 
   redis:
-    image: redis:latest
+    image: redis:7.4.3
     container_name: redis
     ports:
       - "6379:6379"
