@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 import static com.easymarketing.easymarketing.utils.PublicMethodsUtil.buildLink;
@@ -43,13 +45,16 @@ public class DefaultProcessPurchaseCart implements IProcessPurchaseCart {
         PurchaseProcessData response = PurchaseProcessData.builder().completed(Boolean.FALSE).build();
         List<Cart> cartList = cartRepository.findByPurchase_IdAndProcessed(purchaseId, Boolean.FALSE);
         redisService.setProcessing(purchaseId);
+        ExecutorService executor = Executors.newFixedThreadPool(4);
 
         List<CompletableFuture<Void>> futures = cartList
                 .stream()
-                .map(cart -> CompletableFuture.runAsync(() -> callUrl(cart, response)))
+                .map(cart -> CompletableFuture.runAsync(() -> callUrl(cart, response), executor))
                 .collect(Collectors.toList());
 
         CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+
+        executor.shutdown();
 
         if (response.getFailedItems().isEmpty()) {
             response.finish();
