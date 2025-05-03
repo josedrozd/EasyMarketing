@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.util.function.Consumer;
 
 @FunctionalInterface
-public interface IEmailClient extends Consumer<IEmailClient.Model> {
+public interface ISESEmailService extends Consumer<ISESEmailService.Model> {
 
     @Getter
     @Builder
