@@ -1,9 +1,7 @@
 package com.easymarketing.easymarketing.services.interfaces;
 
-import com.easymarketing.easymarketing.model.domain.PurchaseProcessData;
-
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 @FunctionalInterface
-public interface IProcessPurchaseCart extends Function<Long, PurchaseProcessData> {
+public interface IProcessPurchaseCart extends Consumer<Long> {
 }

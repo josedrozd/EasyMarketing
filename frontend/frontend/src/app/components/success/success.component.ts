@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectorRef, Component, Injector, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { PurchaseStatus, StatusService } from '../../services/backend/purchases/status.service';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
@@ -27,7 +27,8 @@ export class SuccessComponent implements OnInit {
     private processPurchaseService: ProcessPurchaseService,
     private route: ActivatedRoute,
     private statusService: StatusService,
-    private injector: Injector
+    private injector: Injector,
+    private cdr: ChangeDetectorRef
   ) {
     this.platformId = this.injector.get(PLATFORM_ID);
   }
@@ -68,6 +69,7 @@ export class SuccessComponent implements OnInit {
       )
       .subscribe(response => {
         this.purchaseStatus = response;
+        this.cdr.detectChanges();
         console.log("Poll interval finished.")
         if (!response.isProcessing) {
           console.log("Stoping poll.")

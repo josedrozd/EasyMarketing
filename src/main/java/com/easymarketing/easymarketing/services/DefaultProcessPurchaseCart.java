@@ -4,7 +4,6 @@ import com.easymarketing.easymarketing.exception.UnauthorizedException;
 import com.easymarketing.easymarketing.model.domain.PurchaseProcessData;
 import com.easymarketing.easymarketing.model.dto.FailedCartItemDTO;
 import com.easymarketing.easymarketing.model.entity.Cart;
-import com.easymarketing.easymarketing.model.enums.UrlTypeEnum;
 import com.easymarketing.easymarketing.repository.api.IHonestSMMClient;
 import com.easymarketing.easymarketing.repository.api.ISMMCostClient;
 import com.easymarketing.easymarketing.repository.jpa.CartRepository;
@@ -12,6 +11,7 @@ import com.easymarketing.easymarketing.services.interfaces.ICompletePurchase;
 import com.easymarketing.easymarketing.services.interfaces.IProcessPurchaseCart;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,8 +37,9 @@ public class DefaultProcessPurchaseCart implements IProcessPurchaseCart {
     @Autowired
     private ISMMCostClient smmCostClient;
 
+    @Async
     @Override
-    public PurchaseProcessData apply(Long purchaseId) {
+    public void accept(Long purchaseId) {
         if(redisService.isProcessing(purchaseId))
             throw new UnauthorizedException(String.format("Another process is being executed for purchase id: %s.", purchaseId));
 
@@ -63,17 +64,15 @@ public class DefaultProcessPurchaseCart implements IProcessPurchaseCart {
         } else {
             redisService.removeProcessing(purchaseId);
         }
-
-        cartRepository.saveAll(cartList);
-
-        return response;
     }
 
     private void callUrl(Cart cart, PurchaseProcessData purchaseProcessData) {
         String link = buildLink(cart.getUrl(), cart.getUrlType());
         Boolean ok = callProvider(cart, link);
-        if (ok) cart.process();
-        else purchaseProcessData.getFailedItems()
+        if (ok) {
+            cart.process();
+            cartRepository.save(cart);
+        } else purchaseProcessData.getFailedItems()
                 .add(FailedCartItemDTO.builder()
                         .serviceId(cart.getServiceId())
                         .url(link)

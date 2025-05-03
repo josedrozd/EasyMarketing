@@ -1,6 +1,5 @@
 package com.easymarketing.easymarketing.controller.purchase;
 
-import com.easymarketing.easymarketing.model.domain.PurchaseProcessData;
 import com.easymarketing.easymarketing.model.dto.PurchaseDTO;
 import com.easymarketing.easymarketing.model.dto.PurchaseStatusDTO;
 import com.easymarketing.easymarketing.services.interfaces.*;
@@ -49,8 +48,9 @@ public class PurchaseController {
     }
 
     @PostMapping("/{purchaseId}/process")
-    public ResponseEntity<PurchaseProcessData> processPurchaseById(@Valid @NotNull @PathVariable Long purchaseId){
-        return ResponseEntity.ok(processPurchaseCart.apply(purchaseId));
+    public ResponseEntity<Void> processPurchaseById(@Valid @NotNull @PathVariable Long purchaseId){
+        processPurchaseCart.accept(purchaseId);
+        return ResponseEntity.accepted().build();
     }
 
     @GetMapping("/{purchaseId}/status")
