@@ -19,7 +19,7 @@ services:
       DONWEB_DOMAIN: ${DONWEB_DOMAIN}
       ADMIN_PASS: ${ADMIN_PASS}
       APP_PORT: ${APP_PORT}
-      REDIS_HOST: ${DONWEB_DOMAIN}
+      REDIS_HOST: redis
     depends_on:
       - db
     restart: unless-stopped
