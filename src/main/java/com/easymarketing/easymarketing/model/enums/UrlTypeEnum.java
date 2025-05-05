@@ -4,6 +4,7 @@ public enum UrlTypeEnum {
 
     POST,
     PROFILE,
-    REEL
+    REEL,
+    UNDEFINED
 
 }
