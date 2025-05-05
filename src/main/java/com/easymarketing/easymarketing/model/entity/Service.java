@@ -38,6 +38,9 @@ public class Service {
     private Integer maxQuantity;
 
     @Column(nullable = false)
+    private Integer priority;
+
+    @Column(nullable = false)
     private Boolean activated;
 
     @Column(name = "automatic_payment", nullable = false)
