@@ -21,14 +21,14 @@ public class SESEmailService implements ISESEmailService {
             Message message = Message.builder()
                     .subject(Content.builder().data(model.getSubject()).build())
                     .body(Body.builder()
-                            .text(Content.builder().data(model.getBody()).build())
+                            .html(Content.builder().data(model.getBody()).build())
                             .build())
                     .build();
 
             SendEmailRequest request = SendEmailRequest.builder()
                     .destination(destination)
                     .message(message)
-                    .source("tucorreo@dominio.com")
+                    .source("easymarketing.argentina@gmail.com")
                     .build();
 
             sesClient.sendEmail(request);
