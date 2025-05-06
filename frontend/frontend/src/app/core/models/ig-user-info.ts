@@ -1,5 +1,5 @@
 export class IgUserInfo {
-    id!: string;
-    profilePicUrl!: string;
-    isPrivate!: boolean;
+    id!: string | undefined;
+    profilePicUrl!: string | undefined;
+    isPrivate!: boolean | undefined;
 }

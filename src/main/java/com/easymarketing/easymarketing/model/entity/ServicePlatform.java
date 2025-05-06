@@ -1,0 +1,32 @@
+package com.easymarketing.easymarketing.model.entity;
+
+import com.easymarketing.easymarketing.model.entity.converter.StringListConverter;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.List;
+
+@Getter
+@Entity
+@Builder
+@Table(name = "service_platforms")
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+public class ServicePlatform {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(name = "automatic_payment_allowed", nullable = false)
+    private Boolean automaticPaymentAllowed;
+
+    @Column(name = "platform_groups", columnDefinition = "TEXT")
+    @Convert(converter = StringListConverter.class)
+    private List<String> platformGroups;
+
+}

@@ -4,6 +4,7 @@ import com.easymarketing.easymarketing.exception.NotFoundException;
 import com.easymarketing.easymarketing.model.dto.IGUserInfoDTO;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +24,8 @@ public class DefaultRetrieveIGUserByUsername implements IRetrieveIGUserByUsernam
     @Override
     public IGUserInfoDTO apply(String username) {
         try {
+            if(StringUtils.containsAny(username, " \t\n\r\f\u00A0\u200B\u200C\u200D\u200E\u200F\u00AD\\"))
+                throw new IllegalArgumentException("Username can not contain invalid characters.");
             HttpClient client = HttpClient.newHttpClient();
 
             String requestBody = String.format("{\"username\":\"%s\"}", username);

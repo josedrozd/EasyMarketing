@@ -14,7 +14,8 @@ export class UsernameCheckService {
   constructor(private http: HttpClient) {}
 
   checkIGUsername(username: string): Observable<IgUserInfo> {
-    const apiUrl = `${this.baseUrl}/api/instagram/users/${username}`;
+    const encodedUsername = encodeURIComponent(username);
+    const apiUrl = `${this.baseUrl}/api/instagram/users/${encodedUsername}`;
     return this.http.get<any>(apiUrl).pipe(
       map(response => ({
         id: response.id,

@@ -16,26 +16,21 @@ public class Service {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, length = 20)
-    private String platform;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "platform_id", nullable = false)
+    private ServicePlatform platform;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false)
     private String type;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false)
     private String provider;
 
     @Column(name = "provider_service_id", nullable = false)
     private Integer providerServiceId;
-
-    @Column(name = "min_quantity")
-    private Integer minQuantity;
-
-    @Column(name = "max_quantity")
-    private Integer maxQuantity;
 
     @Column(nullable = false)
     private Integer priority;

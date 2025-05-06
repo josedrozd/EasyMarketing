@@ -20,7 +20,7 @@ public class ServiceQuality {
     @JoinColumn(name = "service_id", nullable = false)
     private Service service;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 50)
     private String name;
 
     @Column(nullable = false)

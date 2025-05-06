@@ -35,9 +35,9 @@ export class ProfileCheckComponent {
           return;
         }
 
-        this.profilePicUrl = this.igUserInfo.profilePicUrl;
+        this.profilePicUrl = this.igUserInfo.profilePicUrl!;
         this.igVerified.emit();
-        this.userinfoService.updateId(this.igUserInfo.id);
+        this.userinfoService.updateId(this.igUserInfo.id!);
         console.log(this.userinfoService.userId$ + " " + this.igUserInfo.id);
         this.locked = true;
         console.log("Username" + this.userinfoService.username$)
@@ -52,8 +52,8 @@ export class ProfileCheckComponent {
   onUsernameChange(value: string) {
     this.userinfoService.updateUsername(value);
   }
-
   setErrorMsg() {
+
     this.message = "User " + this.username + " not found. Make sure your profile is public.";
   }
 
