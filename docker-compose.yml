@@ -20,6 +20,8 @@ services:
       ADMIN_PASS: ${ADMIN_PASS}
       APP_PORT: ${APP_PORT}
       REDIS_HOST: redis
+      AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}
+      AWS_SECRET_KEY: #{AWS_SECRET_KEY}
     depends_on:
       - db
     restart: unless-stopped
