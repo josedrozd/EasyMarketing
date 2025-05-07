@@ -1,0 +1,56 @@
+<div class="container-box" *ngIf="visible">
+    <div class="top-bar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1000 100">
+            <defs>
+                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#393e45;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#454f50;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+    
+            <!-- Ajustamos el tamaño y alineación para que el texto se cruce por el medio -->
+            <text x="50%" y="50%" font-family="Arial" font-size="3vw" fill="url(#grad1)" text-anchor="middle" alignment-baseline="central" dominant-baseline="central">
+                CONFIGURACION SERVICIOS
+            </text>
+        </svg>
+    </div>
+      
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="tree-container">
+
+        <!-- Nodo sin hijos -->
+        <mat-tree-node *matTreeNodeDef="let node" [ngClass]="getNodeClass(node)">
+            <div class="node">
+            <button mat-icon-button disabled>
+                <mat-icon style="opacity: 0">chevron_right</mat-icon>
+            </button>
+            {{ node.name }}
+            </div>
+        </mat-tree-node>
+
+        <!-- Nodo con hijos -->
+        <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild" [ngClass]="getNodeClass(node)">
+            <div class="node">
+            <button mat-icon-button matTreeNodeToggle>
+                <mat-icon>
+                {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+                </mat-icon>
+            </button>
+            {{ node.name }}
+            </div>
+            <div class="children" *ngIf="treeControl.isExpanded(node)">
+            <ng-container matTreeNodeOutlet></ng-container>
+            </div>
+        </mat-nested-tree-node>
+
+    </mat-tree>
+    <div style=
+        "width: 98%;
+        max-width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.25rem;
+        margin-bottom: 0.75rem">
+        <button class="btn btn-admin">Aplicar</button>
+        <button class="btn btn-admin">Deshacer</button>
+    </div>
+</div>

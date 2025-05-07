@@ -25,8 +25,4 @@ public class ServicePlatform {
     @Column(name = "automatic_payment_allowed", nullable = false)
     private Boolean automaticPaymentAllowed;
 
-    @Column(name = "platform_groups", columnDefinition = "TEXT")
-    @Convert(converter = StringListConverter.class)
-    private List<String> platformGroups;
-
 }

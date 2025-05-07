@@ -27,15 +27,6 @@ public class Service {
     private String type;
 
     @Column(nullable = false)
-    private String provider;
-
-    @Column(name = "provider_service_id", nullable = false)
-    private Integer providerServiceId;
-
-    @Column(nullable = false)
-    private Integer priority;
-
-    @Column(nullable = false)
     private Boolean activated;
 
     @Column(name = "automatic_payment", nullable = false)

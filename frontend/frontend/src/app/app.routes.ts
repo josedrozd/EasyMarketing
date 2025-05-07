@@ -8,6 +8,7 @@ import { NotFoundComponent } from './components/pages/exceptions/not-found/not-f
 import { BadRequestComponent } from './components/pages/exceptions/bad-request/bad-request.component';
 import { AddServiceComponent } from './components/temporary/add-service/add-service.component';
 import { ProcessPuchaseComponent } from './components/temporary/process-puchase/process-puchase.component';
+import { PanelComponent } from './components/panel/panel/panel.component';
 
 export const routes: Routes = [
     { path: 'bad-request', component: BadRequestComponent},
@@ -19,6 +20,12 @@ export const routes: Routes = [
         loadComponent: () => import('./components/mp-checkout/mp-checkout.component').then(m => m.MercadoPagoButtonComponent), 
         providers: [importProvidersFrom(CommonModule)]
     },
-    { path: 'add-service', component: AddServiceComponent},
-    { path: 'manual-processing', component: ProcessPuchaseComponent}
+    {
+        path: 'admin',
+        children: [
+          { path: 'manual-processing', component: ProcessPuchaseComponent},
+          { path: 'add-service', component: AddServiceComponent},
+          { path: 'services-panel', component: PanelComponent }
+        ]
+      }
 ];

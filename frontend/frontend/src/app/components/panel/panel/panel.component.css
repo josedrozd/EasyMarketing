@@ -1,0 +1,111 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.top-bar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    background-image: linear-gradient(to left, 
+    rgba(71, 94, 119, 0.785) 1%, 
+    transparent 100%);
+    color: rgb(48, 48, 59);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    width: 100%;
+}
+
+.top-bar text {
+    text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.164);
+}
+
+.container-box{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    background-image: linear-gradient(to top, 
+    rgba(118, 121, 160, 0.151) 1%, 
+    transparent 100%);
+    background-color: #cbd0d400;
+    overflow: hidden;
+}
+
+.tree-container {
+    background-color: #51647025;
+    border: 0.5px solid #1d20240f;
+    width: 95%;
+    margin: 1rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.208);
+    overflow: hidden;
+}
+
+.node {
+    display: flex;
+    align-items: center;
+    background-image: inherit;
+    margin: 2px;
+    width: 100%;
+}
+
+.children {
+    margin-left: 1rem;
+    overflow: hidden;
+}
+
+.group-true {
+    background-image: linear-gradient(to left, 
+    rgba(71, 94, 119, 0.785) 50%, 
+    transparent 100%);
+    font-weight: bold;
+    font-size: large;
+    color: #3d3939;
+}
+  
+.group-false {
+    background-image: linear-gradient(to left, 
+    rgba(169, 181, 194, 0.815) 50%, 
+    transparent 100%);
+    color: #3d3939;
+    box-shadow: 0 1px 3px rgb(0, 0, 0);
+}
+
+.btn-admin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    background: rgba(169, 181, 194, 0.387);
+    background-image: linear-gradient(to left, 
+    rgba(169, 181, 194, 0.815) 10%, 
+    transparent 100%);
+    color: #3d3939;
+    -webkit-text-stroke: 0.56px rgb(231, 219, 219);
+    font-weight: 700;
+    border-radius: 32px;          
+    font-size: 27px;     
+    cursor: pointer;
+    transition: background-color 0.6s; 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.662);
+}
+
+.btn-admin:hover {
+    background: rgba(169, 181, 194, 0.815);
+    background-image: linear-gradient(to left, 
+    rgba(71, 94, 119, 0.275) 10%, 
+    transparent 100%);
+    font-weight: 700;
+    border: 1px solid #867f86;
+}
+
+.btn-admin:active {
+    background-color: rgba(71, 94, 119, 0.785);
+    font-weight: 700;
+    color: #bcb6b600;
+    border: none;
+    transform: scale(0.98);
+}

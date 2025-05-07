@@ -24,6 +24,12 @@ public class ServiceQuality {
     private String name;
 
     @Column(nullable = false)
+    private String provider;
+
+    @Column(name = "provider_service_id")
+    private Integer providerServiceId;
+
+    @Column(nullable = false)
     private Integer priority;
 
 }
