@@ -20,11 +20,11 @@ export const routes: Routes = [
         loadComponent: () => import('./components/mp-checkout/mp-checkout.component').then(m => m.MercadoPagoButtonComponent), 
         providers: [importProvidersFrom(CommonModule)]
     },
+    { path: 'manual-processing', component: ProcessPuchaseComponent},
+    { path: 'add-service', component: AddServiceComponent},
     {
         path: 'admin',
         children: [
-          { path: 'manual-processing', component: ProcessPuchaseComponent},
-          { path: 'add-service', component: AddServiceComponent},
           { path: 'services-panel', component: PanelComponent }
         ]
       }

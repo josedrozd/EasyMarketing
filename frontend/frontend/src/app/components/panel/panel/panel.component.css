@@ -34,7 +34,7 @@ body {
     overflow: hidden;
 }
 
-.tree-container {
+.tree-rot {
     background-color: #51647025;
     border: 0.5px solid #1d20240f;
     width: 95%;
@@ -108,4 +108,12 @@ body {
     color: #bcb6b600;
     border: none;
     transform: scale(0.98);
+}
+
+.actions {
+    width: 98%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
 }

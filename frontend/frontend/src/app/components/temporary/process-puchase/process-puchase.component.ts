@@ -80,7 +80,7 @@ export class ProcessPuchaseComponent {
         this.createPurchase.create({
           name: 'Pepe',
           lastName: 'Argento',
-          email: 'testing@mail.com',
+          email: 'drozd.jose@mail.com',
           totalPrice: 0,
           cartItems: this.cartItems,
         })

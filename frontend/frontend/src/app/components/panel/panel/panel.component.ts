@@ -1,4 +1,4 @@
-import { Component, inject, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, PLATFORM_ID } from '@angular/core';
 import { CheckPasswordService } from '../../../services/backend/security/check-password.service';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
@@ -6,14 +6,7 @@ import { MatTreeModule, MatTreeNestedDataSource } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
-import { group } from 'console';
-
-export interface TreeNode {
-  name: string;
-  group?: boolean;
-  children?: TreeNode[];
-}
+import { TreeNode, TreeNodeComponent } from '../tree-node/tree-node.component';
 
 @Component({
   selector: 'app-panel',
@@ -21,7 +14,8 @@ export interface TreeNode {
     MatTreeModule,
     MatIconModule,
     MatButtonModule,
-    MatExpansionModule,
+    MatExpansionModule, 
+    TreeNodeComponent,
     CommonModule
   ],
   templateUrl: './panel.component.html',
@@ -31,8 +25,10 @@ export class PanelComponent {
 
   private platformId = inject(PLATFORM_ID);
   visible: boolean = false;
-  treeControl = new NestedTreeControl<TreeNode>(node => node.children);
-  dataSource = new MatTreeNestedDataSource<TreeNode>();
+
+  treeData: TreeNode[] = [
+    { name: 'PLATAFORMAS:', group: true, children: [] }
+  ];
 
   constructor(
       private checkPassword: CheckPasswordService,
@@ -57,40 +53,44 @@ export class PanelComponent {
         this.visible = true;
       }
     }
-    this.dataSource.data = this.treeData;
+  }  
+
+  addChild(parent: TreeNode): void {
+    parent.children = parent.children ?? [];
+  
+    const nextGroupName = this.getNextGroupName(parent.name);
+    const newNode: TreeNode = {
+      name: '',
+      group: false,
+      editing: true,
+      expanded: true,
+      children: nextGroupName ? [{
+        name: nextGroupName,
+        group: true,
+        expanded: true,
+        children: []
+      }] : undefined
+    };
+  
+    parent.children.push(newNode);
+    parent.expanded = true;
   }
 
-  treeData: TreeNode[] = [
-    { name: 'PLATAFORMAS:', group: true,
-      children: [
-      { name: 'INSTAGRAM', 
-        children: [
-        { name: 'SERVICIOS:', group: true,
-          children: [
-          { name: 'Seguidores', 
-            children: [
-            { name: 'CALIDADES:', group: true,
-              children: [
-              { name: 'Clasicos', 
-                children: [
-                { name: 'CANTIDADES:', group: true,
-                  children: [{ name: '100' }] }
-              ]},
-              { name: 'Premium' }
-            ]}
-          ]},
-          { name: 'Likes' }
-        ]},
-      ]},
-      { name: 'TIKTOK', 
-        children: [] }
-    ]}
-  ];
-  
+  private getNextGroupName(currentName: string): string | null {
+    switch (currentName) {
+      case 'PLATAFORMAS:':
+        return 'SERVICIOS:';
+      case 'SERVICIOS:':
+        return 'CALIDADES:';
+      case 'CALIDADES:':
+        return 'CANTIDADES:';
+      default:
+        return null;
+    }
+  }
 
-  hasChild = (_: number, node: TreeNode) => !!node.children && node.children.length > 0;
-
-  getNodeClass(node: any): string {
-    return node.group === true ? 'group-true' : 'group-false';
+  confirm(node: TreeNode): void {
+    if (!node.name.trim()) return;
+    node.editing = false;
   }
 }

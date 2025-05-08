@@ -28,7 +28,7 @@ public class SESEmailService implements ISESEmailService {
             SendEmailRequest request = SendEmailRequest.builder()
                     .destination(destination)
                     .message(message)
-                    .source("easymarketing.argentina@gmail.com")
+                    .source("no-reply@marketingfacil.com.ar")
                     .build();
 
             sesClient.sendEmail(request);

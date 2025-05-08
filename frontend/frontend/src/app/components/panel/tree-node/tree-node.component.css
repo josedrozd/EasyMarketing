@@ -1,0 +1,47 @@
+.group-true {
+    background: rgba(71,94,119,0.2);
+    font-weight: bold;
+  }
+  .group-false {
+    background: rgba(169,181,194,0.2);
+  }
+  .node-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem;
+  }
+  .node-header input {
+    flex: 1;
+  }
+  .toggle {
+    cursor: pointer;
+    width: 1rem;
+    text-align: center;
+  }
+  .add-btn {
+    margin-left: auto;
+  }
+  .children {
+    margin-left: 1.5rem;
+    list-style-type: none;
+    padding-left: 0;
+  }
+  li {
+    list-style-type: none;
+  }
+
+  .add-node {
+    list-style: none;
+    padding-left: 1.5em;
+    margin-top: 0.3em;
+  }
+  
+  .add-node button {
+    font-size: 0.9em;
+    background: #eee;
+    border: 1px solid #ccc;
+    padding: 0.2em 0.6em;
+    cursor: pointer;
+  }
+  
