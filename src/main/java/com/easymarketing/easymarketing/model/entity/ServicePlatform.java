@@ -1,10 +1,7 @@
 package com.easymarketing.easymarketing.model.entity;
 
-import com.easymarketing.easymarketing.model.entity.converter.StringListConverter;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
 
 @Getter
 @Entity
@@ -24,5 +21,8 @@ public class ServicePlatform {
 
     @Column(name = "automatic_payment_allowed", nullable = false)
     private Boolean automaticPaymentAllowed;
+
+    @Column(nullable = false)
+    private Boolean active;
 
 }

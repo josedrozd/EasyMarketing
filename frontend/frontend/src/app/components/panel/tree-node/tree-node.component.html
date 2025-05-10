@@ -1,32 +1,46 @@
-<li [ngClass]="node.group ? 'group-true' : 'group-false'">
-    <div class="node-header">
-      <span *ngIf="node.children" (click)="toggle()" class="toggle">
-        {{ node.expanded ? 'v' : '>' }}
+<li [ngClass]="nodeCssClasses">
+    <div class="node-header"
+    [ngStyle]="{ cursor: node.group ? 'pointer' : 'default' }"
+    (click)="node.group ? toggle() : null">
+      <span class="toggle">
+        <mat-icon *ngIf="node.group" class="chevron-icon">
+          {{ node.expanded ? 'expand_more' : 'chevron_right' }}
+        </mat-icon>
+        {{ node | nodeDisplay }}
+        <div class="action-buttons">
+          <button *ngIf="!node.group && currentTree[0]?.id !== node.id" class="go-in-btn" (click)="navigateTo(); $event.stopPropagation()">
+            <mat-icon>subdirectory_arrow_right</mat-icon>
+          </button>
+          <button *ngIf="currentTree[0]?.id === node.id && node.nodeType !== 'platform-group'" class="go-back-btn" (click)="goBack.emit(); $event.stopPropagation()">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+          <button *ngIf="!node.group" class="edit-btn" (click)="editNodeEvent.emit(node); $event.stopPropagation()">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button *ngIf="!node.group" class="delete-btn" (click)="deleteNode.emit(node); $event.stopPropagation()">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
       </span>
-  
-      <!-- Inline edit vs label -->
-      <ng-container *ngIf="node.editing; else showLabel">
-        <input [(ngModel)]="node.name" placeholder="Nombre…"/>
-        <button (click)="confirm.emit(node)">✔️</button>
-      </ng-container>
-      <ng-template #showLabel>
-        <span class="label">{{ node.name }}</span>
-      </ng-template>
     </div>
   
     <!-- Hijos recursivos -->
-    <ul *ngIf="node.expanded" class="children">
+    <ul *ngIf="node.group ? node.expanded : true" [ngClass]="{ 'children': true, 'children-indent': node.group }">
         <ng-container *ngFor="let child of node.children">
           <app-tree-node
             [node]="child"
+            [currentTree]="currentTree"
+            (goBack)="goBack.emit()"
+            (navigate)="navigate.emit($event)"
             (addChild)="addChild.emit($event)"
-            (confirm)="confirm.emit($event)">
+            (deleteNode)="deleteNode.emit($event)"
+            (editNodeEvent)="editNodeEvent.emit($event)">
           </app-tree-node>
         </ng-container>
-      
-        <!-- Botón “+ Añadir” como un nodo más al final -->
         <li *ngIf="node.group" class="add-node">
-          <button (click)="addChild.emit(node)">+ Añadir {{ getAddButtonLabel(node.name) }}</button>
+          <div class="node-header add-btn-node" (click)="addChild.emit(node)">
+            + Añadir {{ getAddButtonLabel(node.name) }}
+          </div>
         </li>
     </ul>      
 </li>

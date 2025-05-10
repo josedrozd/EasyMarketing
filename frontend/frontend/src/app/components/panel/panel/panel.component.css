@@ -21,6 +21,7 @@ body {
 }
 
 .container-box{
+    color: #363438;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -34,11 +35,16 @@ body {
     overflow: hidden;
 }
 
-.tree-rot {
-    background-color: #51647025;
+ul.tree-root {
+    list-style: none;
+    padding: 0;
+}
+
+.tree-root {
+    background-color: rgba(169, 181, 194, 0.314);
     border: 0.5px solid #1d20240f;
     width: 95%;
-    margin: 1rem;
+    margin: 2rem;
     border-radius: 6px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.208);
     overflow: hidden;
@@ -48,30 +54,7 @@ body {
     display: flex;
     align-items: center;
     background-image: inherit;
-    margin: 2px;
     width: 100%;
-}
-
-.children {
-    margin-left: 1rem;
-    overflow: hidden;
-}
-
-.group-true {
-    background-image: linear-gradient(to left, 
-    rgba(71, 94, 119, 0.785) 50%, 
-    transparent 100%);
-    font-weight: bold;
-    font-size: large;
-    color: #3d3939;
-}
-  
-.group-false {
-    background-image: linear-gradient(to left, 
-    rgba(169, 181, 194, 0.815) 50%, 
-    transparent 100%);
-    color: #3d3939;
-    box-shadow: 0 1px 3px rgb(0, 0, 0);
 }
 
 .btn-admin {
@@ -116,4 +99,36 @@ body {
     justify-content: flex-end;
     gap: 0.5rem;
     margin-bottom: 1rem;
+}
+
+.editing-actions {
+    width: 98%;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1rem;
+}
+
+.node-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.editor-box {
+    margin: 1rem;
+    font-size: 1.5vw;
+    color: #3d3939;
+    padding: 8px;
+    text-shadow: 0 0px 10px #ebe6e6;
+}
+
+label {
+    margin: 1rem;
+}
+
+input[type="checkbox"] {
+    transform: scale(1.5);
+    margin: 0 10px;
+    vertical-align: middle; 
 }

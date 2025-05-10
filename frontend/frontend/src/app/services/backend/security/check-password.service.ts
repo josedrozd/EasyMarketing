@@ -16,7 +16,7 @@ export class CheckPasswordService {
 
   checkPassword(password: string): Observable<boolean> {
     const params = new HttpParams().set('password', password);
-    return this.http.get<boolean>(this.apiUrl, { params });
+    return this.http.get<boolean>(this.apiUrl, { params, withCredentials: true });
   }
   
 }

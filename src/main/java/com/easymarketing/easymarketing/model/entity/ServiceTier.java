@@ -1,6 +1,5 @@
 package com.easymarketing.easymarketing.model.entity;
 
-import com.easymarketing.easymarketing.model.entity.compositeIds.ServiceTierId;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,13 +10,15 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@IdClass(ServiceTierId.class)
 public class ServiceTier {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false)
     private Integer quantity;
 
-    @Id
     @ManyToOne(optional = false)
     @JoinColumn(name = "quality_id", nullable = false)
     private ServiceQuality quality;
@@ -25,7 +26,7 @@ public class ServiceTier {
     @Column(nullable = false)
     private Double price;
 
-    @Column
+    @Column(nullable = false)
     private Double discount;
 
 }

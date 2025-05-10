@@ -29,7 +29,4 @@ public class Service {
     @Column(nullable = false)
     private Boolean activated;
 
-    @Column(name = "automatic_payment", nullable = false)
-    private Boolean automaticPayment;
-
 }

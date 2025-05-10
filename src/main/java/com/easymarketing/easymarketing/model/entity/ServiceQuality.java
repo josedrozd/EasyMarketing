@@ -23,7 +23,6 @@ public class ServiceQuality {
     @Column(nullable = false, length = 50)
     private String name;
 
-    @Column(nullable = false)
     private String provider;
 
     @Column(name = "provider_service_id")
@@ -31,5 +30,11 @@ public class ServiceQuality {
 
     @Column(nullable = false)
     private Integer priority;
+
+    @Column(name = "automatic_payment", nullable = false)
+    private Boolean automaticPayment;
+
+    @Column(nullable = false)
+    private Boolean activated;
 
 }

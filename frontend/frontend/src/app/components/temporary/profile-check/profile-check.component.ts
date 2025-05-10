@@ -58,7 +58,7 @@ export class ProfileCheckComponent {
   }
 
   getImageUrl(): string {
-    return `https://vps-4877609-x.dattaweb.com/proxy/`+this.profilePicUrl;
+    return `https://marketingfacil.com.ar/proxy/`+this.profilePicUrl;
   }
 
 }
