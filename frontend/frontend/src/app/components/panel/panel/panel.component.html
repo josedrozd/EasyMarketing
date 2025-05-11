@@ -1,62 +1,108 @@
-<div class="container-box" *ngIf="visible">
-    <div class="top-bar">
-        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1000 100">
-            <defs>
-                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" style="stop-color:#393e45;stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:#454f50;stop-opacity:1" />
-                </linearGradient>
-            </defs>
-            <text x="50%" y="50%" font-family="Arial" font-size="3rem" fill="url(#grad1)" text-anchor="middle" alignment-baseline="central" dominant-baseline="central">
-                CONFIGURACION SERVICIOS
-            </text>
-        </svg>
-    </div>
-    
-    <ul class="tree-root" *ngIf="!editingNodeType">
-        <ng-container *ngFor="let node of currentTree">
-          <app-tree-node
-            [node]="node"
-            [currentTree]="currentTree"
-            (navigate)="navigateTo($event)"
-            (goBack)="goBack()"
-            (addChild)="addChild($event)"
-            (deleteNode)="removeNode($event)"
-            (editNodeEvent)="editNode($event)">
-          </app-tree-node>
-        </ng-container>
-    </ul>
-    <div *ngIf="editingNodeType" class="editor-box">      
+<div class="full-container">
+  <div class="container-box" *ngIf="visible">
+      <div class="top-bar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1000 100">
+              <defs>
+                  <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" style="stop-color:#393e45;stop-opacity:1" />
+                      <stop offset="100%" style="stop-color:#454f50;stop-opacity:1" />
+                  </linearGradient>
+              </defs>
+              <text x="50%" y="50%" font-family="Arial" font-size="3rem" fill="url(#grad1)" text-anchor="middle" alignment-baseline="central" dominant-baseline="central">
+                  CONFIGURACION SERVICIOS
+              </text>
+          </svg>
+      </div>
+      
+      <ul class="tree-root" *ngIf="!editingNodeType">
+          <ng-container *ngFor="let node of currentTree">
+            <app-tree-node
+              [node]="node"
+              [currentTree]="currentTree"
+              (navigate)="navigateTo($event)"
+              (goBack)="goBack()"
+              (addChild)="addChild($event)"
+              (deleteNode)="removeNode($event)"
+              (editNodeEvent)="editNode($event)">
+            </app-tree-node>
+          </ng-container>
+      </ul>
+      <div *ngIf="editingNodeType" class="editor-box">
         <ng-container [ngSwitch]="editingNodeType">
           <div *ngSwitchCase="'platform'">
-            <input placeholder="Nombre de plataforma" [(ngModel)]="formData.name" />
-            <label>Pagos automáticos: <input type="checkbox" [(ngModel)]="formData.automaticPaymentAllowed" /></label>
-            <label>Activado: <input type="checkbox" [(ngModel)]="formData.active" /></label>
+            <div class="form-row">
+              <label>Nombre de plataforma:</label>
+              <input [(ngModel)]="formData.name" />
+            </div>
+            <div class="form-row">
+              <label>Pagos automáticos:</label>
+              <input type="checkbox" [(ngModel)]="formData.automaticPaymentAllowed" />
+            </div>
+            <div class="form-row">
+              <label>Activado:</label>
+              <input type="checkbox" [(ngModel)]="formData.active" />
+            </div>
           </div>
       
           <div *ngSwitchCase="'service'">
-            <input placeholder="Nombre" [(ngModel)]="formData.name" />
-            <select [(ngModel)]="formData.type">
-              <option *ngFor="let type of getTypes()" [value]="type">{{ type }}</option>
-            </select>
-            <label>Activado: <input type="checkbox" [(ngModel)]="formData.activated" /></label>
+            <div class="form-row">
+              <label>Nombre:</label>
+              <input [(ngModel)]="formData.name" />
+            </div>
+            <div class="form-row">
+              <label>Tipo:</label>
+              <select [(ngModel)]="formData.type">
+                <option *ngFor="let type of getTypes()" [value]="type">{{ type }}</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label>Activado:</label>
+              <input type="checkbox" [(ngModel)]="formData.activated" />
+            </div>
           </div>
       
           <div *ngSwitchCase="'quality'">
-            <input placeholder="Nombre" [(ngModel)]="formData.name" />
-            <select [(ngModel)]="formData.provider" *ngIf="formData.automaticPayment">
-              <option *ngFor="let provider of getProviders()" [value]="provider">{{ provider }}</option>
-            </select>
-            <input placeholder="ID Proveedor" type="number" [(ngModel)]="formData.providerServiceId" *ngIf="formData.automaticPayment" />          
-            <label>Pago automático: <input type="checkbox" [(ngModel)]="formData.automaticPayment" /></label>
-            <input placeholder="Prioridad" type="number" [(ngModel)]="formData.priority" />
-            <label>Activado: <input type="checkbox" [(ngModel)]="formData.activated" /></label>
+            <div class="form-row">
+              <label>Nombre:</label>
+              <input [(ngModel)]="formData.name" />
+            </div>
+            <div class="form-row">
+              <label>Pago automático:</label>
+              <input type="checkbox" [(ngModel)]="formData.automaticPayment" />
+            </div>
+            <div class="form-row" *ngIf="formData.automaticPayment">
+              <label>Proveedor:</label>
+              <select [(ngModel)]="formData.provider">
+                <option *ngFor="let provider of getProviders()" [value]="provider">{{ provider }}</option>
+              </select>
+            </div>
+            <div class="form-row" *ngIf="formData.automaticPayment">
+              <label>ID Proveedor:</label>
+              <input type="number" [(ngModel)]="formData.providerServiceId" />
+            </div>
+            <div class="form-row">
+              <label>Prioridad:</label>
+              <input type="number" [(ngModel)]="formData.priority" />
+            </div>
+            <div class="form-row">
+              <label>Activado:</label>
+              <input type="checkbox" [(ngModel)]="formData.activated" />
+            </div>
           </div>
       
           <div *ngSwitchCase="'quantity'">
-            <input placeholder="Cantidad" type="number" [(ngModel)]="formData.quantity" />
-            <input placeholder="Precio" type="number" [(ngModel)]="formData.price" />
-            <input placeholder="Descuento" type="number" [(ngModel)]="formData.discount" />
+            <div class="form-row">
+              <label>Cantidad:</label>
+              <input type="number" [(ngModel)]="formData.quantity" />
+            </div>
+            <div class="form-row">
+              <label>Precio:</label>
+              <input type="number" [(ngModel)]="formData.price" />
+            </div>
+            <div class="form-row">
+              <label>Descuento:</label>
+              <input type="number" [(ngModel)]="formData.discount" />
+            </div>
           </div>
         </ng-container>
       
@@ -64,23 +110,24 @@
           <button class="btn btn-admin" (click)="confirmForm()">Confirmar</button>
           <button class="btn btn-admin" (click)="cancelForm()">Cancelar</button>
         </div>
-    </div>
-    <div class="actions" *ngIf="!editingNodeType">
-        <button class="btn btn-admin" (click)="applyChanges()" [disabled]="isSaving || isLoading">
-          <ng-container *ngIf="!isSaving; else saving">
-            Aplicar
-          </ng-container>
-          <ng-template #saving>
-            <img src="loading.gif" alt="Guardando..." style="height: 20px;" />
-          </ng-template>
-        </button>
-        <button class="btn btn-admin" (click)="loadTreeData()" [disabled]="isSaving || isLoading">
-          <ng-container *ngIf="!isLoading; else saving">
-            Deshacer
-          </ng-container>
-          <ng-template #saving>
-            <img src="loading.gif" alt="Cargando..." style="height: 20px;" />
-          </ng-template>
-        </button>
-    </div>
+      </div>
+      <div class="actions" *ngIf="!editingNodeType">
+          <button class="btn btn-admin" (click)="applyChanges()" [disabled]="isSaving || isLoading">
+            <ng-container *ngIf="!isSaving; else saving">
+              Aplicar
+            </ng-container>
+            <ng-template #saving>
+              <img src="loading.gif" alt="Guardando..." style="height: 20px;" />
+            </ng-template>
+          </button>
+          <button class="btn btn-admin" (click)="loadTreeData()" [disabled]="isSaving || isLoading">
+            <ng-container *ngIf="!isLoading; else saving">
+              Deshacer
+            </ng-container>
+            <ng-template #saving>
+              <img src="loading.gif" alt="Cargando..." style="height: 20px;" />
+            </ng-template>
+          </button>
+      </div>
+  </div>
 </div>
