@@ -40,6 +40,8 @@ public class AppConfig {
                         .allowedOrigins(
                                 "http://localhost:4000",
                                 "http://localhost:4200",
+                                "https://vps-4877609-x.dattaweb.com/",
+                                "http://vps-4877609-x.dattaweb.com/",
                                 "https://marketingfacil.com.ar",
                                 "https://www.marketingfacil.com.ar",
                                 "http://marketingfacil.com.ar",
