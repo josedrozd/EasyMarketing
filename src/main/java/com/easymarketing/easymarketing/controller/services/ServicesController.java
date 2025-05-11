@@ -1,6 +1,7 @@
 package com.easymarketing.easymarketing.controller.services;
 
 import com.easymarketing.easymarketing.exception.NotFoundException;
+import com.easymarketing.easymarketing.exception.UnauthorizedException;
 import com.easymarketing.easymarketing.model.dto.services.NodeDTO;
 import com.easymarketing.easymarketing.services.interfaces.IRetrieveServices;
 import com.easymarketing.easymarketing.services.interfaces.IUpdateServices;
@@ -45,7 +46,10 @@ public class ServicesController {
     }
 
     private void validateSession(HttpSession session) {
-        if(!(Boolean) session.getAttribute("isLoggedIn"))
+        Object loggedInAttr = session.getAttribute("isLoggedIn");
+        if (loggedInAttr == null)
+            throw new UnauthorizedException("Su sesión expiro.");
+        if (!(Boolean) loggedInAttr)
             throw new NotFoundException("Nothing found");
     }
 
