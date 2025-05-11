@@ -112,8 +112,8 @@ export class PanelComponent {
         case 'platform':
           newNode = new PlatformNode(
             this.formData.name,
-            this.formData.automaticPaymentAllowed,
-            this.formData.active
+            this.formData.automaticPaymentAllowed || false,
+            this.formData.active || false
           );
           break;
         case 'service':
