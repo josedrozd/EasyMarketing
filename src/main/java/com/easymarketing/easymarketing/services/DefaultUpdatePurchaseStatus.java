@@ -96,7 +96,7 @@ public class DefaultUpdatePurchaseStatus implements IUpdatePurchaseStatus {
                 "<body>\n    " +
                 "<div style=\"text-align:center;\">\n      " +
                 "<p>Texto a editar para invitar a q procese la compra:</p>\n      " +
-                "<a href=\"https://vps-4877609-x.dattaweb.com/process-purchase?external_reference=%s&payment_id=%s\" \n         " +
+                "<a href=\"https://marketingfacil.com.ar/process-purchase?external_reference=%s&payment_id=%s\" \n         " +
                 "style=\"display:inline-block; padding:10px 20px; background-color:#6a0dad; color:white; text-decoration:none; border-radius:5px;\">\n        " +
                 "Procesar compra\n      " +
                 "</a>\n    " +
