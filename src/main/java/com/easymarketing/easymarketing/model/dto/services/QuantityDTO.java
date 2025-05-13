@@ -12,7 +12,9 @@ import lombok.experimental.SuperBuilder;
 public class QuantityDTO extends NodeDTO {
 
     private Integer quantity;
-    private Double price;
-    private Double discount;
+    private Boolean withDiscount;
+    private Double basePrice;
+    private Double finalPrice;
+    private Integer discount;
 
 }

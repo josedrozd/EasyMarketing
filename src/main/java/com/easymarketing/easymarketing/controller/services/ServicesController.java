@@ -39,7 +39,6 @@ public class ServicesController {
 
     @PutMapping()
     public ResponseEntity<Void> updateServices(@Valid @NotNull @RequestBody List<NodeDTO> treeNode, HttpSession session) throws JsonProcessingException {
-        System.out.println(new ObjectMapper().writeValueAsString(treeNode));
         validateSession(session);
         updateServices.accept(treeNode);
         return ResponseEntity.accepted().build();

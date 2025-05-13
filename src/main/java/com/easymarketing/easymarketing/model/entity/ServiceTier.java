@@ -24,9 +24,15 @@ public class ServiceTier {
     private ServiceQuality quality;
 
     @Column(nullable = false)
-    private Double price;
+    private Boolean withDiscount;
 
     @Column(nullable = false)
-    private Double discount;
+    private Double basePrice;
+
+    @Column(nullable = true)
+    private Double finalPrice;
+
+    @Column(nullable = false)
+    private Integer discount;
 
 }

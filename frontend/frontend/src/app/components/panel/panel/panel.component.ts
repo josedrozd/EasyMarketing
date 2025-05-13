@@ -10,10 +10,19 @@ import { TreeNode, TreeNodeComponent } from '../tree-node/tree-node.component';
 import { GroupNode, PlatformNode, QualityNode, QuantityNode, ServiceNode } from '../../../core/models/panel-nodes';
 import { FormsModule } from '@angular/forms';
 import { PanelServicesService } from '../../../services/backend/services/panel-services.service';
+import { ConfirmationBoxComponent } from '../confirmation-box/confirmation-box.component';
+
+function calculateDiscount(basePrice: number, finalPrice: number): number {
+  if (!basePrice || !finalPrice || basePrice === 0) {
+    return 0;
+  }
+  return Math.ceil(100 - ((finalPrice / basePrice) * 100));
+}
 
 @Component({
   selector: 'app-panel',
   imports: [
+    ConfirmationBoxComponent,
     MatTreeModule,
     MatIconModule,
     MatButtonModule,
@@ -31,6 +40,8 @@ export class PanelComponent {
   visible: boolean = false;
   isSaving: boolean = false;
   isLoading: boolean = true;
+  deleteConfirmationBoxVisible: boolean = false;
+  applyConfirmationBoxVisible: boolean = false;
 
   treeData!: TreeNode[];
 
@@ -41,6 +52,7 @@ export class PanelComponent {
 
   currentTree: TreeNode[] = this.treeData;
   historyStack: any[] = [];
+  nodeToRemove!: TreeNode | null;
 
   constructor(
       private checkPassword: CheckPasswordService,
@@ -104,6 +116,8 @@ export class PanelComponent {
     if (!this.validateFormData()) return;
   
     if (this.nodeBeingEdited) {
+      if (this.nodeBeingEdited instanceof QuantityNode)
+        this.formData.discount = calculateDiscount(+this.formData.basePrice, +this.formData.finalPrice);
       Object.assign(this.nodeBeingEdited, this.formData);
     } else if (this.editingParentNode && this.editingNodeType) {
       let newNode: TreeNode;
@@ -134,9 +148,12 @@ export class PanelComponent {
           );
           break;
         case 'quantity':
+          this.formData.discount = calculateDiscount(+this.formData.basePrice, +this.formData.finalPrice);
           newNode = new QuantityNode(
             +this.formData.quantity,
-            +this.formData.price,
+            this.formData.withDiscount || false,
+            +this.formData.basePrice,
+            +this.formData.finalPrice,
             +this.formData.discount
           );
           break;
@@ -182,11 +199,15 @@ export class PanelComponent {
         }
         break;
       case 'quantity':
-        if (this.formData.quantity == null || this.formData.price == null) {
+        if (this.formData.quantity == null || this.formData.basePrice == null) {
           alert('Debe completar cantidad y precio.');
           return false;
         }
-        this.formData.discount = this.formData.discount ?? 0;
+        if (this.formData.withDiscount && !this.formData.finalPrice) {
+          alert('Debe completar el precio final');
+          console.log(this.formData.finalPrice);
+          return false;
+        }
         break;
     }
   
@@ -200,9 +221,21 @@ export class PanelComponent {
     this.formData = {};
   }
 
-  removeNode(nodeToRemove: TreeNode): void {  
+  confirmDeletion(nodeToRemove: TreeNode): void {
+    this.nodeToRemove = nodeToRemove;
+    this.deleteConfirmationBoxVisible = true;
+  }
+
+  cancelDelete(): void {
+    this.nodeToRemove = null;
+    this.deleteConfirmationBoxVisible = false;
+  }
+
+  removeNode(): void {  
+    if (!this.nodeToRemove) return;
+
     const recurse = (nodes: TreeNode[]): boolean => {
-      const index = nodes.findIndex(n => n.id === nodeToRemove.id);
+      const index = nodes.findIndex(n => n.id === this.nodeToRemove?.id);
       if (index !== -1) {
         nodes.splice(index, 1);
         return true;
@@ -216,6 +249,8 @@ export class PanelComponent {
     };
   
     recurse(this.treeData);
+    this.deleteConfirmationBoxVisible = false;
+    this.nodeToRemove = null;
   }
 
   editNode(node: TreeNode): void {
@@ -245,8 +280,17 @@ export class PanelComponent {
       this.currentTree = this.historyStack.pop();
   }
 
+  confirmApply(): void {
+    this.applyConfirmationBoxVisible = true;
+  }
+
+  cancelApply(): void {
+    this.applyConfirmationBoxVisible = false;
+  }
+
   applyChanges(): void {
     this.isSaving = true;
+    this.applyConfirmationBoxVisible = false;
     this.panelService.updateServices(this.treeData).subscribe({
       next: () => {
         this.isSaving = false;

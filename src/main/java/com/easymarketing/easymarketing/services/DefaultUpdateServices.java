@@ -79,7 +79,9 @@ public class DefaultUpdateServices implements IUpdateServices {
                                                         ServiceTier tier = ServiceTier.builder()
                                                                 .quantity(tierNode.getQuantity())
                                                                 .quality(quality)
-                                                                .price(tierNode.getPrice())
+                                                                .withDiscount(tierNode.getWithDiscount())
+                                                                .basePrice(tierNode.getBasePrice())
+                                                                .finalPrice(tierNode.getFinalPrice())
                                                                 .discount(tierNode.getDiscount())
                                                                 .build();
                                                         tiersToSave.add(tier);

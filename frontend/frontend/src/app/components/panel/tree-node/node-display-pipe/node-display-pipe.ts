@@ -14,7 +14,11 @@ import { TreeNode } from '../tree-node.component';
           ? `Proveedor: ${node.provider} - Id: ${node.providerServiceId} - Pago automático: Sí`
           : 'Pago automático: No'} - Prioridad: ${node.priority} - Activo: ${node.activated ? 'Sí' : 'No'}`;
       } else if (node instanceof QuantityNode) {
-        return `Cantidad: ${node.quantity} - Precio: $${node.price} - Descuento: ${node.discount}%`;
+        if (node.withDiscount) {
+          return `Cantidad: ${node.quantity} - Precio base: $${node.basePrice} - Precio final: $${node.finalPrice} - Descuento: ${node.discount}%`;
+        } else {
+          return `Cantidad: ${node.quantity} - Precio: $${node.basePrice}`;
+        }
       }
       return node.name;
     }

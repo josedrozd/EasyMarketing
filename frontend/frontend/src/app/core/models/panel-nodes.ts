@@ -74,16 +74,22 @@ export class QualityNode extends BaseNode {
 
 export class QuantityNode extends BaseNode {
     quantity!: number;
-    price!: number;
+    withDiscount!: boolean;
+    basePrice!: number;
+    finalPrice!: number;
     discount!: number;
     constructor(
         quantity: number,
-        price: number,
+        withDiscount: boolean,
+        basePrice: number,
+        finalPrice: number,
         discount: number
     ) {
       super("quantity", quantity.toString(), false, undefined);
       this.quantity = quantity;
-      this.price = price;
+      this.withDiscount = withDiscount;
+      this.basePrice = basePrice;
+      this.finalPrice = finalPrice;
       this.discount = discount;
     }
 }

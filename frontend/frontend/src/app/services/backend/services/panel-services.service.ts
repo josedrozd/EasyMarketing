@@ -45,7 +45,9 @@ function reviveNode(node: TreeNode): TreeNode {
       revived = Object.assign(
         new QuantityNode(
           (node as any).quantity,
-          (node as any).price,
+          (node as any).withDiscount,
+          (node as any).basePrice,
+          (node as any).finalPrice,
           (node as any).discount
         ),
         node
