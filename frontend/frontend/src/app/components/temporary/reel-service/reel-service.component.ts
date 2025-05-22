@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IGClipsService, IGReelClipDTO } from '../../../services/backend/instagram/retrieve-reels.service';
 import { Router } from '@angular/router';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-reel-service',
@@ -81,7 +82,7 @@ export class ReelServiceComponent {
   }
 
   getImageUrl(picUrl: string): string {
-    return `https://marketingfacil.com.ar/proxy/`+picUrl;
+    return environment.imgProxy+picUrl;
   }
 
   ngOnDestroy() {

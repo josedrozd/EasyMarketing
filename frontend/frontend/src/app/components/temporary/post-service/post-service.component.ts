@@ -6,6 +6,7 @@ import { UserInfoService } from '../../../services/temporary/user-info.service';
 import { CartService } from '../../../services/cart.service';
 import { CartItem } from '../../../core/models/cart-item';
 import { Router } from '@angular/router';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-post-service',
@@ -82,7 +83,7 @@ export class PostServiceComponent {
   }
 
   getImageUrl(picUrl: string): string {
-    return `https://marketingfacil.com.ar/proxy/`+picUrl;
+    return environment.imgProxy+picUrl;
   }
 
   ngOnDestroy() {

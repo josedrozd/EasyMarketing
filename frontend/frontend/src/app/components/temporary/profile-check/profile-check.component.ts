@@ -5,6 +5,7 @@ import { UserInfoService } from '../../../services/temporary/user-info.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UsernameCheckService } from '../../../services/backend/instagram/username-check.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-profile-check',
@@ -58,7 +59,7 @@ export class ProfileCheckComponent {
   }
 
   getImageUrl(): string {
-    return `https://marketingfacil.com.ar/proxy/`+this.profilePicUrl;
+    return environment.imgProxy+this.profilePicUrl;
   }
 
 }

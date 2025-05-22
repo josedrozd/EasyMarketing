@@ -1,0 +1,27 @@
+<header class="header">
+  <div class="content">
+    <button class="menu-toggle" (click)="toggleMenu()">☰</button>
+
+    <a class="logo" routerLink="/">
+      <img src="bannertransparent2.png" alt="Logo" />
+    </a>
+
+    <nav class="nav-links" [class.open]="menuOpen">
+      <a routerLink="/">Inicio</a>
+      <div class="dropdown" #dropdownRef (click)="toggleDropdown($event)">
+        <div class="dropdown-label" role="button" tabindex="0">
+          <span>Servicios</span> <mat-icon>{{ dropdownOpen ? 'expand_more' : 'chevron_right' }}</mat-icon>
+        </div>
+        <ul class="dropdown-list" [class.open]="dropdownOpen">
+          <!-- Lista vacía por ahora -->
+        </ul>
+      </div>
+      <a routerLink="/preguntas-frecuentes">Preguntas Frecuentes</a>
+      <a routerLink="/genera-ingresos">Generá Ingresos</a>
+      <a routerLink="/contacto">Contacto</a>
+    </nav>
+    <button mat-icon-button class="cart-button" aria-label="Carrito" routerLink="/carrito">
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
+  </div>
+</header>

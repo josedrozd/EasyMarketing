@@ -1,9 +1,23 @@
 body {
-    background-color: #ededee;
-    color: #e6e4ea;
+    /*background-color: #ededee;
+    color: #e6e4ea;*/
     font-size: 25px; 
     font-family: "Jaldi", sans-serif;
     font-weight: 400;
+}
+
+.content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  box-sizing: border-box;
+  border: 1px solid red;
 }
 
 .btn-custom {
