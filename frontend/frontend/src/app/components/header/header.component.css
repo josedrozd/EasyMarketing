@@ -136,7 +136,7 @@
 
 .dropdown-list {
   display: none;
-  position: static;
+  position: absolute;
   top: 100%;
   left: 0;
   background: white;
