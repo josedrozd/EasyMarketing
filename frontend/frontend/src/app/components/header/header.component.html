@@ -6,8 +6,8 @@
       <img src="bannertransparent2.png" alt="Logo" />
     </a>
 
-    <nav class="nav-links" [class.open]="menuOpen">
-      <a routerLink="/">Inicio</a>
+    <nav class="nav-links" [class.open]="menuOpen" #navRef>
+      <a routerLink="/" (click)="closeMenu()">Inicio</a>
       <div class="dropdown" #dropdownRef (click)="toggleDropdown($event)">
         <div class="dropdown-label" role="button" tabindex="0">
           <span>Servicios</span> <mat-icon>{{ dropdownOpen ? 'expand_more' : 'chevron_right' }}</mat-icon>
@@ -16,9 +16,9 @@
           <!-- Lista vacía por ahora -->
         </ul>
       </div>
-      <a routerLink="/preguntas-frecuentes">Preguntas Frecuentes</a>
-      <a routerLink="/genera-ingresos">Generá Ingresos</a>
-      <a routerLink="/contacto">Contacto</a>
+      <a routerLink="/preguntas-frecuentes" (click)="closeMenu()">Preguntas Frecuentes</a>
+      <a routerLink="/genera-ingresos" (click)="closeMenu()">Generá Ingresos</a>
+      <a routerLink="/contacto" (click)="closeMenu()">Contacto</a>
     </nav>
     <button mat-icon-button class="cart-button" aria-label="Carrito" routerLink="/carrito">
       <mat-icon>shopping_cart</mat-icon>

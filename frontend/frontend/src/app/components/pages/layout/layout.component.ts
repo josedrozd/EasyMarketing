@@ -18,4 +18,8 @@ import { SocialFooterComponent } from '../../social-footer/social-footer.compone
 })
 export class LayoutComponent {
 
+  openLink(url: string) {
+    window.open(url, '_blank');
+  }
+
 }

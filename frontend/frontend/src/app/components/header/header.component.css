@@ -52,6 +52,7 @@
   .logo {
     left: 50%;
     transform: translateX(-50%);
+    margin: 0;
   }
 
   .nav-links {
@@ -60,14 +61,25 @@
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: #444;
+    background-color: #ffffff;
     width: 100%;
     padding: 1rem;
+    margin-left: 0;
   }
 
   .nav-links.open {
     display: flex;
+    padding: 0rem;
+    border: 1px solid rgba(0, 0, 0, 0.42);
+    border-radius: 6px;
   }
+
+  .nav-links.open a,
+  .nav-links.open .dropdown-label,
+  .nav-links.open .dropdown-list li {
+    font-size: 1.5rem;
+  }
+
 }
 
 /* Pantallas grandes */

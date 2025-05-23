@@ -18,10 +18,14 @@ export class HeaderComponent {
   menuOpen = false;
   dropdownOpen = false;
 
+  @ViewChild('menuButton') menuButtonRef!: ElementRef;
+  @ViewChild('navRef') navRef!: ElementRef;
   @ViewChild('dropdownRef') dropdownRef!: ElementRef;
 
   toggleMenu() {
+    event?.stopPropagation();
     this.menuOpen = !this.menuOpen;
+    if (!this.menuOpen) this.dropdownOpen = false;
   }
 
   toggleDropdown(event: Event) {
@@ -29,9 +33,25 @@ export class HeaderComponent {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
+  closeMenu() {
+    this.menuOpen = false;
+    this.dropdownOpen = false;
+  }
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {
-    if (this.dropdownOpen && this.dropdownRef && !this.dropdownRef.nativeElement.contains(event.target)) {
+    const target = event.target as HTMLElement;
+
+    if (this.menuButtonRef && this.menuButtonRef.nativeElement.contains(target)) return;
+
+    if (this.dropdownOpen && !this.dropdownRef.nativeElement.contains(target)) {
+      this.dropdownOpen = false;
+    }
+
+    if (this.menuOpen &&
+        !this.navRef.nativeElement.contains(target) &&
+        !this.dropdownRef.nativeElement.contains(target)) {
+      this.menuOpen = false;
       this.dropdownOpen = false;
     }
   }
