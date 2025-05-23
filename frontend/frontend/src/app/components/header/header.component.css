@@ -24,7 +24,7 @@
 
 .logo {
   position: absolute;
-  height: 70%;
+  height: clamp(15px, 10vw, 50px);
   display: flex;
   align-items: center;
   margin-left: 10px;
@@ -32,7 +32,8 @@
 
 .logo img {
   height: 100%;
-  object-fit: contain;
+  width: auto;
+  display: block;
 }
 
 .nav-links {
@@ -102,7 +103,7 @@
   align-items: center;
   height: 100%;
   padding: 0 0.5rem;
-  font-size: clamp(12px, 1.5vw, 18px);
+  font-size: clamp(12px, 1.5vw, 20px);
   cursor: pointer;
   user-select: none;
 }
@@ -154,7 +155,7 @@
 
 .cart-button {
   position: absolute;
-  right: 1rem;
+  right: 10px;
   font-size: 24px;
 }
 
@@ -165,7 +166,7 @@
   align-items: center;
   height: 100%;
   padding: 0 0.5rem;
-  font-size: clamp(12px, 1.5vw, 18px);
+  font-size: clamp(12px, 1.5vw, 20px);
 }
 
 .nav-links a:hover {
