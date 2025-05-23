@@ -13,6 +13,7 @@ import lombok.experimental.SuperBuilder;
 public class ServiceDTO extends NodeDTO {
 
     private String type;
+    private String imgUrl;
     private Boolean activated;
 
 }

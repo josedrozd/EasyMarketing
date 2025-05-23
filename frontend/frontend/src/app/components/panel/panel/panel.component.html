@@ -51,6 +51,10 @@
               <input [(ngModel)]="formData.name" />
             </div>
             <div class="form-row">
+              <label>Url de imagen:</label>
+              <input [(ngModel)]="formData.imgUrl" />
+            </div>
+            <div class="form-row">
               <label>Pagos automáticos:</label>
               <input type="checkbox" [(ngModel)]="formData.automaticPaymentAllowed" />
             </div>
@@ -70,6 +74,10 @@
               <select [(ngModel)]="formData.type">
                 <option *ngFor="let type of getTypes()" [value]="type">{{ type }}</option>
               </select>
+            </div>
+            <div class="form-row">
+              <label>Url de imagen:</label>
+              <input [(ngModel)]="formData.imgUrl" />
             </div>
             <div class="form-row">
               <label>Activado:</label>
@@ -122,6 +130,21 @@
             <div class="form-row" *ngIf="formData.withDiscount">
               <label> Precio final:</label>
               <input type="number" [(ngModel)]="formData.finalPrice" />
+            </div>
+          </div>
+
+          <div *ngSwitchCase="'extra'">
+            <div class="form-row">
+              <label>Nombre:</label>
+              <input [(ngModel)]="formData.name" />
+            </div>
+            <div class="form-row">
+              <label>Url de imagen:</label>
+              <input [(ngModel)]="formData.imgUrl" />
+            </div>
+            <div class="form-row">
+              <label>Url de destino:</label>
+              <input [(ngModel)]="formData.destinationUrl" />
             </div>
           </div>
         </ng-container>

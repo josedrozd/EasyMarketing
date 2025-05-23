@@ -19,6 +19,9 @@ public class ServicePlatform {
     @Column(nullable = false)
     private String name;
 
+    @Column(name = "img_url", nullable = false)
+    private String imgUrl;
+
     @Column(name = "automatic_payment_allowed", nullable = false)
     private Boolean automaticPaymentAllowed;
 

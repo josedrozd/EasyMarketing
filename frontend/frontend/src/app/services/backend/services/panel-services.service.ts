@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TreeNode } from '../../../components/panel/tree-node/tree-node.component';
-import { GroupNode, PlatformNode, QualityNode, QuantityNode, ServiceNode } from '../../../core/models/panel-nodes';
+import { ExtraNode, GroupNode, PlatformNode, QualityNode, QuantityNode, ServiceNode } from '../../../core/models/panel-nodes';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
@@ -15,14 +15,14 @@ function reviveNode(node: TreeNode): TreeNode {
   switch (node.nodeType) {
     case 'platform':
       revived = Object.assign(
-        new PlatformNode(node.name, (node as any).automaticPaymentAllowed, (node as any).active),
+        new PlatformNode(node.name, (node as any).imgUrl, (node as any).automaticPaymentAllowed, (node as any).active),
         node
       );
       break;
 
     case 'service':
       revived = Object.assign(
-        new ServiceNode(node.name, (node as any).type, (node as any).activated),
+        new ServiceNode(node.name, (node as any).type, (node as any).imgUrl, (node as any).activated),
         node
       );
       break;
@@ -52,6 +52,17 @@ function reviveNode(node: TreeNode): TreeNode {
         ),
         node
       );
+      break;
+
+    case 'extra':
+      revived = Object.assign(
+        new ExtraNode(
+          node.name,
+          (node as any).imgUrl,
+          (node as any).destinationUrl
+        ),
+        node
+      )
       break;
 
     default:

@@ -1,13 +1,11 @@
 package com.easymarketing.easymarketing.services;
 
 import com.easymarketing.easymarketing.model.dto.services.*;
+import com.easymarketing.easymarketing.model.entity.ExtraService;
 import com.easymarketing.easymarketing.model.entity.ServicePlatform;
 import com.easymarketing.easymarketing.model.entity.ServiceQuality;
 import com.easymarketing.easymarketing.model.entity.ServiceTier;
-import com.easymarketing.easymarketing.repository.jpa.ServicePlatformRepository;
-import com.easymarketing.easymarketing.repository.jpa.ServiceQualityRepository;
-import com.easymarketing.easymarketing.repository.jpa.ServiceRepository;
-import com.easymarketing.easymarketing.repository.jpa.ServiceTierRepository;
+import com.easymarketing.easymarketing.repository.jpa.*;
 import com.easymarketing.easymarketing.services.interfaces.IUpdateServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +25,8 @@ public class DefaultUpdateServices implements IUpdateServices {
     private ServiceQualityRepository serviceQualityRepository;
     @Autowired
     private ServiceTierRepository serviceTierRepository;
+    @Autowired
+    private ExtraServiceRepository extraServiceRepository;
 
     @Transactional
     @Override
@@ -36,13 +36,14 @@ public class DefaultUpdateServices implements IUpdateServices {
         List<com.easymarketing.easymarketing.model.entity.Service> servicesToSave = new ArrayList<>();
         List<ServiceQuality> qualitiesToSave = new ArrayList<>();
         List<ServiceTier> tiersToSave = new ArrayList<>();
+        List<ExtraService> extrasToSave = new ArrayList<>();
 
-
-        treeData.get(0).getChildren().stream()
+        treeData.stream().filter(node -> node.getNodeType().equals("platform-group")).findFirst().get().getChildren().stream()
                 .map(PlatformDTO.class::cast)
                 .forEach(platformDTO -> {
                     ServicePlatform platform = ServicePlatform.builder()
                             .name(platformDTO.getName())
+                            .imgUrl(platformDTO.getImgUrl())
                             .automaticPaymentAllowed(platformDTO.getAutomaticPaymentAllowed())
                             .active(platformDTO.getActive())
                             .build();
@@ -55,6 +56,7 @@ public class DefaultUpdateServices implements IUpdateServices {
                                         .name(serviceNode.getName())
                                         .platform(platform)
                                         .type(serviceNode.getType())
+                                        .imgUrl(serviceNode.getImgUrl())
                                         .activated(serviceNode.getActivated())
                                         .build();
                                 servicesToSave.add(service);
@@ -89,16 +91,28 @@ public class DefaultUpdateServices implements IUpdateServices {
                                         });
                             });
                 });
+        treeData.stream().filter(node -> node.getNodeType().equals("extra-group")).findFirst().get().getChildren().stream()
+                .map(ExtraDTO.class::cast)
+                .forEach(extraDTO -> {
+                    ExtraService extra = ExtraService.builder()
+                            .name(extraDTO.getName())
+                            .imgUrl(extraDTO.getImgUrl())
+                            .destinationUrl(extraDTO.getDestinationUrl())
+                            .build();
+                    extrasToSave.add(extra);
+                });
 
         serviceTierRepository.deleteAllInBulk();
         serviceQualityRepository.deleteAllInBulk();
         serviceRepository.deleteAllInBulk();
         servicePlatformRepository.deleteAllInBulk();
+        extraServiceRepository.deleteAllInBulk();
 
         servicePlatformRepository.saveAll(platformsToSave);
         serviceRepository.saveAll(servicesToSave);
         serviceQualityRepository.saveAll(qualitiesToSave);
         serviceTierRepository.saveAll(tiersToSave);
+        extraServiceRepository.saveAll(extrasToSave);
 
     }
 

@@ -9,10 +9,9 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PlatformDTO extends NodeDTO {
+public class ExtraDTO extends NodeDTO{
 
     private String imgUrl;
-    private Boolean automaticPaymentAllowed;
-    private Boolean active;
+    private String destinationUrl;
 
 }

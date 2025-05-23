@@ -20,10 +20,12 @@ import java.util.List;
         @JsonSubTypes.Type(value = ServiceDTO.class, name = "service"),
         @JsonSubTypes.Type(value = QualityDTO.class, name = "quality"),
         @JsonSubTypes.Type(value = QuantityDTO.class, name = "quantity"),
+        @JsonSubTypes.Type(value = ExtraDTO.class, name = "extra"),
         @JsonSubTypes.Type(value = NodeDTO.class, name = "platform-group"),
         @JsonSubTypes.Type(value = NodeDTO.class, name = "service-group"),
         @JsonSubTypes.Type(value = NodeDTO.class, name = "quality-group"),
-        @JsonSubTypes.Type(value = NodeDTO.class, name = "quantity-group")
+        @JsonSubTypes.Type(value = NodeDTO.class, name = "quantity-group"),
+        @JsonSubTypes.Type(value = NodeDTO.class, name = "extra-group")
 })
 @Getter
 @SuperBuilder

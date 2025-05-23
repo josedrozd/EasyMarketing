@@ -49,6 +49,8 @@ export class TreeNodeComponent {
         return 'calidad';
       case 'CANTIDADES:':
         return 'cantidad';
+      case 'EXTRAS:':
+        return 'extra';
       default:
         return '';
     }
@@ -60,10 +62,12 @@ export class TreeNodeComponent {
       case 'service-group': return 'service-group';
       case 'quality-group': return 'quality-group';
       case 'quantity-group': return 'quantity-group';
+      case 'extra-group': return 'extra-group';
       case 'platform': return 'platform-node';
       case 'service': return 'service-node';
       case 'quality': return 'quality-node';
       case 'quantity': return 'quantity-node';
+      case 'extra': return 'extra';
       default: return 'default-node';
     }
   }

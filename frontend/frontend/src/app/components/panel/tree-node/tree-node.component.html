@@ -11,7 +11,7 @@
           <button *ngIf="!node.group && currentTree[0]?.id !== node.id" class="go-in-btn" (click)="navigateTo(); $event.stopPropagation()">
             <mat-icon>subdirectory_arrow_right</mat-icon>
           </button>
-          <button *ngIf="currentTree[0]?.id === node.id && node.nodeType !== 'platform-group'" class="go-back-btn" (click)="goBack.emit(); $event.stopPropagation()">
+          <button *ngIf="currentTree[0]?.id === node.id && node.nodeType !== 'platform-group' && node.nodeType !== 'extra-group'" class="go-back-btn" (click)="goBack.emit(); $event.stopPropagation()">
             <mat-icon>arrow_back</mat-icon>
           </button>
           <button *ngIf="!node.group" class="edit-btn" (click)="editNodeEvent.emit(node); $event.stopPropagation()">

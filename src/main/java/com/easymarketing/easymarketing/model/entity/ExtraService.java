@@ -6,11 +6,11 @@ import lombok.*;
 @Getter
 @Entity
 @Builder
-@Table(name = "service")
+@Table(name = "extra_service")
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Service {
+public class ExtraService {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,17 +19,10 @@ public class Service {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "platform_id", nullable = false)
-    private ServicePlatform platform;
-
-    @Column(nullable = false)
-    private String type;
-
     @Column(name = "img_url", nullable = false)
     private String imgUrl;
 
-    @Column(nullable = false)
-    private Boolean activated;
+    @Column(name = "destination_url", nullable = false)
+    private String destinationUrl;
 
 }

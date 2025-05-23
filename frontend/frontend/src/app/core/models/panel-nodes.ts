@@ -22,14 +22,17 @@ export class GroupNode extends BaseNode {
 }
 
 export class PlatformNode extends BaseNode {
+    imgUrl!: string;
     automaticPaymentAllowed!: boolean;
     active!: boolean;
     constructor(
       name: string,
+      imgUrl: string,
       automaticPaymentAllowed: boolean,
       active: boolean
     ) {
       super("platform", name, false, [new GroupNode("service-group", "SERVICIOS:")], true);
+      this.imgUrl = imgUrl;
       this.automaticPaymentAllowed = automaticPaymentAllowed;
       this.active = active;
     }
@@ -37,14 +40,17 @@ export class PlatformNode extends BaseNode {
 
 export class ServiceNode extends BaseNode {
     type!: string;
+    imgUrl!: string;
     activated!: boolean;
     constructor(
         name: string,
         type: string,
+        imgUrl: string,
         activated: boolean
     ) {
       super("service", name, false, [new GroupNode("quality-group", "CALIDADES:")], true);
       this.type = type;
+      this.imgUrl = imgUrl;
       this.activated = activated;
     }
 }
@@ -92,4 +98,18 @@ export class QuantityNode extends BaseNode {
       this.finalPrice = finalPrice;
       this.discount = discount;
     }
+}
+
+export class ExtraNode extends BaseNode {
+  imgUrl!: string;
+  destinationUrl!: string;
+  constructor(
+    name: string,
+    imgUrl: string,
+    destinationUrl: string
+  ) {
+    super("extra", name, false, undefined)
+    this.imgUrl = imgUrl;
+    this.destinationUrl = destinationUrl;
+  }
 }

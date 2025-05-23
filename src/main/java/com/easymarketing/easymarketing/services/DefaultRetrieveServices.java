@@ -1,13 +1,11 @@
 package com.easymarketing.easymarketing.services;
 
 import com.easymarketing.easymarketing.model.dto.services.*;
+import com.easymarketing.easymarketing.model.entity.ExtraService;
 import com.easymarketing.easymarketing.model.entity.ServicePlatform;
 import com.easymarketing.easymarketing.model.entity.ServiceQuality;
 import com.easymarketing.easymarketing.model.entity.ServiceTier;
-import com.easymarketing.easymarketing.repository.jpa.ServicePlatformRepository;
-import com.easymarketing.easymarketing.repository.jpa.ServiceQualityRepository;
-import com.easymarketing.easymarketing.repository.jpa.ServiceRepository;
-import com.easymarketing.easymarketing.repository.jpa.ServiceTierRepository;
+import com.easymarketing.easymarketing.repository.jpa.*;
 import com.easymarketing.easymarketing.services.interfaces.IRetrieveServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,9 +25,13 @@ public class DefaultRetrieveServices implements IRetrieveServices {
     @Autowired
     private ServiceTierRepository serviceTierRepository;
 
+    @Autowired
+    private ExtraServiceRepository extraServiceRepository;
+
     @Override
     public List<NodeDTO> get() {
         List<ServicePlatform> platforms = servicePlatformRepository.findAll();
+        List<ExtraService> extras = extraServiceRepository.findAll();
         return List.of(NodeDTO.builder()
                         .id(UUID.randomUUID().toString())
                         .nodeType("platform-group")
@@ -44,13 +46,34 @@ public class DefaultRetrieveServices implements IRetrieveServices {
                                         .children(buildServicesGroup(platform.getId()))
                                         .expanded(false)
                                         .editing(false)
+                                        .imgUrl(platform.getImgUrl())
                                         .automaticPaymentAllowed(platform.getAutomaticPaymentAllowed())
                                         .active(platform.getActive())
                                         .build())
                                 .toList())
                         .expanded(false)
                         .editing(false)
-                        .build());
+                        .build(),
+                        NodeDTO.builder()
+                                .id(UUID.randomUUID().toString())
+                                .nodeType("extra-group")
+                                .name("EXTRAS:")
+                                .group(true)
+                                .children(extras.stream()
+                                        .map(extra -> (NodeDTO) ExtraDTO.builder()
+                                                .id(UUID.randomUUID().toString())
+                                                .nodeType("extra")
+                                                .name(extra.getName())
+                                                .group(false)
+                                                .children(null)
+                                                .expanded(false)
+                                                .editing(false)
+                                                .imgUrl(extra.getImgUrl())
+                                                .destinationUrl(extra.getDestinationUrl())
+                                                .build())
+                                        .toList())
+                                .build()
+                );
     }
 
     private List<NodeDTO> buildServicesGroup(Integer platformId) {
@@ -70,6 +93,7 @@ public class DefaultRetrieveServices implements IRetrieveServices {
                                 .expanded(false)
                                 .editing(false)
                                 .type(service.getType())
+                                .imgUrl(service.getImgUrl())
                                 .activated(service.getActivated())
                                 .build())
                         .toList())

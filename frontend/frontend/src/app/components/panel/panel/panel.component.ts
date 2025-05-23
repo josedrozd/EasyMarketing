@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { TreeNode, TreeNodeComponent } from '../tree-node/tree-node.component';
-import { GroupNode, PlatformNode, QualityNode, QuantityNode, ServiceNode } from '../../../core/models/panel-nodes';
+import { ExtraNode, GroupNode, PlatformNode, QualityNode, QuantityNode, ServiceNode } from '../../../core/models/panel-nodes';
 import { FormsModule } from '@angular/forms';
 import { PanelServicesService } from '../../../services/backend/services/panel-services.service';
 import { ConfirmationBoxComponent } from '../confirmation-box/confirmation-box.component';
@@ -80,7 +80,7 @@ export class PanelComponent {
         this.loadTreeData();
       }
     }
-  }  
+  }
 
   loadTreeData(): void {
     this.isLoading = true;
@@ -108,6 +108,7 @@ export class PanelComponent {
       case 'SERVICIOS:': return 'service';
       case 'CALIDADES:': return 'quality';
       case 'CANTIDADES:': return 'quantity';
+      case 'EXTRAS:': return 'extra';
       default: return null;
     }
   }
@@ -126,6 +127,7 @@ export class PanelComponent {
         case 'platform':
           newNode = new PlatformNode(
             this.formData.name,
+            this.formData.imgUrl,
             this.formData.automaticPaymentAllowed || false,
             this.formData.active || false
           );
@@ -134,6 +136,7 @@ export class PanelComponent {
           newNode = new ServiceNode(
             this.formData.name,
             this.formData.type,
+            this.formData.imgUrl,
             this.formData.activated || false
           );
           break;
@@ -156,6 +159,13 @@ export class PanelComponent {
             +this.formData.finalPrice,
             +this.formData.discount
           );
+          break;
+        case 'extra':
+          newNode = new ExtraNode(
+            this.formData.name,
+            this.formData.imgUrl,
+            this.formData.destinationUrl
+          )
           break;
         default:
           return;
@@ -209,6 +219,11 @@ export class PanelComponent {
           return false;
         }
         break;
+      case 'extra':
+        if (!this.formData.imgUrl?.trim() || !this.formData.destinationUrl?.trim()) {
+          alert('Las urls no pueden estar vacias.');
+          return false;
+        }
     }
   
     return true;

@@ -31,9 +31,7 @@ public class ServicesController {
 
     @GetMapping()
     public ResponseEntity<List<NodeDTO>> retrieveServices(HttpSession session) {
-        System.out.println("Session ID: " + session.getId());
-        System.out.println("isLoggedIn: " + session.getAttribute("isLoggedIn"));
-        validateSession(session);
+        //validateSession(session);
         return ResponseEntity.ok(retrieveServices.get());
     }
 
