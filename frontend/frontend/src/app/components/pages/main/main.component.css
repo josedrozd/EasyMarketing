@@ -1,0 +1,59 @@
+.welcome-message {
+  width: 100%;
+  max-width: 800px;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.welcome-message p {
+  width: 100%;
+  max-width: 800px;
+  margin: 0.5em 0;
+  word-wrap: break-word;
+  font-size: clamp(12px, 2vw, 20px);
+}
+
+.welcome-message h1 {
+    font-size: clamp(30px, 4vw, 60px);
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #33deca 0%, #c619e8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.main-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    background: rgb(23, 24, 33);
+    color: #ffffff;
+    border-radius: 32px;          
+    font-size: 22px;     
+    padding: 20px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.6s; 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.662);
+    text-shadow: 
+        0 0 1px rgb(255, 255, 255),
+        0 0 8px rgba(255, 255, 255, 0.543);
+}
+
+.main-button:hover {
+    background: rgba(80, 9, 202, 0.785);
+}
+
+.main-button:active {
+    background: rgba(7, 197, 207, 0.785);
+    border: none;
+    transform: scale(0.995);
+}
