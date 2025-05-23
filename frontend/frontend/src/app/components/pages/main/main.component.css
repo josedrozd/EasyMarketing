@@ -20,6 +20,7 @@
 
 .welcome-message h1 {
     font-size: clamp(30px, 4vw, 60px);
+    filter: drop-shadow(-1px 2px 1px rgba(0, 0, 0, 0.322));
 }
 
 .gradient-text {
