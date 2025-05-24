@@ -9,7 +9,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { TreeNode, TreeNodeComponent } from '../tree-node/tree-node.component';
 import { ExtraNode, GroupNode, PlatformNode, QualityNode, QuantityNode, ServiceNode } from '../../../core/models/panel-nodes';
 import { FormsModule } from '@angular/forms';
-import { PanelServicesService } from '../../../services/backend/services/panel-services.service';
+import { ServicesService } from '../../../services/backend/services/services.service'
 import { ConfirmationBoxComponent } from '../confirmation-box/confirmation-box.component';
 
 function calculateDiscount(basePrice: number, finalPrice: number): number {
@@ -57,7 +57,7 @@ export class PanelComponent {
   constructor(
       private checkPassword: CheckPasswordService,
       private router: Router,
-      private panelService: PanelServicesService
+      private panelService: ServicesService
   ){
     if (isPlatformBrowser(this.platformId)) {
       const authPassed = sessionStorage.getItem('auth_passed') === 'true';
@@ -84,7 +84,7 @@ export class PanelComponent {
 
   loadTreeData(): void {
     this.isLoading = true;
-    this.panelService.getServices().subscribe({
+    this.panelService.refreshServices().subscribe({
       next: (tree) => {
         this.treeData = tree;
         this.currentTree = this.treeData;

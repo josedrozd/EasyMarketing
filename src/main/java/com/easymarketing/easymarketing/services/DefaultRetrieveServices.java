@@ -24,7 +24,6 @@ public class DefaultRetrieveServices implements IRetrieveServices {
     private ServiceQualityRepository serviceQualityRepository;
     @Autowired
     private ServiceTierRepository serviceTierRepository;
-
     @Autowired
     private ExtraServiceRepository extraServiceRepository;
 
@@ -39,7 +38,7 @@ public class DefaultRetrieveServices implements IRetrieveServices {
                         .group(true)
                         .children(platforms.stream()
                                 .map(platform -> (NodeDTO) PlatformDTO.builder()
-                                        .id(UUID.randomUUID().toString())
+                                        .id(platform.getId().toString()+"p")
                                         .nodeType("platform")
                                         .name(platform.getName())
                                         .group(false)
@@ -61,7 +60,7 @@ public class DefaultRetrieveServices implements IRetrieveServices {
                                 .group(true)
                                 .children(extras.stream()
                                         .map(extra -> (NodeDTO) ExtraDTO.builder()
-                                                .id(UUID.randomUUID().toString())
+                                                .id(extra.getId().toString()+"e")
                                                 .nodeType("extra")
                                                 .name(extra.getName())
                                                 .group(false)
@@ -72,6 +71,8 @@ public class DefaultRetrieveServices implements IRetrieveServices {
                                                 .destinationUrl(extra.getDestinationUrl())
                                                 .build())
                                         .toList())
+                                .expanded(false)
+                                .editing(false)
                                 .build()
                 );
     }
@@ -85,7 +86,7 @@ public class DefaultRetrieveServices implements IRetrieveServices {
                 .group(true)
                 .children(services.stream()
                         .map(service -> (NodeDTO) ServiceDTO.builder()
-                                .id(UUID.randomUUID().toString())
+                                .id(service.getId().toString()+"s")
                                 .nodeType("service")
                                 .name(service.getName())
                                 .group(false)
@@ -111,7 +112,7 @@ public class DefaultRetrieveServices implements IRetrieveServices {
                 .group(true)
                 .children(qualities.stream()
                         .map(quality -> (NodeDTO) QualityDTO.builder()
-                                .id(UUID.randomUUID().toString())
+                                .id(quality.getId().toString()+"q")
                                 .nodeType("quality")
                                 .name(quality.getName())
                                 .group(false)
@@ -139,7 +140,7 @@ public class DefaultRetrieveServices implements IRetrieveServices {
                 .group(true)
                 .children(tiers.stream()
                         .map(tier -> (NodeDTO) QuantityDTO.builder()
-                                .id(UUID.randomUUID().toString())
+                                .id(tier.getId().toString()+"t")
                                 .nodeType("quantity")
                                 .name(tier.getQuantity().toString())
                                 .group(false)

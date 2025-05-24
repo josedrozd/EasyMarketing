@@ -80,6 +80,24 @@
     font-size: 1.5rem;
   }
 
+  .dropdown-list.open {
+    display: block;
+    padding-left: 1.5rem;
+    position: relative;
+    width: 100%;
+    background-color: rgb(230, 230, 230);
+  }
+
+  .dropdown-list.open::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    border-radius: 2px;
+  }
+
 }
 
 /* Pantallas grandes */
@@ -155,6 +173,7 @@
   background: white;
   border: 1px solid #ccc;
   min-width: 150px;
+  width: max-content;
   z-index: 20;
   list-style: none;
   margin: 0;
@@ -163,6 +182,22 @@
 
 .dropdown-list.open {
   display: block;
+}
+
+.dropdown-list li {
+  color: black;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: clamp(12px, 1.5vw, 20px);
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.dropdown-list li:hover {
+  background-color: black;
+  color: white;
+  text-decoration: underline;
 }
 
 .cart-button {

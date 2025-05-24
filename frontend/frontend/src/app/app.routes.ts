@@ -17,6 +17,7 @@ import { ServicesComponent } from './components/pages/services/services.componen
 import { CartComponent } from './components/pages/cart/cart.component';
 import { LayoutComponent } from './components/pages/layout/layout.component';
 import { PoliciesComponent } from './components/pages/policies/policies.component';
+import { ProductsComponent } from './components/pages/services/products/products.component';
 
 export const routes: Routes = [
     { path: 'bad-request', component: BadRequestComponent},
@@ -26,7 +27,8 @@ export const routes: Routes = [
     { path: '', component: LayoutComponent,
         children: [
             { path: '', component: MainComponent },
-            { path: 'servicios', component: ServicesComponent },
+            { path: 'servicios', component: ServicesComponent},
+            { path: 'servicios/:name/productos', component: ProductsComponent },
             { path: 'preguntas-frecuentes', component: FaqComponent },
             { path: 'genera-ingresos', component: IngresosComponent },
             { path: 'contacto', component: ContactComponent },

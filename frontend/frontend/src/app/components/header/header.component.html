@@ -1,6 +1,6 @@
 <header class="header">
   <div class="content">
-    <button class="menu-toggle" (click)="toggleMenu()">☰</button>
+    <button class="menu-toggle" (click)="toggleMenu($event)">☰</button>
 
     <a class="logo" routerLink="/">
       <img src="bannertransparent2.png" alt="Logo" />
@@ -13,7 +13,9 @@
           <span>Servicios</span> <mat-icon>{{ dropdownOpen ? 'expand_more' : 'chevron_right' }}</mat-icon>
         </div>
         <ul class="dropdown-list" [class.open]="dropdownOpen">
-          <!-- Lista vacía por ahora -->
+          <li *ngFor="let item of servicesList" (click)="onSelect(item, $event); closeMenu()">
+            {{ item.name.charAt(0).toUpperCase() + item.name.slice(1).toLowerCase() }}
+          </li>
         </ul>
       </div>
       <a routerLink="/preguntas-frecuentes" (click)="closeMenu()">Preguntas Frecuentes</a>
