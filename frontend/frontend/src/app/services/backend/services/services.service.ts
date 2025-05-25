@@ -59,7 +59,8 @@ function reviveNode(node: TreeNode): TreeNode {
         new ExtraNode(
           node.name,
           (node as any).imgUrl,
-          (node as any).destinationUrl
+          (node as any).destinationUrl,
+          (node as any).active
         ),
         node
       )

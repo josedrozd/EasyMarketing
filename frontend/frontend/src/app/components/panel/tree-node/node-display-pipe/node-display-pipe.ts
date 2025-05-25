@@ -20,7 +20,7 @@ import { TreeNode } from '../tree-node.component';
           return `Cantidad: ${node.quantity} - Precio: $${node.basePrice}`;
         }
       } else if (node instanceof ExtraNode) {
-        return `${node.name} - ${node.imgUrl.slice(0,12)}... - ${node.destinationUrl.slice(0,12)}...`;
+        return `${node.name} - ${node.imgUrl.slice(0,12)}... - ${node.destinationUrl.slice(0,12)}... - Activo: ${node.active ? 'Sí' : 'No'}`;
       }
       return node.name;
     }

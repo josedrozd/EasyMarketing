@@ -3,10 +3,12 @@ import { HeaderComponent } from '../../header/header.component';
 import { FooterComponent } from '../../footer/footer.component';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { SocialFooterComponent } from '../../social-footer/social-footer.component';
+import { PromotionComponent } from '../../promotion/promotion.component';
 
 @Component({
   selector: 'app-layout',
   imports: [
+    PromotionComponent,
     HeaderComponent,
     SocialFooterComponent,
     FooterComponent,

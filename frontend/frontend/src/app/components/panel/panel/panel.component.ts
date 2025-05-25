@@ -164,7 +164,8 @@ export class PanelComponent {
           newNode = new ExtraNode(
             this.formData.name,
             this.formData.imgUrl,
-            this.formData.destinationUrl
+            this.formData.destinationUrl,
+            this.formData.active || false
           )
           break;
         default:

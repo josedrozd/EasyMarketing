@@ -98,6 +98,7 @@ public class DefaultUpdateServices implements IUpdateServices {
                             .name(extraDTO.getName())
                             .imgUrl(extraDTO.getImgUrl())
                             .destinationUrl(extraDTO.getDestinationUrl())
+                            .active(extraDTO.getActive())
                             .build();
                     extrasToSave.add(extra);
                 });

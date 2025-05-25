@@ -3,9 +3,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ServicesService } from '../../../../services/backend/services/services.service';
 import { TreeNode } from '../../../panel/tree-node/tree-node.component';
 import { Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { ServiceNode } from '../../../../core/models/panel-nodes';
 
 @Component({
   selector: 'app-products',
+  imports: [
+    CommonModule
+  ],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
@@ -13,6 +18,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   referenceId: string | null = null;
   service!: TreeNode;
+  products!: TreeNode[];
   msg!: string;
   private routeSub!: Subscription;
   private servicesSub!: Subscription;
@@ -50,6 +56,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
         return;
       }
       this.service = foundService;
+      this.products = (this.service?.children?.length ? 
+        this.service.children[0].children?.filter(child => (child as ServiceNode).activated) : []) ?? [];
       this.msg = "Productos de " + this.service.name;
     });
   }
@@ -61,6 +69,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
     if (this.servicesSub) {
       this.servicesSub.unsubscribe();
     }
+  }
+
+  redirectToProduct(node: TreeNode) {
+    console.log("redirect to:"+ node.name);
+    //this.router.navigate(['/servicios', this.slugify(node.name), 'productos'], { queryParams: { reference: node.id }});
   }
 
 }

@@ -41,7 +41,7 @@ export class HeaderComponent {
   ngOnInit() {
     this.servicios$ = this.services.getServices();
     this.servicios$.subscribe(tree => {
-      this.servicesList = tree.flatMap(node => node.children ?? []);
+      this.servicesList = tree.flatMap(node => node.children ?? []).filter(child => (child as any).active);
     });
   }
 

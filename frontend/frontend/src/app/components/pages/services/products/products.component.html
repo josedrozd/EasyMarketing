@@ -1,1 +1,15 @@
-<p>{{ msg }}</p>
+<div class="services-container">
+  <h1>{{ msg }}</h1>
+  <div class="services-grid">
+    <div *ngFor="let node of products" class="service-col">
+      <div class="service-card" (click)="redirectToProduct(node)">
+        <img 
+          [src]="$any(node).imgUrl" 
+          alt="{{ $any(node).name }}" 
+          class="service-image"
+        />
+        <div class="service-name">{{ node.name }}</div>
+      </div>
+    </div>
+  </div>
+</div>

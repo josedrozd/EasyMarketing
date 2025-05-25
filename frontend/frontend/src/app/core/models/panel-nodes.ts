@@ -103,13 +103,16 @@ export class QuantityNode extends BaseNode {
 export class ExtraNode extends BaseNode {
   imgUrl!: string;
   destinationUrl!: string;
+  active!: boolean;
   constructor(
     name: string,
     imgUrl: string,
-    destinationUrl: string
+    destinationUrl: string,
+    active: boolean
   ) {
     super("extra", name, false, undefined)
     this.imgUrl = imgUrl;
     this.destinationUrl = destinationUrl;
+    this.active = active;
   }
 }

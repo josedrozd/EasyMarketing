@@ -25,4 +25,7 @@ public class ExtraService {
     @Column(name = "destination_url", nullable = false)
     private String destinationUrl;
 
+    @Column(nullable = false)
+    private Boolean active;
+
 }

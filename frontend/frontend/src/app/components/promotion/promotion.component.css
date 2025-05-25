@@ -1,0 +1,29 @@
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  padding: 0 1rem;
+  font-size: small;
+  border-top: 1px solid rgba(0, 0, 0, 0.036);
+  gap: 0;
+  position: relative;
+  z-index: 11;
+  transform: translate(0, 0);
+  background-color: black;
+  color: white;
+}
+
+header p {
+  margin: 3px;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  text-decoration: underline;
+}

@@ -13,5 +13,6 @@ public class ExtraDTO extends NodeDTO{
 
     private String imgUrl;
     private String destinationUrl;
+    private Boolean active;
 
 }

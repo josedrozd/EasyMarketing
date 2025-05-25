@@ -18,6 +18,7 @@ import { CartComponent } from './components/pages/cart/cart.component';
 import { LayoutComponent } from './components/pages/layout/layout.component';
 import { PoliciesComponent } from './components/pages/policies/policies.component';
 import { ProductsComponent } from './components/pages/services/products/products.component';
+import { HowitworksComponent } from './components/pages/howitworks/howitworks.component';
 
 export const routes: Routes = [
     { path: 'bad-request', component: BadRequestComponent},
@@ -33,7 +34,8 @@ export const routes: Routes = [
             { path: 'genera-ingresos', component: IngresosComponent },
             { path: 'contacto', component: ContactComponent },
             { path: 'carrito', component: CartComponent },
-            { path: 'politicas-privacidad', component: PoliciesComponent}
+            { path: 'politicas-privacidad', component: PoliciesComponent},
+            { path: 'como-funciona', component: HowitworksComponent}
         ]
     },
     { path: 'process-purchase', component: SuccessComponent},

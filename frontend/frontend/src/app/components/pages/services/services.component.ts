@@ -29,12 +29,11 @@ export class ServicesComponent {
   ngOnInit() {
     this.servicios$ = this.services.getServices();
     this.servicios$.subscribe(tree => {
-      this.servicesList = tree.flatMap(node => node.children ?? []);
+      this.servicesList = tree.flatMap(node => node.children ?? []).filter(child => (child as any).active);
     });
   }
 
   redirectToService(node: TreeNode) {
-    console.log("redirecting");
     if (node.nodeType == "extra") {
       window.location.href = (node as ExtraNode).destinationUrl;
     } else {
