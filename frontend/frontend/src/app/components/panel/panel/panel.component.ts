@@ -145,6 +145,7 @@ export class PanelComponent {
             this.formData.name,
             this.formData.provider,
             +this.formData.providerServiceId,
+            +this.formData.minimum,
             this.formData.automaticPayment || false,
             +this.formData.priority,
             this.formData.activated || false
@@ -187,9 +188,19 @@ export class PanelComponent {
     }
   
     switch (this.editingNodeType) {
+      case 'platform':
+        if (!this.formData.imgUrl?.trim()) {
+          alert('Las url de la imagen no puede estar vacia.');
+          return false;
+        }
+        break;
       case 'service':
         if (!this.formData.type?.trim()) {
           alert('El tipo de servicio es obligatorio.');
+          return false;
+        }
+        if (!this.formData.imgUrl?.trim()) {
+          alert('Las url de la imagen no puede estar vacia.');
           return false;
         }
         break;
@@ -201,6 +212,10 @@ export class PanelComponent {
           }
           if (this.formData.providerServiceId == null) {
             alert('Debe ingresar un ID de proveedor.');
+            return false;
+          }
+          if (this.formData.minimum == null) {
+            alert('Debe ingresar una cantidad minima.');
             return false;
           }
         }

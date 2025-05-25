@@ -58,6 +58,7 @@ export class ServiceNode extends BaseNode {
 export class QualityNode extends BaseNode {
     provider!: string;
     providerServiceId!: number;
+    minimum!: number;
     priority!: number;
     automaticPayment!: boolean;
     activated!: boolean;
@@ -65,6 +66,7 @@ export class QualityNode extends BaseNode {
         name: string,
         provider: string,
         providerServiceId: number,
+        minimum: number,
         automaticPayment: boolean,
         priority: number,
         activated: boolean
@@ -72,6 +74,7 @@ export class QualityNode extends BaseNode {
       super("quality", name, false, [new GroupNode("quantity-group", "CANTIDADES:")], true);
       this.provider = provider;
       this.providerServiceId = providerServiceId;
+      this.minimum = minimum;
       this.automaticPayment = automaticPayment;
       this.priority = priority;
       this.activated = activated;

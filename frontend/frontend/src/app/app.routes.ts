@@ -19,17 +19,19 @@ import { LayoutComponent } from './components/pages/layout/layout.component';
 import { PoliciesComponent } from './components/pages/policies/policies.component';
 import { ProductsComponent } from './components/pages/services/products/products.component';
 import { HowitworksComponent } from './components/pages/howitworks/howitworks.component';
+import { DetailsComponent } from './components/pages/services/products/details/details.component';
 
 export const routes: Routes = [
-    { path: 'bad-request', component: BadRequestComponent},
-    { path: '404', component: NotFoundComponent },
-    { path: 'unauthorized', component: UnauthorizedComponent },
     { path: 'ping', component: PingComponent, runGuardsAndResolvers: 'always' },
     { path: '', component: LayoutComponent,
         children: [
             { path: '', component: MainComponent },
+            { path: 'bad-request', component: BadRequestComponent},
+            { path: '404', component: NotFoundComponent },
+            { path: 'unauthorized', component: UnauthorizedComponent },
             { path: 'servicios', component: ServicesComponent},
             { path: 'servicios/:name/productos', component: ProductsComponent },
+            { path: 'servicios/:name/productos/:product/detalles', component: DetailsComponent },
             { path: 'preguntas-frecuentes', component: FaqComponent },
             { path: 'genera-ingresos', component: IngresosComponent },
             { path: 'contacto', component: ContactComponent },

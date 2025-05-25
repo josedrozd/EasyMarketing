@@ -13,6 +13,7 @@ public class QualityDTO extends NodeDTO {
 
     private String provider;
     private Integer providerServiceId;
+    private Integer minimum;
     private Integer priority;
     private Boolean automaticPayment;
     private Boolean activated;

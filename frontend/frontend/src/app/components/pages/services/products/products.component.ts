@@ -73,7 +73,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   redirectToProduct(node: TreeNode) {
     console.log("redirect to:"+ node.name);
-    //this.router.navigate(['/servicios', this.slugify(node.name), 'productos'], { queryParams: { reference: node.id }});
+    this.router.navigate(
+      ['/servicios', this.slugify(this.service.name), 'productos', this.slugify(node.name), 'detalles'], 
+      { queryParams: { sref: this.service.id,  dref: node.id}});
+  }
+
+  slugify(text: string) {
+    return text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '');
   }
 
 }

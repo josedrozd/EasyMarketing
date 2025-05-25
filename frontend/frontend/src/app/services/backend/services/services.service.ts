@@ -33,6 +33,7 @@ function reviveNode(node: TreeNode): TreeNode {
           node.name,
           (node as any).provider,
           (node as any).providerServiceId,
+          (node as any).minimum,
           (node as any).automaticPayment,
           (node as any).priority,
           (node as any).activated

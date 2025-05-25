@@ -1,0 +1,182 @@
+.product-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: 0;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.tabs button {
+  flex: 1;
+  word-break: break-word;
+  white-space: normal; 
+  padding: 12px;
+  cursor: pointer;
+  border: none;
+  white-space: normal;  
+  background: #f0f0f0;
+  border-right: 1px solid #ccc;
+  border-top: 2px solid #ccc;
+  border-left: 2px solid #ccc;
+  border-bottom: none;
+  margin: 0;
+  border-radius: 0;
+  text-align: center;
+  font-weight: bold;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  font-size: clamp(8px, 1.5vw, 12px);
+}
+
+.tabs button:last-child {
+  border-right: 2px solid #ccc;
+}
+
+.tabs button.active {
+  border-bottom: 2px solid white;
+  color: #333;
+}
+
+.tabs button:not(.active) {
+  border-bottom: 2px solid #ccc;
+}
+
+.tab-content {
+  border: 2px solid #ccc;
+  border-top: none;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  max-width: 400px;
+  align-items: center;
+  text-align: center;
+}
+
+.quantity-card:hover {
+  cursor: pointer;
+}
+
+.quantity-card.selected .card {
+  border: 2px solid #4dab95;
+  background-color: #e0f7f4;
+  box-shadow: 0 0 5px rgba(77, 171, 149, 0.5);
+}
+
+.quantity-card {
+  display: inline-block;
+  margin: 5px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  height: clamp(80px, 4.5vw, 120px);;
+  font-size: clamp(12px, 5vw, 16px);
+  font-weight: 800;
+}
+
+.card {
+  display: table;
+  border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 6px;
+  width: clamp(80px, 4.5vw, 120px);;
+  text-align: center;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.card > div {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.card p, .card small {
+  margin: 0;
+  padding: 0;
+}
+
+.card small {
+  font-size: clamp(8px, 2vw, 10px);
+}
+
+.quantities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.selected-price {
+  margin-top: 16px;
+  font-size: 44px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.price-discounted {
+  color: rgb(50, 50, 50);
+  position: relative;
+}
+
+.base-price-old {
+  font-size: 24px;
+  color: #6a6a6a;
+  text-decoration: line-through;
+  position: relative;
+  top: -20px;
+}
+
+.sign {
+  font-size: 24px;
+  color: #464646;
+  position: relative;
+  top: -5px;
+  right: 4px;
+}
+
+.sign-small {
+  font-size: 17px;
+  color: #6a6a6a;
+  position: relative;
+  top: -22px;
+}
+
+.buy-button {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 3rem;
+    background: rgb(23, 24, 33);
+    color: #ffffff;
+    border-radius: 32px;          
+    font-size: 22px;     
+    padding: 20px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.6s; 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.662);
+    text-shadow: 
+        0 0 1px rgb(255, 255, 255),
+        0 0 8px rgba(255, 255, 255, 0.543);
+}
+
+.buy-button:hover {
+    background: rgba(80, 9, 202, 0.785);
+}
+
+.buy-button:active {
+    background: rgba(7, 197, 207, 0.785);
+    border: none;
+    transform: scale(0.995);
+}

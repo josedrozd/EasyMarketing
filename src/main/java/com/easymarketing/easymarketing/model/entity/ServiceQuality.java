@@ -28,6 +28,8 @@ public class ServiceQuality {
     @Column(name = "provider_service_id")
     private Integer providerServiceId;
 
+    private Integer minimum;
+
     @Column(nullable = false)
     private Integer priority;
 

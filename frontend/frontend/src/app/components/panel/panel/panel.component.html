@@ -104,6 +104,10 @@
               <label>ID Proveedor:</label>
               <input type="number" [(ngModel)]="formData.providerServiceId" />
             </div>
+            <div class="form-row" *ngIf="formData.automaticPayment">
+              <label>Cantidad mínima:</label>
+              <input type="number" [(ngModel)]="formData.minimum" />
+            </div>
             <div class="form-row">
               <label>Prioridad:</label>
               <input type="number" [(ngModel)]="formData.priority" />

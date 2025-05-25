@@ -122,6 +122,7 @@ public class DefaultRetrieveServices implements IRetrieveServices {
                                 .editing(false)
                                 .provider(quality.getProvider())
                                 .providerServiceId(quality.getProviderServiceId())
+                                .minimum(quality.getMinimum())
                                 .priority(quality.getPriority())
                                 .automaticPayment(quality.getAutomaticPayment())
                                 .activated(quality.getActivated())

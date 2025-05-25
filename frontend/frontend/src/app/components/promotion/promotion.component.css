@@ -27,3 +27,15 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+.prom-button {
+  border-radius: 6px;
+  background-color: white;
+  border: none;
+  margin: 4px;
+  padding: 2px;
+}
+
+.prom-button:hover {
+  background-color: gray;
+}

@@ -1,0 +1,46 @@
+<div class="product-container">
+  <h1>{{ msg }}</h1>
+
+  <div class="tabs">
+    <button 
+      *ngFor="let quality of qualities; let i = index"
+      (click)="setTab(i)"
+      [class.active]="selectedTab === i"
+    >
+      {{ quality.name }}
+    </button>
+  </div>
+
+  <div class="tab-content" *ngIf="qualities?.length">
+    <div *ngFor="let quality of qualities; let i = index">
+      <div *ngIf="selectedTab === i">
+        <div class="quantities" *ngIf="quality.children">
+          <div *ngFor="let group of quality.children">
+            <ng-container *ngIf="group.nodeType === 'quantity-group'">
+              <div class="quantity-card" *ngFor="let quantity of group.children" [class.selected]="selectedQuantity?.id === quantity.id" (click)="selectQuantity(quantity)">
+                <div class="card">
+                    <div>
+                        <p>{{ getQuantity(quantity) }}</p>
+                        <small *ngIf="isWithDiscount(quantity)">{{ getDiscount(quantity) }}</small>
+                    </div>
+                </div>
+              </div>
+              <div class="selected-price" *ngIf="selectedQuantity">
+                <span *ngIf="!selectedQuantity.withDiscount">
+                    <span class="sign">$</span>{{ selectedQuantity.basePrice }}
+                </span>
+                <span *ngIf="selectedQuantity.withDiscount" class="price-discounted">
+                    <span class="sign">$</span>{{ selectedQuantity.finalPrice }}
+                    <span class="sign-small">$</span>
+                    <span class="base-price-old">{{ selectedQuantity.basePrice }}</span>
+                </span>
+              </div>
+              <button class="buy-button" (click)="buy()">Comprar ahora</button>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
