@@ -121,6 +121,10 @@ export class DetailsComponent {
     return quantity.toString();
   }
 
+  getSaving(node: TreeNode | null): string {
+    return "Ahorras $" + ((node as QuantityNode).basePrice - (node as QuantityNode).finalPrice).toString();
+  }
+
   getDescription(node: TreeNode): string {
     return (node as QualityNode).description || 'No hay descripción disponible.';
   }

@@ -36,6 +36,7 @@
                 </span>
               </div>
               <button class="buy-button" (click)="buy()">Comprar ahora</button>
+              <small *ngIf="isWithDiscount(selectedQuantity)" class="saving">{{ getSaving(selectedQuantity) }}</small>
             </ng-container>
           </div>
         </div>
@@ -45,7 +46,8 @@
 
   <div class="quality-descriptions-wrapper">
     <div class="quality-descriptions">
-        <div *ngFor="let quality of qualities" class="description-card">
+        <div *ngFor="let quality of qualities; let i = index" class="description-card" [class.active]="selectedTab === i" (click)="setTab(i)">
+            <div class="tabs"><button class="desc-button">{{ quality.name }}</button></div>
             <p class="description-text">{{ getDescription(quality) }}</p>
         </div>
     </div>
