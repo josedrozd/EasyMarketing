@@ -9,6 +9,8 @@
   padding-left: 1rem;
   padding-right: 1rem;
   overflow-x: hidden; 
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .tabs {
@@ -87,7 +89,7 @@
   margin: 5px;
   box-sizing: border-box;
   vertical-align: middle;
-  height: clamp(80px, 4.5vw, 120px);
+  height: clamp(80px, 4.5vw, 80px);
   font-size: clamp(12px, 5vw, 16px);
   font-weight: 800;
 }
@@ -97,7 +99,7 @@
   border: 1px solid #ccc;
   padding: 12px;
   border-radius: 6px;
-  width: clamp(80px, 4.5vw, 120px);
+  width: clamp(80px, 4.5vw, 80px);
   text-align: center;
   height: 100%;
   box-sizing: border-box;
