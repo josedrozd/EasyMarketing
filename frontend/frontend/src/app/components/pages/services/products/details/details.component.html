@@ -14,10 +14,10 @@
   <div class="tab-content" *ngIf="qualities?.length">
     <div *ngFor="let quality of qualities; let i = index">
       <div *ngIf="selectedTab === i">
-        <div class="quantities" *ngIf="quality.children">
+        <div class="quantities" *ngIf="quality.children && selectedQuantity; else noQuantities">
           <div *ngFor="let group of quality.children">
             <ng-container *ngIf="group.nodeType === 'quantity-group'">
-              <div class="quantity-card" *ngFor="let quantity of group.children" [class.selected]="selectedQuantity?.id === quantity.id" (click)="selectQuantity(quantity)">
+              <div class="quantity-card" *ngFor="let quantity of group.children" [class.selected]="selectedQuantity.id === quantity.id" (click)="selectQuantity(quantity)">
                 <div class="card">
                     <div>
                         <p>{{ getQuantity(quantity) }}</p>
@@ -40,6 +40,9 @@
             </ng-container>
           </div>
         </div>
+        <ng-template #noQuantities>
+            <p>No hay cantidades disponibles.</p>
+        </ng-template>
       </div>
     </div>
   </div>

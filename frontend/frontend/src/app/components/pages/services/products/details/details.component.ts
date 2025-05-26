@@ -94,7 +94,7 @@ export class DetailsComponent {
     const quantityGroup = quality.children?.find(child => child.nodeType === 'quantity-group');
     const firstQuantity = quantityGroup?.children?.[0];
 
-    this.selectedQuantity = firstQuantity as QuantityNode ?? null;
+    this.selectedQuantity = firstQuantity ? (firstQuantity as QuantityNode) : null;
   }
 
   isWithDiscount(quantity: any): boolean {
