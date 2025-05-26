@@ -36,7 +36,8 @@ function reviveNode(node: TreeNode): TreeNode {
           (node as any).minimum,
           (node as any).automaticPayment,
           (node as any).priority,
-          (node as any).activated
+          (node as any).activated,
+          (node as any).description
         ),
         node
       );

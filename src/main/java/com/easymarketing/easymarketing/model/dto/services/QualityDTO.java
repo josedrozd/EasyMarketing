@@ -17,5 +17,6 @@ public class QualityDTO extends NodeDTO {
     private Integer priority;
     private Boolean automaticPayment;
     private Boolean activated;
+    private String description;
 
 }

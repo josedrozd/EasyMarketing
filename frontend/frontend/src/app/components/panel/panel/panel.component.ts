@@ -148,7 +148,8 @@ export class PanelComponent {
             +this.formData.minimum,
             this.formData.automaticPayment || false,
             +this.formData.priority,
-            this.formData.activated || false
+            this.formData.activated || false,
+            this.formData.description
           );
           break;
         case 'quantity':
@@ -221,6 +222,10 @@ export class PanelComponent {
         }
         if (this.formData.priority == null) {
           alert('Debe establecer una prioridad.');
+          return false;
+        }
+        if (!this.formData.description?.trim()) {
+          alert('Debe proveer una descripcion.');
           return false;
         }
         break;

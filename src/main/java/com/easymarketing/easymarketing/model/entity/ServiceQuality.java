@@ -39,4 +39,8 @@ public class ServiceQuality {
     @Column(nullable = false)
     private Boolean activated;
 
+    @Lob
+    @Column(length = 1000, nullable = false)
+    private String description;
+
 }

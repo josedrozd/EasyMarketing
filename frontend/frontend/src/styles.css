@@ -131,3 +131,12 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+:root {
+  --safe-padding-inline: max(env(safe-area-inset-left), 1rem);
+}
+
+.product-container {
+  padding-left: var(--safe-padding-inline);
+  padding-right: var(--safe-padding-inline);
+}

@@ -62,6 +62,7 @@ export class QualityNode extends BaseNode {
     priority!: number;
     automaticPayment!: boolean;
     activated!: boolean;
+    description!: string;
     constructor(
         name: string,
         provider: string,
@@ -69,7 +70,8 @@ export class QualityNode extends BaseNode {
         minimum: number,
         automaticPayment: boolean,
         priority: number,
-        activated: boolean
+        activated: boolean,
+        description: string
     ) {
       super("quality", name, false, [new GroupNode("quantity-group", "CANTIDADES:")], true);
       this.provider = provider;
@@ -78,6 +80,7 @@ export class QualityNode extends BaseNode {
       this.automaticPayment = automaticPayment;
       this.priority = priority;
       this.activated = activated;
+      this.description = description;
     }
 }
 

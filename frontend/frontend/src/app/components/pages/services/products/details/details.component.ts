@@ -121,4 +121,8 @@ export class DetailsComponent {
     return quantity.toString();
   }
 
+  getDescription(node: TreeNode): string {
+    return (node as QualityNode).description || 'No hay descripción disponible.';
+  }
+
 }

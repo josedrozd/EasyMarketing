@@ -116,6 +116,10 @@
               <label>Activado:</label>
               <input type="checkbox" [(ngModel)]="formData.activated" />
             </div>
+            <div class="form-row">
+              <label>Descripción:</label>
+              <textarea [(ngModel)]="formData.description" rows="12" maxlength="500"></textarea>
+            </div>
           </div>
       
           <div *ngSwitchCase="'quantity'">

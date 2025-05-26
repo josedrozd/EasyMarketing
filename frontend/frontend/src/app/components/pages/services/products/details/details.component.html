@@ -42,5 +42,13 @@
       </div>
     </div>
   </div>
-  
+
+  <div class="quality-descriptions-wrapper">
+    <div class="quality-descriptions">
+        <div *ngFor="let quality of qualities" class="description-card">
+            <p class="description-text">{{ getDescription(quality) }}</p>
+        </div>
+    </div>
+  </div>
+    
 </div>

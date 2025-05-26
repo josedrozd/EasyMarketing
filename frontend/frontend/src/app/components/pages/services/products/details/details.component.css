@@ -4,16 +4,19 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 2rem;
+  width: 100vw;
   box-sizing: border-box;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  overflow-x: hidden; 
 }
 
 .tabs {
   display: flex;
-  margin-bottom: 0;
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .tabs button {
@@ -23,14 +26,11 @@
   padding: 12px;
   cursor: pointer;
   border: none;
-  white-space: normal;  
   background: #f0f0f0;
   border-right: 1px solid #ccc;
   border-top: 2px solid #ccc;
   border-left: 2px solid #ccc;
   border-bottom: none;
-  margin: 0;
-  border-radius: 0;
   text-align: center;
   font-weight: bold;
   border-top-left-radius: 8px;
@@ -52,15 +52,24 @@
 }
 
 .tab-content {
+  display: flex;
+  flex-direction: column;
   border: 2px solid #ccc;
   border-top: none;
   padding-top: 16px;
   padding-bottom: 16px;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
+  width: 100%;
   max-width: 400px;
+  min-width: 0;
+  flex-shrink: 1;
   align-items: center;
   text-align: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .quantity-card:hover {
@@ -78,7 +87,7 @@
   margin: 5px;
   box-sizing: border-box;
   vertical-align: middle;
-  height: clamp(80px, 4.5vw, 120px);;
+  height: clamp(80px, 4.5vw, 120px);
   font-size: clamp(12px, 5vw, 16px);
   font-weight: 800;
 }
@@ -88,7 +97,7 @@
   border: 1px solid #ccc;
   padding: 12px;
   border-radius: 6px;
-  width: clamp(80px, 4.5vw, 120px);;
+  width: clamp(80px, 4.5vw, 120px);
   text-align: center;
   height: 100%;
   box-sizing: border-box;
@@ -179,4 +188,49 @@
     background: rgba(7, 197, 207, 0.785);
     border: none;
     transform: scale(0.995);
+}
+
+.quality-descriptions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding-bottom: 8px;
+  -webkit-overflow-scrolling: touch;
+}
+
+
+.description-card {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  width: min(200px, 60vw);
+  max-width: 60vw;
+  box-sizing: border-box;
+}
+
+.description-text {
+  white-space: pre-wrap;
+  flex-grow: 1;
+  text-align: left;
+}
+
+.quality-descriptions-wrapper {
+  display: flex;
+  width: 100%;
+  margin: 1rem;
+  min-width: 0;
+  max-width: 800px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  box-sizing: border-box;
+  justify-content: center; 
 }

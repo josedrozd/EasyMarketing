@@ -73,6 +73,7 @@ public class DefaultUpdateServices implements IUpdateServices {
                                                     .priority(qualityNode.getPriority())
                                                     .automaticPayment(qualityNode.getAutomaticPayment())
                                                     .activated(qualityNode.getActivated())
+                                                    .description(qualityNode.getDescription())
                                                     .build();
                                             qualitiesToSave.add(quality);
 
