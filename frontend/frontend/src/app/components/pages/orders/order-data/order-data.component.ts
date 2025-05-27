@@ -1,13 +1,17 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { OrderDataService } from '../../../../services/order-data.service';
 import { OrderLayoutComponent } from '../order-layout/order-layout.component';
-import { Subscription } from 'rxjs';
+import { filter, Subscription, take } from 'rxjs';
 import { TreeNode } from '../../../panel/tree-node/tree-node.component';
 import { Router } from '@angular/router';
 import { ServicesService } from '../../../../services/backend/services/services.service';
-import { PlatformNode, QualityNode, QuantityNode } from '../../../../core/models/panel-nodes';
+import { PlatformNode, QualityNode, QuantityNode, ServiceNode } from '../../../../core/models/panel-nodes';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { UsernameCheckService } from '../../../../services/backend/instagram/username-check.service';
+import { platform } from 'os';
+import { IGMediaService } from '../../../../services/backend/instagram/retrieve-media.service';
+import { IGClipsService, IGReelClipDTO } from '../../../../services/backend/instagram/retrieve-reels.service';
 
 type FormDataKeys = 'username' | 'mail' | 'name' | 'lastname';
 
@@ -26,7 +30,7 @@ export class OrderDataComponent {
   productRef: string | null = null;
   qualityRef: string | null = null;
   quantityRef: string | null = null;
-  product!: TreeNode | null;
+  product!: ServiceNode | null;
   quantity!: QuantityNode | null;
   quantities!: QuantityNode[];
   private orderSub!: Subscription;
@@ -37,6 +41,7 @@ export class OrderDataComponent {
   isInstagram: boolean = false;
   recaptchaOk = false;
   recaptchaToken: string = '';
+  isScrapping: boolean = false;
 
   formData: { [key in FormDataKeys]: string } = {
     username: '',
@@ -48,6 +53,9 @@ export class OrderDataComponent {
   constructor(
     private services: ServicesService,
     private orderDataService: OrderDataService,
+    private usernameCheckService: UsernameCheckService,
+    private igMediaService: IGMediaService,
+    private igClipsService: IGClipsService,
     private router: Router
   ) {}
 
@@ -75,14 +83,7 @@ export class OrderDataComponent {
     if (this.orderSub) {
       this.orderSub.unsubscribe();
     }
-    const currentData = this.orderDataService.getSnapshot();
-    this.orderDataService.setAll({
-      ...currentData,
-      username: null,
-      mail: null,
-      name: null,
-      lastname: null
-    });
+    this.isScrapping = false;
   }
 
   ngAfterViewInit(): void {
@@ -124,26 +125,58 @@ export class OrderDataComponent {
   }
 
   checkAndSubmit(f: NgForm) {
+    this.isScrapping = true;
     if (!this.recaptchaOk) {
       alert('Por favor, verifica el captcha.');
+      this.isScrapping = false;
       return;
     }
     const formEl = document.querySelector('.order-form') as HTMLFormElement;
     if (!formEl.reportValidity()) {
+      this.isScrapping = false;
       return;
     }
-
     if (!this.validateCustomFields()) {
+      this.isScrapping = false;
       return;
     }
 
-    this.orderDataService.setAll({
-      username: this.formData.username,
-      mail: this.formData.mail,
-      name: this.formData.name,
-      lastname: this.formData.lastname
-    });
-    console.log('Datos guardados:', this.orderDataService.getSnapshot());
+    const saveAndContinue = () => {
+      this.orderDataService.setAll({
+        username: this.formData.username,
+        mail: this.formData.mail,
+        name: this.formData.name,
+        lastname: this.formData.lastname,
+        platform: this.isInstagram ? "instagram" : "other"
+      });
+      this.orderDataService.orderData$.pipe(take(1))
+        .subscribe(() => {this.router.navigate(['/ordenes/detalles']);});
+    }
+
+    if (this.isInstagram) {
+      this.usernameCheckService.checkIGUsername(this.formData.username).subscribe(userInfo => {
+        if (!userInfo.id || userInfo.isPrivate) {
+          alert('El usuario no es válido o es privado.');
+          return;
+        }
+        try {
+          if (this.product?.type == "POST") {
+            this.igMediaService.getMediaByUserId(Number(userInfo.id));
+          } else if (this.product?.type == "REEL") {
+            this.igClipsService.getReelsByUserId(Number(userInfo.id));
+          }
+          saveAndContinue();
+        } catch(error) {
+          console.error(error);
+          this.router.navigate(['/']);
+        }
+      }, error => {
+        console.error('Error al verificar el usuario:', error);
+        alert('No se pudo verificar el usuario.');
+      });
+    } else {
+      saveAndContinue();
+    }
   }
 
   loadService() {
@@ -163,7 +196,8 @@ export class OrderDataComponent {
       }
 
       this.isInstagram = (foundService as PlatformNode).automaticPaymentAllowed;
-      this.product = foundProduct;
+      console.log(this.isInstagram);
+      this.product = foundProduct as ServiceNode;
       this.quantity = foundQuantity as QuantityNode;
       this.quantities = (foundQuality.children![0].children as QuantityNode[]).sort((a, b) => a.quantity - b.quantity);
     });

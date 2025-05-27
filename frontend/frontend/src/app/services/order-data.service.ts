@@ -11,6 +11,7 @@ export interface OrderData {
   mail: string | null;
   name: string | null;
   lastname: string | null;
+  platform: string | null;
 }
 
 @Injectable({
@@ -31,6 +32,7 @@ export class OrderDataService {
     mail: null,
     name: null,
     lastname: null,
+    platform: null
   };
 
   private orderDataSubject: BehaviorSubject<OrderData>;
@@ -93,6 +95,10 @@ export class OrderDataService {
 
   setLastname(lastname: string) {
     this.setAll({ lastname });
+  }
+
+  setPlatform(platform: string) {
+    this.setAll({ platform });
   }
 
   reset() {

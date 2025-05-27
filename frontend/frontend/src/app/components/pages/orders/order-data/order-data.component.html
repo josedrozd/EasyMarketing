@@ -32,8 +32,13 @@
       </div>
     </div>
     <div #recaptchaContainer class="g-recaptcha" data-sitekey="6LctlksrAAAAAKArc4eeiYd5g1TiSWtwj3e8O_UK" data-callback="recaptchaResolved"></div>
-    <button type="submit" class="action-button" [disabled]="!recaptchaOk || f.invalid">
-      Continuar
+    <button type="submit" class="action-button" [disabled]="!recaptchaOk || f.invalid || isScrapping">
+      <ng-container *ngIf="!isScrapping; else loading">
+        Continuar
+      </ng-container>
+      <ng-template #loading>
+        <img src="loading.gif" alt="Procesando..." style="height: 20px;" />
+      </ng-template>
     </button>
   </form>
 </div>
