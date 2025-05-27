@@ -94,6 +94,10 @@ export class OrderDataComponent {
             callback: (token: string) => {
               this.recaptchaToken = token;
               this.recaptchaOk = true;
+            },
+            'expired-callback': () => {
+              this.recaptchaToken = '';
+              this.recaptchaOk = false;
             }
           });
         } else {
