@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { TreeNode } from '../panel/tree-node/tree-node.component';
 import { CommonModule } from '@angular/common';
 import { ExtraNode } from '../../core/models/panel-nodes';
+import { OrderDataService } from '../../services/order-data.service';
 
 @Component({
   selector: 'app-header',
@@ -35,6 +36,7 @@ export class HeaderComponent {
 
   constructor(
     private services: ServicesService,
+    private orderDataService: OrderDataService,
     private router: Router
   ) {}
 
@@ -48,10 +50,11 @@ export class HeaderComponent {
   onSelect(node: TreeNode, event: Event) {
     event.stopPropagation();
     this.selectedNode = node;
+    this.orderDataService.setServiceId(node.id);
     if (node.nodeType == "extra") {
       window.location.href = (node as ExtraNode).destinationUrl;
     } else {
-      this.router.navigate(['/servicios', this.slugify(node.name), 'productos'], { queryParams: { reference: node.id }});
+      this.router.navigate(['/servicios', this.slugify(node.name), 'productos']);
     }
   }
   

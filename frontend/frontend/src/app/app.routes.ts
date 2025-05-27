@@ -20,6 +20,9 @@ import { PoliciesComponent } from './components/pages/policies/policies.componen
 import { ProductsComponent } from './components/pages/services/products/products.component';
 import { HowitworksComponent } from './components/pages/howitworks/howitworks.component';
 import { DetailsComponent } from './components/pages/services/products/details/details.component';
+import { OrderDataComponent } from './components/pages/orders/order-data/order-data.component';
+import { OrderDetailsComponent } from './components/pages/orders/order-details/order-details.component';
+import { OrderLayoutComponent } from './components/pages/orders/order-layout/order-layout.component';
 
 export const routes: Routes = [
     { path: 'ping', component: PingComponent, runGuardsAndResolvers: 'always' },
@@ -39,6 +42,13 @@ export const routes: Routes = [
             { path: 'politicas-privacidad', component: PoliciesComponent},
             { path: 'como-funciona', component: HowitworksComponent}
         ]
+    },
+    { path: 'ordenes', component: OrderLayoutComponent,
+        children: [
+            { path: 'ingresar-datos', component: OrderDataComponent },
+            { path: 'detalles', component: OrderDetailsComponent },
+        ]
+
     },
     { path: 'process-purchase', component: SuccessComponent},
     { path: 'mp', 

@@ -1,0 +1,38 @@
+<div class="form-container">
+  <form #f="ngForm" class="order-form" (ngSubmit)="checkAndSubmit(f)">
+    <div class="input-icon-wrapper">
+      <img [src]="isInstagram ? '/socialmedia/icons8-instagram-48.png' : '/socialmedia/icons8-user-48.png'" class="icon" />
+      <input name="username" [(ngModel)]="formData.username" required type="text" placeholder="Nombre de usuario" />
+    </div>
+    <div class="input-icon-wrapper">
+      <img src="/socialmedia/icons8-email-48.png" class="icon" />
+      <input name="mail" [(ngModel)]="formData.mail" required type="email" pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$" title="Correo inválido." placeholder="Correo electrónico" />
+    </div>
+    <div class="name-lastname-row">
+      <div class="input-icon-wrapper">
+        <img src="/socialmedia/icons8-user-48.png" class="icon" />
+        <input name="name" [(ngModel)]="formData.name" required pattern="^[a-zA-ZÀ-ÿ\s]+$" title="Solo letras y espacios." type="text" placeholder="Nombre" />
+      </div>
+      <div class="input-icon-wrapper">
+        <img src="/socialmedia/icons8-user-48.png" class="icon" />
+        <input name="lastname" [(ngModel)]="formData.lastname" required pattern="^[a-zA-ZÀ-ÿ\s]+$" title="Solo letras y espacios." type="text" placeholder="Apellido" />
+      </div>
+    </div>
+    <div #customSelect class="custom-select">
+      <div class="selected" (click)="toggleDropdown()">
+        <span>{{ quantity?.quantity }} {{ product?.name }}</span>
+        <span class="right-price">${{ quantity?.basePrice }}</span>
+      </div>
+
+      <div class="dropdown" *ngIf="dropdownOpen">
+        <div *ngFor="let q of quantities" (click)="selectQuantity(q)" class="dropdown-item">
+          <span>{{ q.quantity }} {{ product?.name}}</span>
+          <span class="drop-right-price">${{ q.basePrice }}</span>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="action-button">
+      Continuar
+    </button>
+  </form>
+</div>

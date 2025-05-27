@@ -5,6 +5,7 @@ import { ServicesService } from '../../../../../services/backend/services/servic
 import { QualityNode, QuantityNode } from '../../../../../core/models/panel-nodes';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { OrderDataService } from '../../../../../services/order-data.service';
 
 @Component({
   selector: 'app-details',
@@ -17,37 +18,39 @@ import { Subscription } from 'rxjs';
 export class DetailsComponent {
 
   serviceRef: string | null = null;
-  qualityRef: string | null = null;
+  productRef: string | null = null;
   product!: TreeNode;
   qualities!: TreeNode[];
   msg!: string;
   private routeSub!: Subscription;
   private productsSub!: Subscription;
+  private orderSub!: Subscription;
 
   selectedTab: number = 0;
   selectedQuantity!: QuantityNode | null;
 
   constructor(
     private services: ServicesService,
+    private orderDataService: OrderDataService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit() {
-    this.route.queryParamMap.subscribe(params => {
-      this.serviceRef = params.get('sref');
-      this.qualityRef = params.get('dref');
-      if (this.serviceRef && this.qualityRef) {
-        this.loadService(this.serviceRef, this.qualityRef);
+    this.orderSub = this.orderDataService.orderData$.subscribe(data => {
+      this.serviceRef = data.serviceId;
+      this.productRef = data.productId;
+      if (this.serviceRef && this.productRef) {
+        this.loadService(this.serviceRef, this.productRef);
       } else {
-        this.router.navigate(['/404']);
+        this.router.navigate(['']);
       }
     });
   }
 
   ngOnDestroy() {
-    if (this.routeSub) {
-      this.routeSub.unsubscribe();
+    if (this.orderSub) {
+      this.orderSub.unsubscribe();
     }
     if (this.productsSub) {
       this.productsSub.unsubscribe();
@@ -110,7 +113,15 @@ export class DetailsComponent {
   }
 
   buy() {
-    console.log("buying");
+    const selectedQuality = this.qualities[this.selectedTab] as QualityNode;
+    const selectedQuantity = this.selectedQuantity;
+    if (selectedQuality && selectedQuantity) {
+      this.orderDataService.setAll({
+        qualityId: selectedQuality.id,
+        quantityId: selectedQuantity.id
+      });
+      this.router.navigate(['/ordenes/ingresar-datos']);
+    }
   }
 
   getQuantity(node: TreeNode): string {

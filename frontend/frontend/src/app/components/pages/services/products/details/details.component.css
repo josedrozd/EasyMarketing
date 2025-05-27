@@ -230,10 +230,13 @@
 }
 
 .description-text {
+  font-size: 1.1rem;
   white-space: pre-wrap;
   flex-grow: 1;
   text-align: left;
   padding: 0.3rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .quality-descriptions-wrapper {

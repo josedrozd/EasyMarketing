@@ -5,6 +5,7 @@ import { TreeNode } from '../../../panel/tree-node/tree-node.component';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ServiceNode } from '../../../../core/models/panel-nodes';
+import { OrderDataService } from '../../../../services/order-data.service';
 
 @Component({
   selector: 'app-products',
@@ -20,22 +21,23 @@ export class ProductsComponent implements OnInit, OnDestroy {
   service!: TreeNode;
   products!: TreeNode[];
   msg!: string;
-  private routeSub!: Subscription;
   private servicesSub!: Subscription;
+  private serviceIdSub!: Subscription;
 
   constructor(
     private services: ServicesService,
+    private orderDataService: OrderDataService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit() {
-    this.routeSub = this.route.queryParamMap.subscribe(params => {
-      this.referenceId = params.get('reference');
-      if (this.referenceId) {
-        this.loadService(this.referenceId);
+    this.serviceIdSub = this.orderDataService.orderData$.subscribe(data => {
+      const serviceId = data.serviceId;
+      if (serviceId) {
+        this.loadService(serviceId);
       } else {
-        this.router.navigate(['/404']);
+        this.router.navigate(['']);
       }
     });
   }
@@ -63,19 +65,15 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.routeSub) {
-      this.routeSub.unsubscribe();
-    }
     if (this.servicesSub) {
       this.servicesSub.unsubscribe();
     }
   }
 
   redirectToProduct(node: TreeNode) {
-    console.log("redirect to:"+ node.name);
+    this.orderDataService.setProductId(node.id);
     this.router.navigate(
-      ['/servicios', this.slugify(this.service.name), 'productos', this.slugify(node.name), 'detalles'], 
-      { queryParams: { sref: this.service.id,  dref: node.id}});
+      ['/servicios', this.slugify(this.service.name), 'productos', this.slugify(node.name), 'detalles']);
   }
 
   slugify(text: string) {

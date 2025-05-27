@@ -6,6 +6,7 @@ import { TreeNode } from '../../panel/tree-node/tree-node.component';
 import { CommonModule } from '@angular/common';
 import { ExtraNode } from '../../../core/models/panel-nodes';
 import { Router } from '@angular/router';
+import { OrderDataService } from '../../../services/order-data.service';
 
 @Component({
   selector: 'app-services',
@@ -23,6 +24,7 @@ export class ServicesComponent {
 
   constructor(
     private services: ServicesService,
+    private orderDataService: OrderDataService,
     private router: Router
   ) {}
 
@@ -37,7 +39,8 @@ export class ServicesComponent {
     if (node.nodeType == "extra") {
       window.location.href = (node as ExtraNode).destinationUrl;
     } else {
-      this.router.navigate(['/servicios', this.slugify(node.name), 'productos'], { queryParams: { reference: node.id }});
+      this.orderDataService.setServiceId(node.id);
+      this.router.navigate(['/servicios', this.slugify(node.name), 'productos']);
     }
   }
 
