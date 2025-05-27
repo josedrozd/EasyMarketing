@@ -31,7 +31,8 @@
         </div>
       </div>
     </div>
-    <button type="submit" class="action-button">
+    <div #recaptchaContainer class="g-recaptcha" data-sitekey="6LctlksrAAAAAKArc4eeiYd5g1TiSWtwj3e8O_UK" data-callback="recaptchaResolved"></div>
+    <button type="submit" class="action-button" [disabled]="!recaptchaOk || f.invalid">
       Continuar
     </button>
   </form>

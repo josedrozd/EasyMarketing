@@ -31,9 +31,12 @@ export class OrderDataComponent {
   quantities!: QuantityNode[];
   private orderSub!: Subscription;
   @ViewChild('customSelect') customSelectRef!: ElementRef;
+  @ViewChild('recaptchaContainer', { static: true }) recaptchaElement!: ElementRef;
 
   dropdownOpen = false;
   isInstagram: boolean = false;
+  recaptchaOk = false;
+  recaptchaToken: string = '';
 
   formData: { [key in FormDataKeys]: string } = {
     username: '',
@@ -60,6 +63,12 @@ export class OrderDataComponent {
         this.router.navigate(['']);
       }
     });
+    if (typeof window !== 'undefined') {
+      (window as any)['recaptchaResolved'] = (token: string) => {
+        this.recaptchaToken = token;
+        this.recaptchaOk = true;
+      };
+    }
   }
 
   ngOnDestroy() {
@@ -76,7 +85,45 @@ export class OrderDataComponent {
     });
   }
 
+  ngAfterViewInit(): void {
+    if (typeof window !== 'undefined') {
+      this.loadRecaptchaScript().then(() => {
+        if ((window as any).grecaptcha) {
+          (window as any).grecaptcha.render(this.recaptchaElement.nativeElement, {
+            sitekey: '6LctlksrAAAAAKArc4eeiYd5g1TiSWtwj3e8O_UK',
+            callback: (token: string) => {
+              this.recaptchaToken = token;
+              this.recaptchaOk = true;
+            }
+          });
+        } else {
+          console.warn('⚠️ grecaptcha todavía no está listo');
+        }
+      });
+    }
+  }
+
+  loadRecaptchaScript(): Promise<void> {
+    return new Promise((resolve) => {
+      if ((window as any).grecaptcha) {
+        resolve();
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = 'https://www.google.com/recaptcha/api.js?render=explicit';
+      script.async = true;
+      script.defer = true;
+      script.onload = () => resolve();
+      document.head.appendChild(script);
+    });
+  }
+
   checkAndSubmit(f: NgForm) {
+    if (!this.recaptchaOk) {
+      alert('Por favor, verifica el captcha.');
+      return;
+    }
     const formEl = document.querySelector('.order-form') as HTMLFormElement;
     if (!formEl.reportValidity()) {
       return;
@@ -97,50 +144,24 @@ export class OrderDataComponent {
 
   loadService() {
     this.services.getServices().subscribe(tree => {
-      const platformGroup = tree.find(node => node.nodeType === 'platform-group');
-      if (!platformGroup || !platformGroup.children) {
+      const platformGroup = tree[0];
+      const foundService = platformGroup.children!.find(child => child.id === this.serviceRef);
+      const serviceGroup = foundService?.children![0];
+      const foundProduct = serviceGroup?.children!.find(child => child.id === this.productRef);
+      const qualityGroup = foundProduct?.children![0];
+      const foundQuality = qualityGroup?.children!.find(child => child.id === this.qualityRef);
+      const quantityGroup = foundQuality?.children![0];
+      const foundQuantity = quantityGroup?.children!.find(child => child.id === this.quantityRef);
+
+      if (!foundService || !foundProduct || !foundQuality || !foundQuantity) {
         this.router.navigate(['/404']);
         return;
       }
-      const foundService = platformGroup.children.find(child => child.id === this.serviceRef);
-      if (!foundService || !foundService.children) {
-        this.router.navigate(['/404']);
-        return;
-      }
-      const serviceGroup = foundService.children.find(node => node.nodeType === 'service-group');
-      if (!serviceGroup || !serviceGroup.children) {
-        this.router.navigate(['/404']);
-        return;
-      }
-      const foundProduct = serviceGroup.children.find(child => child.id === this.productRef);
-      if (!foundProduct || !foundProduct.children) {
-        this.router.navigate(['/404']);
-        return;
-      }
-      const qualityGroup = foundProduct.children.find(node => node.nodeType == 'quality-group');
-      if (!qualityGroup || !qualityGroup.children) {
-        this.router.navigate(['/404']);
-        return;
-      }
-      const foundQuality = qualityGroup.children.find(child => child.id === this.qualityRef);
-      if (!foundQuality || !foundQuality.children) {
-        this.router.navigate(['/404']);
-        return;
-      }
-      const quantityGroup = foundQuality.children.find(node => node.nodeType == 'quantity-group');
-      if (!quantityGroup || !quantityGroup.children) {
-        this.router.navigate(['/404']);
-        return;
-      }
-      const foundQuantity = quantityGroup.children.find(child => child.id === this.quantityRef);
-      if (!foundQuantity) {
-        this.router.navigate(['/404']);
-        return;
-      }
+
       this.isInstagram = (foundService as PlatformNode).automaticPaymentAllowed;
       this.product = foundProduct;
       this.quantity = foundQuantity as QuantityNode;
-      this.quantities = (foundQuality.children[0].children as QuantityNode[])?.sort((a, b) => a.quantity - b.quantity) ?? [];
+      this.quantities = (foundQuality.children![0].children as QuantityNode[]).sort((a, b) => a.quantity - b.quantity);
     });
   }
 

@@ -22,7 +22,6 @@ export class DetailsComponent {
   product!: TreeNode;
   qualities!: TreeNode[];
   msg!: string;
-  private routeSub!: Subscription;
   private productsSub!: Subscription;
   private orderSub!: Subscription;
 
@@ -32,7 +31,6 @@ export class DetailsComponent {
   constructor(
     private services: ServicesService,
     private orderDataService: OrderDataService,
-    private route: ActivatedRoute,
     private router: Router
   ) {}
 
@@ -62,29 +60,18 @@ export class DetailsComponent {
       this.productsSub.unsubscribe();
     }
     this.productsSub = this.services.getServices().subscribe(tree => {
-      const platformGroup = tree.find(node => node.nodeType === 'platform-group');
-      if (!platformGroup || !platformGroup.children) {
-        this.router.navigate(['/404']);
-        return;
-      }
-      const foundService = platformGroup.children.find(child => child.id === sref);
-      if (!foundService || !foundService.children) {
-        this.router.navigate(['/404']);
-        return;
-      }
-      const serviceGroup = foundService.children.find(node => node.nodeType === 'service-group');
-      if (!serviceGroup || !serviceGroup.children) {
-        this.router.navigate(['/404']);
-        return;
-      }
-      const foundProduct = serviceGroup.children.find(child => child.id === dref);
-      if (!foundProduct || !foundProduct.children) {
+      const platformGroup = tree[0];
+      const foundService = platformGroup.children?.find(child => child.id === sref);
+      const serviceGroup = foundService?.children?.[0];
+      const foundProduct = serviceGroup?.children?.find(child => child.id === dref);
+      if (!foundService || !foundProduct) {
         this.router.navigate(['/404']);
         return;
       }
       this.product = foundProduct;
-      this.qualities = (this.product?.children?.length ? 
-        this.product.children[0].children?.filter(child => (child as QualityNode).activated).sort((a, b) => (b as QualityNode).priority - (a as QualityNode).priority) : []) ?? [];
+      this.qualities = (foundProduct.children?.[0]?.children
+          ?.filter(child => (child as QualityNode).activated)
+          .sort((a, b) => (b as QualityNode).priority - (a as QualityNode).priority)) ?? [];
       this.setTab(0);
       this.msg = "Compra " + this.product.name + " con entrega inmediata.";
     });

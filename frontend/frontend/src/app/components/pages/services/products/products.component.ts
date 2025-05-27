@@ -47,20 +47,16 @@ export class ProductsComponent implements OnInit, OnDestroy {
       this.servicesSub.unsubscribe();
     }
     this.servicesSub = this.services.getServices().subscribe(tree => {
-      const platformGroup = tree.find(node => node.nodeType === 'platform-group');
-      if (!platformGroup || !platformGroup.children) {
-        this.router.navigate(['/404']);
-        return;
-      }
-      const foundService = platformGroup.children.find(child => child.id === referenceId);
+      const platformGroup = tree[0];
+      const foundService = platformGroup.children?.find(child => child.id === referenceId);
       if (!foundService) {
         this.router.navigate(['/404']);
         return;
       }
       this.service = foundService;
-      this.products = (this.service?.children?.length ? 
-        this.service.children[0].children?.filter(child => (child as ServiceNode).activated) : []) ?? [];
-      this.msg = "Productos de " + this.service.name;
+      this.products = (foundService.children?.[0]?.children
+          ?.filter(child => (child as ServiceNode).activated)) ?? [];
+      this.msg = "Productos de " + foundService.name;
     });
   }
 
