@@ -13,7 +13,8 @@ import lombok.*;
 public class ExtraService {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
     private Integer id;
 
     @Column(nullable = false)

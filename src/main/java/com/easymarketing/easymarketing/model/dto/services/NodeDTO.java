@@ -33,7 +33,8 @@ import java.util.List;
 @AllArgsConstructor
 public class NodeDTO {
 
-    private String id;
+    private Integer id;
+    private String refId;
     private String nodeType;
     private String name;
     private Boolean group;

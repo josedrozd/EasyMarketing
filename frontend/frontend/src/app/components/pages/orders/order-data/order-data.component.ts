@@ -51,7 +51,7 @@ export class OrderDataComponent {
   };
 
   constructor(
-    private services: ServicesService,
+    private servicesService: ServicesService,
     private orderDataService: OrderDataService,
     private usernameCheckService: UsernameCheckService,
     private igMediaService: IGMediaService,
@@ -180,23 +180,22 @@ export class OrderDataComponent {
   }
 
   loadService() {
-    this.services.getServices().subscribe(tree => {
+    this.servicesService.getServices().subscribe(tree => {
       const platformGroup = tree[0];
-      const foundService = platformGroup.children!.find(child => child.id === this.serviceRef);
+      const foundService = platformGroup.children!.find(child => child.refId === this.serviceRef);
       const serviceGroup = foundService?.children![0];
-      const foundProduct = serviceGroup?.children!.find(child => child.id === this.productRef);
+      const foundProduct = serviceGroup?.children!.find(child => child.refId === this.productRef);
       const qualityGroup = foundProduct?.children![0];
-      const foundQuality = qualityGroup?.children!.find(child => child.id === this.qualityRef);
+      const foundQuality = qualityGroup?.children!.find(child => child.refId === this.qualityRef);
       const quantityGroup = foundQuality?.children![0];
-      const foundQuantity = quantityGroup?.children!.find(child => child.id === this.quantityRef);
+      const foundQuantity = quantityGroup?.children!.find(child => child.refId === this.quantityRef);
 
       if (!foundService || !foundProduct || !foundQuality || !foundQuantity) {
         this.router.navigate(['/404']);
         return;
       }
 
-      this.isInstagram = (foundService as PlatformNode).automaticPaymentAllowed;
-      console.log(this.isInstagram);
+      this.isInstagram = (foundService as PlatformNode).platform === "INSTAGRAM";
       this.product = foundProduct as ServiceNode;
       this.quantity = foundQuantity as QuantityNode;
       this.quantities = (foundQuality.children![0].children as QuantityNode[]).sort((a, b) => a.quantity - b.quantity);
@@ -205,7 +204,7 @@ export class OrderDataComponent {
 
   onQuantityChange(selectedQuantity: TreeNode) {
     this.quantity = selectedQuantity as QuantityNode;
-    this.orderDataService.setQuantityId(selectedQuantity.id);
+    this.orderDataService.setQuantityRefId(selectedQuantity.refId);
   }
 
   validateCustomFields(): boolean {
@@ -229,12 +228,13 @@ export class OrderDataComponent {
 
   selectQuantity(q: QuantityNode) {
     this.quantity = q;
-    this.orderDataService.setQuantityId(q.id);
+    this.orderDataService.setQuantityRefId(q.refId);
     this.dropdownOpen = false;
   }
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
+    if (!this.customSelectRef) return;
     const clickedInside = this.customSelectRef.nativeElement.contains(event.target);
     if (!clickedInside && this.dropdownOpen) {
       this.dropdownOpen = false;

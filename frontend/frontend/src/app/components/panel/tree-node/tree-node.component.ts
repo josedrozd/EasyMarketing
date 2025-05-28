@@ -5,7 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { NodeDisplayPipe } from './node-display-pipe/node-display-pipe';
 
 export interface TreeNode {
-  id: string;
+  id: number | null;
+  refId: string;
   nodeType: string;
   name: string;
   group: boolean;

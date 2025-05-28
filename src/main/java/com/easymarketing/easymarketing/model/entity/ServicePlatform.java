@@ -1,5 +1,6 @@
 package com.easymarketing.easymarketing.model.entity;
 
+import com.easymarketing.easymarketing.model.enums.PlatformEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,11 +14,15 @@ import lombok.*;
 public class ServicePlatform {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
     private Integer id;
 
     @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
+    private String platform;
 
     @Column(name = "img_url", nullable = false)
     private String imgUrl;

@@ -11,6 +11,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class PlatformDTO extends NodeDTO {
 
+    private String platform;
     private String imgUrl;
     private Boolean automaticPaymentAllowed;
     private Boolean active;

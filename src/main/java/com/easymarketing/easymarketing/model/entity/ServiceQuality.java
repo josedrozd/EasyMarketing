@@ -13,7 +13,8 @@ import lombok.*;
 public class ServiceQuality {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
     private Integer id;
 
     @ManyToOne(optional = false)

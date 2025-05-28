@@ -39,7 +39,7 @@ export class ServicesComponent {
     if (node.nodeType == "extra") {
       window.location.href = (node as ExtraNode).destinationUrl;
     } else {
-      this.orderDataService.setServiceId(node.id);
+      this.orderDataService.setServiceRefId(node.refId);
       this.router.navigate(['/servicios', this.slugify(node.name), 'productos']);
     }
   }

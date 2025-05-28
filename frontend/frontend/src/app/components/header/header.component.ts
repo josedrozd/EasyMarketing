@@ -50,7 +50,7 @@ export class HeaderComponent {
   onSelect(node: TreeNode, event: Event) {
     event.stopPropagation();
     this.selectedNode = node;
-    this.orderDataService.setServiceId(node.id);
+    this.orderDataService.setServiceRefId(node.refId);
     if (node.nodeType == "extra") {
       window.location.href = (node as ExtraNode).destinationUrl;
     } else {

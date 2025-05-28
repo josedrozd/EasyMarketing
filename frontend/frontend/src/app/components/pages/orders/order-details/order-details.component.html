@@ -1,1 +1,20 @@
-<p>order-details works!</p>
+<div class="details-container">
+    <div class="profile-container">
+        <div class="user-info">
+            <div><img [src]="getImageUrl()" alt="Foto de perfil" width="150" /></div>
+            <div>
+                <span>{{'@' + orderData.username }}</span>
+                <a [routerLink]="['/ordenes/ingresar-datos']">Cambiar usuario</a>
+            </div>
+        </div>
+        <div class="order-details">
+            <img src="/socialmedia/icons8-heart-48.png" />
+            <span>{{ quantity?.quantity + ' ' + product?.name }}</span>
+            <a [routerLink]="['/ordenes/ingresar-datos']">Cambiar</a>
+            <span>{{ '$' + (quantity?.withDiscount ? quantity?.finalPrice : quantity?.basePrice) }}</span>
+        </div>
+        <div class="checkout">
+            <button>Añadir al carrito</button>
+        </div>
+    </div>
+</div>

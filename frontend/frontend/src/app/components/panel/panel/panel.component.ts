@@ -119,6 +119,8 @@ export class PanelComponent {
     if (this.nodeBeingEdited) {
       if (this.nodeBeingEdited instanceof QuantityNode)
         this.formData.discount = calculateDiscount(+this.formData.basePrice, +this.formData.finalPrice);
+      if (this.nodeBeingEdited instanceof PlatformNode && this.formData.platform !== "INSTAGRAM")
+        this.formData.automaticPaymentAllowed = false;
       Object.assign(this.nodeBeingEdited, this.formData);
     } else if (this.editingParentNode && this.editingNodeType) {
       let newNode: TreeNode;
@@ -126,22 +128,28 @@ export class PanelComponent {
       switch (this.editingNodeType) {
         case 'platform':
           newNode = new PlatformNode(
+            null,
             this.formData.name,
+            this.formData.platform,
             this.formData.imgUrl,
-            this.formData.automaticPaymentAllowed || false,
+            ((this.formData.platform === "INSTAGRAM") ? (this.formData.automaticPaymentAllowed || false) : false),
             this.formData.active || false
           );
           break;
         case 'service':
           newNode = new ServiceNode(
+            null,
             this.formData.name,
             this.formData.type,
+            this.formData.product,
             this.formData.imgUrl,
-            this.formData.activated || false
+            this.formData.activated || false,
+            this.formData.descripcion
           );
           break;
         case 'quality':
           newNode = new QualityNode(
+            null,
             this.formData.name,
             this.formData.provider,
             +this.formData.providerServiceId,
@@ -155,6 +163,7 @@ export class PanelComponent {
         case 'quantity':
           this.formData.discount = calculateDiscount(+this.formData.basePrice, +this.formData.finalPrice);
           newNode = new QuantityNode(
+            null,
             +this.formData.quantity,
             this.formData.withDiscount || false,
             +this.formData.basePrice,
@@ -164,6 +173,7 @@ export class PanelComponent {
           break;
         case 'extra':
           newNode = new ExtraNode(
+            null,
             this.formData.name,
             this.formData.imgUrl,
             this.formData.destinationUrl,
@@ -194,14 +204,26 @@ export class PanelComponent {
           alert('Las url de la imagen no puede estar vacia.');
           return false;
         }
+        if (!this.formData.platform?.trim()) {
+          alert('La plataforma es obligatoria.');
+          return false;
+        }
         break;
       case 'service':
         if (!this.formData.type?.trim()) {
           alert('El tipo de servicio es obligatorio.');
           return false;
         }
+        if (!this.formData.product?.trim()) {
+          alert('El tipo de producto es obligatorio.');
+          return false;
+        }
         if (!this.formData.imgUrl?.trim()) {
           alert('Las url de la imagen no puede estar vacia.');
+          return false;
+        }
+        if (!this.formData.description?.trim()) {
+          alert('Debe proveer una descripcion.');
           return false;
         }
         break;
@@ -271,7 +293,7 @@ export class PanelComponent {
     if (!this.nodeToRemove) return;
 
     const recurse = (nodes: TreeNode[]): boolean => {
-      const index = nodes.findIndex(n => n.id === this.nodeToRemove?.id);
+      const index = nodes.findIndex(n => n.refId === this.nodeToRemove?.refId);
       if (index !== -1) {
         nodes.splice(index, 1);
         return true;
@@ -303,9 +325,17 @@ export class PanelComponent {
     return ["HONEST", "SMMCOST"];
   }
 
+  getProducts(): string[] {
+    return ["LIKES", "FOLLOWERS", "VIEWS", "COMMENTS", "OTHERS"];
+  }
+
+  getPlatforms(): string[] {
+    return ["INSTAGRAM", "TIKTOK", "YOUTUBE", "FACEBOOK", "KICK", "OTHER"];
+  }
+
   navigateTo(node: TreeNode) {
-    console.log("navigateTo:" + node.id + " - " + this.currentTree[0]?.id);
-    if (node.id !== this.currentTree[0]?.id) {
+    console.log("navigateTo:" + node.refId + " - " + this.currentTree[0]?.refId);
+    if (node.refId !== this.currentTree[0]?.refId) {
       this.historyStack.push(this.currentTree);
       this.currentTree = [node];
     }

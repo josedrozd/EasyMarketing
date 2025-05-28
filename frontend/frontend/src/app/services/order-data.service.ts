@@ -65,19 +65,19 @@ export class OrderDataService {
     return this.orderDataSubject.value;
   }
 
-  setServiceId(serviceId: string) {
+  setServiceRefId(serviceId: string) {
     this.setAll({ serviceId });
   }
 
-  setProductId(productId: string) {
+  setProductRefId(productId: string) {
     this.setAll({ productId });
   }
 
-  setQualityId(qualityId: string) {
+  setQualityRefId(qualityId: string) {
     this.setAll({ qualityId });
   }
 
-  setQuantityId(quantityId: string) {
+  setQuantityRefId(quantityId: string) {
     this.setAll({ quantityId });
   }
 

@@ -15,14 +15,14 @@ function reviveNode(node: TreeNode): TreeNode {
   switch (node.nodeType) {
     case 'platform':
       revived = Object.assign(
-        new PlatformNode(node.name, (node as any).imgUrl, (node as any).automaticPaymentAllowed, (node as any).active),
+        new PlatformNode(node.id, node.name, (node as any).platform, (node as any).imgUrl, (node as any).automaticPaymentAllowed, (node as any).active),
         node
       );
       break;
 
     case 'service':
       revived = Object.assign(
-        new ServiceNode(node.name, (node as any).type, (node as any).imgUrl, (node as any).activated),
+        new ServiceNode(node.id, node.name, (node as any).type, (node as any).product, (node as any).imgUrl, (node as any).activated, (node as any).description),
         node
       );
       break;
@@ -30,6 +30,7 @@ function reviveNode(node: TreeNode): TreeNode {
     case 'quality':
       revived = Object.assign(
         new QualityNode(
+          node.id,
           node.name,
           (node as any).provider,
           (node as any).providerServiceId,
@@ -46,6 +47,7 @@ function reviveNode(node: TreeNode): TreeNode {
     case 'quantity':
       revived = Object.assign(
         new QuantityNode(
+          node.id,
           (node as any).quantity,
           (node as any).withDiscount,
           (node as any).basePrice,
@@ -59,6 +61,7 @@ function reviveNode(node: TreeNode): TreeNode {
     case 'extra':
       revived = Object.assign(
         new ExtraNode(
+          node.id,
           node.name,
           (node as any).imgUrl,
           (node as any).destinationUrl,
@@ -69,7 +72,7 @@ function reviveNode(node: TreeNode): TreeNode {
       break;
 
     default:
-      revived = Object.assign(new GroupNode(node.nodeType, node.name), node);
+      revived = Object.assign(new GroupNode(node.id, node.nodeType, node.name), node);
       break;
   }
 

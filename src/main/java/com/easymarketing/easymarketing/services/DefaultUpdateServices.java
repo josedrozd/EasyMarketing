@@ -42,7 +42,9 @@ public class DefaultUpdateServices implements IUpdateServices {
                 .map(PlatformDTO.class::cast)
                 .forEach(platformDTO -> {
                     ServicePlatform platform = ServicePlatform.builder()
+                            .id(platformDTO.getId())
                             .name(platformDTO.getName())
+                            .platform(platformDTO.getPlatform())
                             .imgUrl(platformDTO.getImgUrl())
                             .automaticPaymentAllowed(platformDTO.getAutomaticPaymentAllowed())
                             .active(platformDTO.getActive())
@@ -53,11 +55,14 @@ public class DefaultUpdateServices implements IUpdateServices {
                             .map(ServiceDTO.class::cast)
                             .forEach(serviceNode -> {
                                 com.easymarketing.easymarketing.model.entity.Service service = com.easymarketing.easymarketing.model.entity.Service.builder()
+                                        .id(serviceNode.getId())
                                         .name(serviceNode.getName())
+                                        .product(serviceNode.getProduct())
                                         .platform(platform)
                                         .type(serviceNode.getType())
                                         .imgUrl(serviceNode.getImgUrl())
                                         .activated(serviceNode.getActivated())
+                                        .description(serviceNode.getDescription())
                                         .build();
                                 servicesToSave.add(service);
 
@@ -65,6 +70,7 @@ public class DefaultUpdateServices implements IUpdateServices {
                                         .map(QualityDTO.class::cast)
                                         .forEach(qualityNode -> {
                                             ServiceQuality quality = ServiceQuality.builder()
+                                                    .id(qualityNode.getId())
                                                     .service(service)
                                                     .name(qualityNode.getName())
                                                     .provider(qualityNode.getProvider())
@@ -81,6 +87,7 @@ public class DefaultUpdateServices implements IUpdateServices {
                                                     .map(QuantityDTO.class::cast)
                                                     .forEach(tierNode -> {
                                                         ServiceTier tier = ServiceTier.builder()
+                                                                .id(tierNode.getId())
                                                                 .quantity(tierNode.getQuantity())
                                                                 .quality(quality)
                                                                 .withDiscount(tierNode.getWithDiscount())
@@ -97,6 +104,7 @@ public class DefaultUpdateServices implements IUpdateServices {
                 .map(ExtraDTO.class::cast)
                 .forEach(extraDTO -> {
                     ExtraService extra = ExtraService.builder()
+                            .id(extraDTO.getId())
                             .name(extraDTO.getName())
                             .imgUrl(extraDTO.getImgUrl())
                             .destinationUrl(extraDTO.getDestinationUrl())
@@ -104,12 +112,6 @@ public class DefaultUpdateServices implements IUpdateServices {
                             .build();
                     extrasToSave.add(extra);
                 });
-
-        serviceTierRepository.deleteAllInBulk();
-        serviceQualityRepository.deleteAllInBulk();
-        serviceRepository.deleteAllInBulk();
-        servicePlatformRepository.deleteAllInBulk();
-        extraServiceRepository.deleteAllInBulk();
 
         servicePlatformRepository.saveAll(platformsToSave);
         serviceRepository.saveAll(servicesToSave);

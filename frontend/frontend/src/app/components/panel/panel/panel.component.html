@@ -47,14 +47,20 @@
         <ng-container [ngSwitch]="editingNodeType">
           <div *ngSwitchCase="'platform'">
             <div class="form-row">
-              <label>Nombre de plataforma:</label>
+              <label>Nombre visual:</label>
               <input [(ngModel)]="formData.name" />
+            </div>
+            <div class="form-row">
+              <label>Plataforma:</label>
+              <select [(ngModel)]="formData.platform">
+                <option *ngFor="let platform of getPlatforms()" [value]="platform">{{ platform }}</option>
+              </select>
             </div>
             <div class="form-row">
               <label>Url de imagen:</label>
               <input [(ngModel)]="formData.imgUrl" />
             </div>
-            <div class="form-row">
+            <div class="form-row" *ngIf="formData.platform === 'INSTAGRAM'">
               <label>Pagos automáticos:</label>
               <input type="checkbox" [(ngModel)]="formData.automaticPaymentAllowed" />
             </div>
@@ -66,7 +72,7 @@
       
           <div *ngSwitchCase="'service'">
             <div class="form-row">
-              <label>Nombre:</label>
+              <label>Nombre visual del producto:</label>
               <input [(ngModel)]="formData.name" />
             </div>
             <div class="form-row">
@@ -76,12 +82,22 @@
               </select>
             </div>
             <div class="form-row">
+              <label>Producto:</label>
+              <select [(ngModel)]="formData.product">
+                <option *ngFor="let product of getProducts()" [value]="product">{{ product }}</option>
+              </select>
+            </div>
+            <div class="form-row">
               <label>Url de imagen:</label>
               <input [(ngModel)]="formData.imgUrl" />
             </div>
             <div class="form-row">
               <label>Activado:</label>
               <input type="checkbox" [(ngModel)]="formData.activated" />
+            </div>
+            <div class="form-row">
+              <label>Descripción:</label>
+              <textarea [(ngModel)]="formData.description" rows="12" maxlength="1000"></textarea>
             </div>
           </div>
       

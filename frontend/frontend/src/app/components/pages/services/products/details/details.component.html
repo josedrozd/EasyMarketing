@@ -17,7 +17,7 @@
         <div class="quantities" *ngIf="quality.children && selectedQuantity; else noQuantities">
           <div *ngFor="let group of quality.children">
             <ng-container *ngIf="group.nodeType === 'quantity-group'">
-              <div class="quantity-card" *ngFor="let quantity of group.children" [class.selected]="selectedQuantity.id === quantity.id" (click)="selectQuantity(quantity)">
+              <div class="quantity-card" *ngFor="let quantity of group.children" [class.selected]="selectedQuantity.refId === quantity.refId" (click)="selectQuantity(quantity)">
                 <div class="card">
                     <div>
                         <p>{{ getQuantity(quantity) }}</p>

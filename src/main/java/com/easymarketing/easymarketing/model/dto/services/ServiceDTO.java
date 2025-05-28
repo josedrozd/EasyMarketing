@@ -12,8 +12,10 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class ServiceDTO extends NodeDTO {
 
+    private String product;
     private String type;
     private String imgUrl;
     private Boolean activated;
+    private String description;
 
 }

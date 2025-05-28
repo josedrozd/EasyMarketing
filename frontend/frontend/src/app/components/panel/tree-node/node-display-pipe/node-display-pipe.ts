@@ -6,9 +6,9 @@ import { TreeNode } from '../tree-node.component';
   export class NodeDisplayPipe implements PipeTransform {
     transform(node: TreeNode): string {
       if (node instanceof PlatformNode) {
-        return `${node.name} - Pagos automáticos: ${node.automaticPaymentAllowed ? 'Sí' : 'No'} - ${node.imgUrl?.slice(0,12)}... - Activo: ${node.active ? 'Sí' : 'No'}`;
+        return `${node.name} - Plataforma: ${node.platform} - Pagos automáticos: ${node.automaticPaymentAllowed ? 'Sí' : 'No'} - ${node.imgUrl?.slice(0,12)}... - Activo: ${node.active ? 'Sí' : 'No'}`;
       } else if (node instanceof ServiceNode) {
-        return `${node.name} - Tipo: ${node.type} - ${node.imgUrl.slice(0,12)}... - Activo: ${node.activated ? 'Sí' : 'No'}`;
+        return `${node.name} - Tipo: ${node.type} - Producto: ${node.product} - ${node.imgUrl.slice(0,12)}... - Activo: ${node.activated ? 'Sí' : 'No'}`;
       } else if (node instanceof QualityNode) {
         return `${node.name} - ${node.automaticPayment
           ? `Proveedor: ${node.provider} - Id: ${node.providerServiceId} - Mín.: ${node.minimum} - Pago automático: Sí`

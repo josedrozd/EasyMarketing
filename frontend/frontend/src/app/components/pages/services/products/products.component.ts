@@ -48,7 +48,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     }
     this.servicesSub = this.services.getServices().subscribe(tree => {
       const platformGroup = tree[0];
-      const foundService = platformGroup.children?.find(child => child.id === referenceId);
+      const foundService = platformGroup.children?.find(child => child.refId === referenceId);
       if (!foundService) {
         this.router.navigate(['/404']);
         return;
@@ -67,7 +67,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   redirectToProduct(node: TreeNode) {
-    this.orderDataService.setProductId(node.id);
+    this.orderDataService.setProductRefId(node.refId);
     this.router.navigate(
       ['/servicios', this.slugify(this.service.name), 'productos', this.slugify(node.name), 'detalles']);
   }

@@ -2,36 +2,42 @@ import { TreeNode } from "../../components/panel/tree-node/tree-node.component";
 
 export class BaseNode implements TreeNode {
     constructor(
+      public id: number | null,
       public nodeType: string,
       public name: string,
       public group: boolean,
       public children: TreeNode[] | undefined,
       public expanded: boolean = false,
       public editing: boolean = true,
-      public id: string = crypto.randomUUID().toString()
+      public refId: string = crypto.randomUUID().toString()
     ) {}
 }
 
 export class GroupNode extends BaseNode {
     constructor(
+        id: number | null,
         nodeType: string,
         name: string
     ) {
-      super(nodeType, name, true, [], false, false);
+      super(id, nodeType, name, true, [], false, false);
     }
 }
 
 export class PlatformNode extends BaseNode {
+    platform!: string;
     imgUrl!: string;
     automaticPaymentAllowed!: boolean;
     active!: boolean;
     constructor(
+      id: number | null,
       name: string,
+      platform: string,
       imgUrl: string,
       automaticPaymentAllowed: boolean,
       active: boolean
     ) {
-      super("platform", name, false, [new GroupNode("service-group", "SERVICIOS:")], true);
+      super(id, "platform", name, false, [new GroupNode(1, "service-group", "SERVICIOS:")], true);
+      this.platform = platform;
       this.imgUrl = imgUrl;
       this.automaticPaymentAllowed = automaticPaymentAllowed;
       this.active = active;
@@ -40,18 +46,25 @@ export class PlatformNode extends BaseNode {
 
 export class ServiceNode extends BaseNode {
     type!: string;
+    product!: string;
     imgUrl!: string;
     activated!: boolean;
+    description!: string;
     constructor(
+        id: number | null,
         name: string,
         type: string,
+        product: string,
         imgUrl: string,
-        activated: boolean
+        activated: boolean,
+        description: string
     ) {
-      super("service", name, false, [new GroupNode("quality-group", "CALIDADES:")], true);
+      super(id, "service", name, false, [new GroupNode(1, "quality-group", "CALIDADES:")], true);
       this.type = type;
+      this.product = product;
       this.imgUrl = imgUrl;
       this.activated = activated;
+      this.description = description;
     }
 }
 
@@ -64,6 +77,7 @@ export class QualityNode extends BaseNode {
     activated!: boolean;
     description!: string;
     constructor(
+        id: number | null,
         name: string,
         provider: string,
         providerServiceId: number,
@@ -73,7 +87,7 @@ export class QualityNode extends BaseNode {
         activated: boolean,
         description: string
     ) {
-      super("quality", name, false, [new GroupNode("quantity-group", "CANTIDADES:")], true);
+      super(id, "quality", name, false, [new GroupNode(1, "quantity-group", "CANTIDADES:")], true);
       this.provider = provider;
       this.providerServiceId = providerServiceId;
       this.minimum = minimum;
@@ -91,13 +105,14 @@ export class QuantityNode extends BaseNode {
     finalPrice!: number;
     discount!: number;
     constructor(
+        id: number | null,
         quantity: number,
         withDiscount: boolean,
         basePrice: number,
         finalPrice: number,
         discount: number
     ) {
-      super("quantity", quantity.toString(), false, undefined);
+      super(id, "quantity", quantity.toString(), false, undefined);
       this.quantity = quantity;
       this.withDiscount = withDiscount;
       this.basePrice = basePrice;
@@ -111,12 +126,13 @@ export class ExtraNode extends BaseNode {
   destinationUrl!: string;
   active!: boolean;
   constructor(
+    id: number | null,
     name: string,
     imgUrl: string,
     destinationUrl: string,
     active: boolean
   ) {
-    super("extra", name, false, undefined)
+    super(id, "extra", name, false, undefined)
     this.imgUrl = imgUrl;
     this.destinationUrl = destinationUrl;
     this.active = active;

@@ -1,5 +1,6 @@
 package com.easymarketing.easymarketing.model.entity;
 
+import com.easymarketing.easymarketing.model.enums.ServiceProductEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,7 +14,8 @@ import lombok.*;
 public class Service {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
     private Integer id;
 
     @Column(nullable = false)
@@ -26,10 +28,17 @@ public class Service {
     @Column(nullable = false)
     private String type;
 
+    @Column(nullable = false)
+    private String product;
+
     @Column(name = "img_url", nullable = false)
     private String imgUrl;
 
     @Column(nullable = false)
     private Boolean activated;
+
+    @Lob
+    @Column(length = 2000, nullable = false)
+    private String description;
 
 }

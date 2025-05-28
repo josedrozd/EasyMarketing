@@ -61,9 +61,9 @@ export class DetailsComponent {
     }
     this.productsSub = this.services.getServices().subscribe(tree => {
       const platformGroup = tree[0];
-      const foundService = platformGroup.children?.find(child => child.id === sref);
+      const foundService = platformGroup.children?.find(child => child.refId === sref);
       const serviceGroup = foundService?.children?.[0];
-      const foundProduct = serviceGroup?.children?.find(child => child.id === dref);
+      const foundProduct = serviceGroup?.children?.find(child => child.refId === dref);
       if (!foundService || !foundProduct) {
         this.router.navigate(['/404']);
         return;
@@ -104,8 +104,8 @@ export class DetailsComponent {
     const selectedQuantity = this.selectedQuantity;
     if (selectedQuality && selectedQuantity) {
       this.orderDataService.setAll({
-        qualityId: selectedQuality.id,
-        quantityId: selectedQuantity.id
+        qualityId: selectedQuality.refId,
+        quantityId: selectedQuantity.refId
       });
       this.router.navigate(['/ordenes/ingresar-datos']);
     }

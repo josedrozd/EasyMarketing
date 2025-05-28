@@ -30,9 +30,9 @@ export class OrderLayoutComponent {
       const orderData: OrderData = this.orderDataService.getSnapshot();
       this.servicesService.getServices().subscribe(tree => {
         const platformGroup = tree[0];
-        const foundService = platformGroup.children!.find(child => child.id === orderData.serviceId);
+        const foundService = platformGroup.children!.find(child => child.refId === orderData.serviceId);
         const serviceGroup = foundService!.children![0];
-        const foundProduct = serviceGroup.children!.find(child => child.id === orderData.productId);
+        const foundProduct = serviceGroup.children!.find(child => child.refId === orderData.productId);
 
         if (!foundService || !foundProduct) {
           this.router.navigate(['/404']);

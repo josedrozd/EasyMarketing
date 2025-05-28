@@ -3,10 +3,16 @@ import { UsernameCheckService } from '../../../../services/backend/instagram/use
 import { OrderData, OrderDataService } from '../../../../services/order-data.service';
 import { IgUserInfo } from '../../../../core/models/ig-user-info';
 import { take } from 'rxjs';
+import { environment } from '../../../../../environments/environment';
+import { Router, RouterLink } from '@angular/router';
+import { ServicesService } from '../../../../services/backend/services/services.service';
+import { PlatformNode, QuantityNode, ServiceNode } from '../../../../core/models/panel-nodes';
 
 @Component({
   selector: 'app-order-details',
-  imports: [],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './order-details.component.html',
   styleUrl: './order-details.component.css'
 })
@@ -14,11 +20,16 @@ export class OrderDetailsComponent {
 
   userInfoValue!: IgUserInfo;
   orderData!: OrderData;
-  username!: string;
+  product!: ServiceNode | null;
+  quantity!: QuantityNode | null;
+
+  isInstagram: boolean = false;
 
   constructor(
+    private servicesService: ServicesService,
     private orderDataService: OrderDataService,
-    private usernameCheckService: UsernameCheckService
+    private usernameCheckService: UsernameCheckService,
+    private router: Router
   ) {
 
   }
@@ -26,9 +37,8 @@ export class OrderDetailsComponent {
   ngOnInit() {
     this.orderDataService.orderData$.pipe(take(1)).subscribe(data => {
       this.orderData = data;
-      this.username = this.orderData.username!;
-      
-      if (this.orderData.platform === "instagram") {
+      this.loadService();
+      if (this.isInstagram) {
         this.usernameCheckService.checkIGUsername(this.orderData.username!).subscribe(res => {
           this.userInfoValue = res;
           console.log(this.userInfoValue.id);
@@ -51,6 +61,34 @@ export class OrderDetailsComponent {
       name: null,
       lastname: null,
       platform: null
+    });
+  }
+
+  getImageUrl(): string {
+    return environment.production
+      ? environment.imgProxy + this.userInfoValue.profilePicUrl
+      : '/dev_img.jpg';
+  }
+
+  loadService() {
+    this.servicesService.getServices().subscribe(tree => {
+      const platformGroup = tree[0];
+      const foundService = platformGroup.children!.find(child => child.refId === this.orderData.serviceId);
+      const serviceGroup = foundService?.children![0];
+      const foundProduct = serviceGroup?.children!.find(child => child.refId === this.orderData.productId);
+      const qualityGroup = foundProduct?.children![0];
+      const foundQuality = qualityGroup?.children!.find(child => child.refId === this.orderData.qualityId);
+      const quantityGroup = foundQuality?.children![0];
+      const foundQuantity = quantityGroup?.children!.find(child => child.refId === this.orderData.quantityId);
+
+      if (!foundService || !foundProduct || !foundQuality || !foundQuantity) {
+        this.router.navigate(['/404']);
+        return;
+      }
+
+      this.isInstagram = (foundService as PlatformNode).platform === "INSTAGRAM";
+      this.product = foundProduct as ServiceNode;
+      this.quantity = foundQuantity as QuantityNode;
     });
   }
 
