@@ -1,20 +1,51 @@
-<div class="details-container">
-    <div class="profile-container">
+<div *ngIf="!isLoading; else loading" class="details-container">
+    <div *ngIf="mediaVisible" class="media-container card">
+        <div class="title">
+            <span>{{ 'SELECCIONAR ' + (product?.type?.toUpperCase()) + 'S' }}</span>
+        </div>
+        <div class="option-cards">
+            <button>Distribución automática</button>
+            <button>Distribución manual</button>
+        </div>
+        <div class="media-grid">
+            <div class="media-item" *ngFor="let m of media" (click)="toggleSelection(m.url)" [class.selected]="isSelected(m.url)">
+                <input type="checkbox" class="card-check" [checked]="isSelected(m.url)" tabindex="-1" readonly />
+                <img [src]="getImageUrl(m.picUrl)" alt="Imagen" />
+            </div>
+        </div>
+        <div>
+            <button *ngIf="hasMore()" class="action-button" (click)="loadMedia()" [disabled]="isLoadingMedia">
+                <ng-container *ngIf="!isLoadingMedia; else loading">
+                    Cargar más
+                </ng-container>
+                <ng-template #loading>
+                    <img src="loading.gif" alt="Cargando..." style="height: 20px;" />
+                </ng-template>
+            </button>
+        </div>
+    </div>
+    <div class="checkout small-window" (click)="addToCart()">
+        <button class="action-button" [disabled]="isDisabled()">Añadir al carrito</button>
+    </div>
+    <div class="profile-container card big-window">
         <div class="user-info">
-            <div><img [src]="getImageUrl()" alt="Foto de perfil" width="150" /></div>
-            <div>
+            <div><img [src]="getImageUrl(profilePicUrl)" alt="Foto de perfil" class="profile-pic" /></div>
+            <div class="username-display">
                 <span>{{'@' + orderData.username }}</span>
                 <a [routerLink]="['/ordenes/ingresar-datos']">Cambiar usuario</a>
             </div>
         </div>
         <div class="order-details">
             <img src="/socialmedia/icons8-heart-48.png" />
-            <span>{{ quantity?.quantity + ' ' + product?.name }}</span>
+            <span>{{ quantity?.quantity + ' ' + product?.name?.toLowerCase() }}</span>
             <a [routerLink]="['/ordenes/ingresar-datos']">Cambiar</a>
-            <span>{{ '$' + (quantity?.withDiscount ? quantity?.finalPrice : quantity?.basePrice) }}</span>
+            <span class="price">{{ '$' + (quantity?.withDiscount ? quantity?.finalPrice : quantity?.basePrice) }}</span>
         </div>
-        <div class="checkout">
-            <button>Añadir al carrito</button>
+        <div class="checkout" (click)="addToCart()">
+            <button class="action-button" [disabled]="isDisabled()">Añadir al carrito</button>
         </div>
     </div>
 </div>
+<ng-template #loading>
+    <img src="loading.gif" alt="Cargando..." style="height: 50px;" />
+</ng-template>

@@ -1,5 +1,5 @@
 <div class="form-container">
-  <form #f="ngForm" class="order-form" (ngSubmit)="checkAndSubmit(f)">
+  <form #f="ngForm" class="order-form card" (ngSubmit)="checkAndSubmit(f)">
     <div class="input-icon-wrapper">
       <img [src]="isInstagram ? '/socialmedia/icons8-instagram-48.png' : '/socialmedia/icons8-user-48.png'" class="icon" />
       <input name="username" [(ngModel)]="formData.username" required type="text" placeholder="Nombre de usuario" />

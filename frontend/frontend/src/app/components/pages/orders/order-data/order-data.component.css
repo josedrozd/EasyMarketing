@@ -166,10 +166,3 @@ form.order-form .name-lastname-row > input {
   justify-content: center;
   margin: 0.5rem 0;
 }
-
-.action-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-  opacity: 0.6;
-  pointer-events: none;
-}

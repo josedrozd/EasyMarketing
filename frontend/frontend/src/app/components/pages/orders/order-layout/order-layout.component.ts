@@ -60,6 +60,11 @@ export class OrderLayoutComponent {
     }
   }
 
+  goIndex() {
+    this.orderDataService.reset();
+    this.router.navigate(['/']);
+  }
+
   slugify(text: string) {
     return text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '');
   }

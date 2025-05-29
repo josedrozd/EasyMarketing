@@ -3,12 +3,12 @@
         <button class="back" (click)="goBack()">
             <mat-icon>chevron_left</mat-icon> <span>Atrás</span>
         </button>
-        <a class="logo" routerLink="/">
+        <a class="logo" (click)="goIndex()">
             <img src="bannertransparent2.png" alt="Logo" />
         </a>
     </header>
 
-    <main class="content">
+    <main class="layout-content">
         <router-outlet></router-outlet>
     </main>
 </div>
