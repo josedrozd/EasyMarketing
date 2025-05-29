@@ -1,4 +1,4 @@
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, ElementRef, Inject, PLATFORM_ID, QueryList, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { UsernameCheckService } from '../../../../services/backend/instagram/username-check.service';
 import { OrderData, OrderDataService } from '../../../../services/order-data.service';
 import { IgUserInfo } from '../../../../core/models/ig-user-info';
@@ -6,16 +6,22 @@ import { take } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { Router, RouterLink } from '@angular/router';
 import { ServicesService } from '../../../../services/backend/services/services.service';
-import { PlatformNode, QuantityNode, ServiceNode } from '../../../../core/models/panel-nodes';
+import { PlatformNode, QualityNode, QuantityNode, ServiceNode } from '../../../../core/models/panel-nodes';
 import { IGMediaPostDTO, IGMediaService } from '../../../../services/backend/instagram/retrieve-media.service';
 import { IGClipsService, IGReelClipDTO } from '../../../../services/backend/instagram/retrieve-reels.service';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS, MatSlideToggleDefaultOptions, MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FormsModule } from '@angular/forms';
+import { CartItem } from '../../../../core/models/cart-item';
+import { CartService } from '../../../../services/cart.service';
 
 @Component({
   selector: 'app-order-details',
   imports: [
+    MatSlideToggleModule,
     RouterLink,
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   templateUrl: './order-details.component.html',
   styleUrls: ['./order-details.component.css', '../order-layout/order-layout.component.css']
@@ -28,18 +34,24 @@ export class OrderDetailsComponent {
   userInfoValue!: IgUserInfo;
   orderData!: OrderData;
   product!: ServiceNode | null;
+  quality!: QualityNode | null;
   quantity!: QuantityNode | null;
 
   isInstagram: boolean = false;
   mediaVisible: boolean = false;
+  
+  isAutoDistribution: boolean = true;
 
   userId!: number;
-  profilePicUrl!: string;
+  profilePicUrl!: string | undefined;
   mediaType!: string;
   media: IGReelClipDTO[] | IGMediaPostDTO[] = [];
   selectedUrls: string[] = [];
+  
+  @ViewChildren('manualQtyInput') manualInputs!: QueryList<ElementRef<HTMLInputElement>>;
 
   constructor(
+    private cartService: CartService,
     private servicesService: ServicesService,
     private orderDataService: OrderDataService,
     private usernameCheckService: UsernameCheckService,
@@ -77,8 +89,8 @@ export class OrderDetailsComponent {
     this.selectedUrls = [];
   }
 
-  getImageUrl(picUrl: string): string {
-    return environment.production
+  getImageUrl(picUrl: string | undefined): string {
+    return picUrl && environment.production
       ? environment.imgProxy + picUrl
       : '/dev_img.jpg';
   }
@@ -103,6 +115,7 @@ export class OrderDetailsComponent {
       this.mediaType = (foundProduct as ServiceNode).type;
       this.mediaVisible = this.isInstagram && (this.mediaType === "POST" || this.mediaType === "REEL");
       this.product = foundProduct as ServiceNode;
+      this.quality = foundQuality as QualityNode;
       this.quantity = foundQuantity as QuantityNode;
       if (this.isInstagram) this.loadIgData();
     });
@@ -112,12 +125,12 @@ export class OrderDetailsComponent {
     this.usernameCheckService.checkIGUsername(this.orderData.username!).subscribe(res => {
       this.userInfoValue = res;
       this.userId = Number(this.userInfoValue.id);
+      this.profilePicUrl = this.userInfoValue.profilePicUrl;
       this.loadMedia();
     });
   }
 
   loadMedia() {
-    console.log("loading");
     if (this.mediaType === "POST") {
       this.isLoadingMedia = true;
       this.igMediaService.getMediaByUserId(this.userId).subscribe(() => {
@@ -154,19 +167,68 @@ export class OrderDetailsComponent {
     return this.mediaType && this.mediaType === "POST" ? this.igMediaService.hasMore() : this.igClipsService.hasMore();
   }
 
+  isDisabled(): boolean {
+    return !(["POST", "REEL"].includes(this.mediaType) && this.selectedUrls.length !== 0);
+  }
+
+  getAutoDistributedValue(): number {
+    if (!this.quantity || !this.quantity.quantity) return 0;
+    const selectedCount = this.selectedUrls.length || 1;
+    return Math.floor(this.quantity.quantity / selectedCount);
+  }
+
   addToCart() {
-    const currentData = this.orderDataService.getSnapshot();
+    if (this.selectedUrls.length === 0) return;
+    const itemsToAdd: CartItem[] = [];
+    if (this.isAutoDistribution) {
+      const distributedQty = this.getAutoDistributedValue();
+      const item = new CartItem(
+        this.orderData.username!,
+        this.quality?.providerServiceId!,
+        this.product?.name || '',
+        [...this.selectedUrls],
+        this.mediaType,
+        this.quality?.provider!,
+        distributedQty,
+        this.quantity?.withDiscount ? this.quantity.finalPrice : this.quantity?.basePrice || 0
+      );
+      itemsToAdd.push(item);
+    } else {
+      const manualQtyMap = new Map<string, number>();
+      this.manualInputs.forEach(inputRef => {
+        const url = inputRef.nativeElement.getAttribute('data-url');
+        const value = parseInt(inputRef.nativeElement.value, 10);
+        if (url && !isNaN(value)) {
+          manualQtyMap.set(url, value);
+        }
+      });
+      for (const url of this.selectedUrls) {
+        const qty = manualQtyMap.get(url) ?? 0;
+        const item = new CartItem(
+          this.orderData.username!,
+          this.quality?.providerServiceId!,
+          this.product?.name || '',
+          [url],
+          this.mediaType,
+          this.quality?.provider!,
+          qty,
+          this.quantity?.withDiscount ? this.quantity.finalPrice : this.quantity?.basePrice || 0
+        );
+        itemsToAdd.push(item);
+      }
+    }
+    itemsToAdd.forEach(item => this.cartService.addItem(item));
+    console.log(itemsToAdd);
+    
+    /*const currentData = this.orderDataService.getSnapshot();
     this.orderDataService.setAll({
       ...currentData,
       serviceId: null,
       productId: null,
       qualityId: null,
       quantityId: null
-    });
+    });*/
   }
 
-  isDisabled(): boolean {
-    return !(["POST", "REEL"].includes(this.mediaType) && this.selectedUrls.length !== 0);
-  }
 
 }

@@ -3,14 +3,22 @@
         <div class="title">
             <span>{{ 'SELECCIONAR ' + (product?.type?.toUpperCase()) + 'S' }}</span>
         </div>
-        <div class="option-cards">
-            <button>Distribución automática</button>
-            <button>Distribución manual</button>
-        </div>
+        <label class="toggle-label">
+            <span>{{ 'Distribución de cantidades automática: ' }}</span>
+            <mat-slide-toggle [(ngModel)]="isAutoDistribution"></mat-slide-toggle>
+        </label>
         <div class="media-grid">
             <div class="media-item" *ngFor="let m of media" (click)="toggleSelection(m.url)" [class.selected]="isSelected(m.url)">
                 <input type="checkbox" class="card-check" [checked]="isSelected(m.url)" tabindex="-1" readonly />
                 <img [src]="getImageUrl(m.picUrl)" alt="Imagen" />
+                <div class="media-input" *ngIf="isSelected(m.url)">
+                    <ng-container *ngIf="!isAutoDistribution; else autoValue">
+                        <input #manualQtyInput [attr.data-url]="m.url" type="number" [min]="quality?.minimum" (click)="$event.stopPropagation()" />
+                    </ng-container>
+                    <ng-template #autoValue>
+                        <span>{{ '+' + getAutoDistributedValue() + ' ' + product?.product?.toLowerCase() }}</span>
+                    </ng-template>
+                </div>
             </div>
         </div>
         <div>
@@ -24,10 +32,10 @@
             </button>
         </div>
     </div>
-    <div class="checkout small-window" (click)="addToCart()">
+    <div *ngIf="mediaVisible" class="checkout" [ngClass]="{'small-window': mediaVisible}" (click)="addToCart()">
         <button class="action-button" [disabled]="isDisabled()">Añadir al carrito</button>
     </div>
-    <div class="profile-container card big-window">
+    <div class="profile-container card" [ngClass]="{'big-window': mediaVisible}">
         <div class="user-info">
             <div><img [src]="getImageUrl(profilePicUrl)" alt="Foto de perfil" class="profile-pic" /></div>
             <div class="username-display">

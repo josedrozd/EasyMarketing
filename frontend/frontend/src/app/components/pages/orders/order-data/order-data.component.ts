@@ -12,6 +12,7 @@ import { UsernameCheckService } from '../../../../services/backend/instagram/use
 import { platform } from 'os';
 import { IGMediaService } from '../../../../services/backend/instagram/retrieve-media.service';
 import { IGClipsService, IGReelClipDTO } from '../../../../services/backend/instagram/retrieve-reels.service';
+import { environment } from '../../../../../environments/environment';
 
 type FormDataKeys = 'username' | 'mail' | 'name' | 'lastname';
 
@@ -42,6 +43,7 @@ export class OrderDataComponent {
   recaptchaOk = false;
   recaptchaToken: string = '';
   isScrapping: boolean = false;
+  isProduction: boolean = environment.production;
 
   formData: { [key in FormDataKeys]: string } = {
     username: '',
@@ -126,7 +128,7 @@ export class OrderDataComponent {
 
   checkAndSubmit(f: NgForm) {
     this.isScrapping = true;
-    if (!this.recaptchaOk) {
+    if (this.isProduction && !this.recaptchaOk) {
       alert('Por favor, verifica el captcha.');
       this.isScrapping = false;
       return;

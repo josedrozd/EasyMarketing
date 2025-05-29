@@ -31,8 +31,8 @@
         </div>
       </div>
     </div>
-    <div #recaptchaContainer class="g-recaptcha" data-sitekey="6LctlksrAAAAAKArc4eeiYd5g1TiSWtwj3e8O_UK" data-callback="recaptchaResolved"></div>
-    <button type="submit" class="action-button" [disabled]="!recaptchaOk || f.invalid || isScrapping">
+    <div *ngIf="isProduction" #recaptchaContainer class="g-recaptcha" data-sitekey="6LctlksrAAAAAKArc4eeiYd5g1TiSWtwj3e8O_UK" data-callback="recaptchaResolved"></div>
+    <button type="submit" class="action-button" [disabled]="(!recaptchaOk && isProduction) || f.invalid || isScrapping">
       <ng-container *ngIf="!isScrapping; else loading">
         Continuar
       </ng-container>

@@ -1,5 +1,6 @@
 html, body{
-  height: 100%;
+  height: auto;
+  min-height: 100%;
   margin: 0;
   padding: 0;
 }
@@ -141,9 +142,4 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .product-container {
   padding-left: var(--safe-padding-inline);
   padding-right: var(--safe-padding-inline);
-}
-
-* {
-  outline: 1px solid rgba(0, 255, 0, 0);
-  background-color: rgba(255, 0, 0, 0);
 }

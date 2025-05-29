@@ -117,22 +117,6 @@ a:hover {
     font-weight: 500;
 }
 
-.option-cards {
-    gap: 1rem;
-    width: 100%;
-}
-
-.option-cards button {
-    align-items: center;
-    font-size: 1.1rem;
-    min-width: 45%;
-    flex: 1 0 0;
-    border: 1.5px solid rgba(0, 0, 0, 0.395);
-    border-radius: 12px;
-    background-color: transparent;
-    justify-content: space-evenly;
-}
-
 .checkout {
     overflow: visible;
 }
@@ -166,4 +150,84 @@ a:hover {
   .media-item img {
     height: clamp(80px, 2vw, 100px);
   }
+}
+
+.toggle-label {
+  display: flex;
+  align-items: baseline;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 1rem;
+  margin: 1rem 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.toggle-label span {
+  margin-right: 0.5rem;
+}
+
+::ng-deep mat-slide-toggle {
+  --mdc-switch-selected-track-color: #000000 !important;
+  --mdc-switch-selected-thumb-color: #ffffff !important;
+  --mdc-switch-selected-focus-track-color: #000000 !important;
+  --mdc-switch-selected-hover-track-color: #5e5e5e !important;
+  --mdc-switch-selected-pressed-track-color: #000000 !important;
+  --mdc-switch-selected-focus-thumb-color: #ffffff !important;
+  --mdc-switch-selected-hover-thumb-color: #ffffff !important;
+  --mdc-switch-selected-pressed-thumb-color: #ffffff !important;
+  --mdc-switch-selected-icon-color: #000000 !important;
+  --mdc-switch-selected-hover-state-layer-color: transparent !important;
+  --mdc-switch-selected-focus-state-layer-color: transparent !important;
+}
+
+::ng-deep mat-slide-toggle .mdc-switch__icon--off {
+  display: none !important;
+}
+
+::ng-deep mat-slide-toggle .mdc-switch__thumb {
+  box-shadow: none !important;
+}
+
+::ng-deep mat-slide-toggle.mat-mdc-slide-toggle {
+  margin: 0 !important;
+}
+
+::ng-deep mat-slide-toggle .mdc-switch__state-layer {
+  background-color: transparent !important;
+}
+
+::ng-deep .mdc-switch .mdc-switch__ripple::before,
+::ng-deep .mdc-switch .mdc-switch__ripple::after {
+  background-color: rgba(0, 0, 0, 0.727) !important;
+}
+
+::ng-deep .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked .mdc-switch__handle::after {
+  background-color: white !important;
+  box-shadow: none !important;
+}
+
+.media-input {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 4px;
+  color: white;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+}
+
+.media-input input {
+  width: 100%;
+  text-align: right;
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  border-radius: 4px;
 }
