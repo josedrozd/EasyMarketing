@@ -159,6 +159,7 @@ export class OrderDataComponent {
       this.usernameCheckService.checkIGUsername(this.formData.username).subscribe(userInfo => {
         if (!userInfo.id || userInfo.isPrivate) {
           alert('El usuario no es válido o es privado.');
+          this.isScrapping = false;
           return;
         }
         try {
