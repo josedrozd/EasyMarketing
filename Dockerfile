@@ -7,5 +7,7 @@ FROM eclipse-temurin:17-jdk
 WORKDIR /app
 COPY --from=builder /app/target/easymarketing-0.0.1-SNAPSHOT.jar app.jar
 COPY wait-for-mysql.sh /wait-for-mysql.sh
-RUN apt-get update && apt-get install -y default-mysql-client && chmod +x /wait-for-mysql.sh
+RUN sed -i 's|http://archive.ubuntu.com|https://archive.ubuntu.com|g' /etc/apt/sources.list && \
+    apt-get update && apt-get install -y default-mysql-client && chmod +x /wait-for-mysql.sh
+
 ENTRYPOINT ["/wait-for-mysql.sh", "db:3306", "--", "java", "-jar", "app.jar"]
