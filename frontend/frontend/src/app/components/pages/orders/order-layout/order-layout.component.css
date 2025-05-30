@@ -40,6 +40,10 @@
   transform: translateX(-50%);
 }
 
+.logo:hover {
+  cursor: pointer;
+}
+
 .logo img {
   height: 100%;
   width: auto;

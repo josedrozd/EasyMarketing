@@ -10,7 +10,7 @@ import { PlatformNode, QualityNode, QuantityNode, ServiceNode } from '../../../.
 import { IGMediaPostDTO, IGMediaService } from '../../../../services/backend/instagram/retrieve-media.service';
 import { IGClipsService, IGReelClipDTO } from '../../../../services/backend/instagram/retrieve-reels.service';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS, MatSlideToggleDefaultOptions, MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
 import { CartItem } from '../../../../core/models/cart-item';
 import { CartService } from '../../../../services/cart.service';
@@ -33,6 +33,7 @@ export class OrderDetailsComponent {
 
   userInfoValue!: IgUserInfo;
   orderData!: OrderData;
+  platform!: PlatformNode | null;
   product!: ServiceNode | null;
   quality!: QualityNode | null;
   quantity!: QuantityNode | null;
@@ -114,6 +115,7 @@ export class OrderDetailsComponent {
       this.isInstagram = (foundService as PlatformNode).platform === "INSTAGRAM";
       this.mediaType = (foundProduct as ServiceNode).type;
       this.mediaVisible = this.isInstagram && (this.mediaType === "POST" || this.mediaType === "REEL");
+      this.platform = foundService as PlatformNode;
       this.product = foundProduct as ServiceNode;
       this.quality = foundQuality as QualityNode;
       this.quantity = foundQuantity as QuantityNode;
@@ -168,7 +170,7 @@ export class OrderDetailsComponent {
   }
 
   isDisabled(): boolean {
-    return !(["POST", "REEL"].includes(this.mediaType) && this.selectedUrls.length !== 0);
+    return ["POST", "REEL"].includes(this.mediaType) && this.selectedUrls.length === 0;
   }
 
   getAutoDistributedValue(): number {
@@ -178,47 +180,62 @@ export class OrderDetailsComponent {
   }
 
   addToCart() {
-    if (this.selectedUrls.length === 0) return;
     const itemsToAdd: CartItem[] = [];
-    if (this.isAutoDistribution) {
-      const distributedQty = this.getAutoDistributedValue();
-      const item = new CartItem(
-        this.orderData.username!,
-        this.quality?.providerServiceId!,
-        this.product?.name || '',
-        [...this.selectedUrls],
-        this.mediaType,
-        this.quality?.provider!,
-        distributedQty,
-        this.quantity?.withDiscount ? this.quantity.finalPrice : this.quantity?.basePrice || 0
-      );
-      itemsToAdd.push(item);
-    } else {
-      const manualQtyMap = new Map<string, number>();
-      this.manualInputs.forEach(inputRef => {
-        const url = inputRef.nativeElement.getAttribute('data-url');
-        const value = parseInt(inputRef.nativeElement.value, 10);
-        if (url && !isNaN(value)) {
-          manualQtyMap.set(url, value);
-        }
-      });
-      for (const url of this.selectedUrls) {
-        const qty = manualQtyMap.get(url) ?? 0;
+    if(["POST", "REEL"].includes(this.mediaType)){
+      if (this.isAutoDistribution) {
+        const distributedQty = this.getAutoDistributedValue();
         const item = new CartItem(
           this.orderData.username!,
           this.quality?.providerServiceId!,
           this.product?.name || '',
-          [url],
+          [...this.selectedUrls],
           this.mediaType,
           this.quality?.provider!,
-          qty,
-          this.quantity?.withDiscount ? this.quantity.finalPrice : this.quantity?.basePrice || 0
+          distributedQty,
+          this.quantity?.withDiscount ? this.quantity.finalPrice : this.quantity?.basePrice!
         );
         itemsToAdd.push(item);
+      } else {
+        const manualQtyMap = new Map<string, number>();
+        this.manualInputs.forEach(inputRef => {
+          const url = inputRef.nativeElement.getAttribute('data-url');
+          const value = parseFloat(inputRef.nativeElement.value);
+          if (url && !isNaN(value)) {
+            manualQtyMap.set(url, value);
+          }
+        });
+        for (const url of this.selectedUrls) {
+          const qty = manualQtyMap.get(url) ?? 0;
+          const item = new CartItem(
+            this.orderData.username!,
+            this.quality?.providerServiceId!,
+            this.product?.name || '',
+            [url],
+            this.mediaType,
+            this.quality?.provider!,
+            qty,
+            this.quantity?.withDiscount ? this.quantity.finalPrice : this.quantity?.basePrice!
+          );
+          itemsToAdd.push(item);
+        }
       }
+    } else {
+      itemsToAdd.push(new CartItem(
+        this.orderData.username!,
+        this.quality?.providerServiceId!,
+        this.product?.name || '',
+        [this.orderData.username!],
+        this.product?.type!,
+        this.quality?.provider!,
+        this.quantity?.quantity!,
+        this.quantity?.withDiscount ? this.quantity.finalPrice : this.quantity?.basePrice!
+      ));
     }
-    itemsToAdd.forEach(item => this.cartService.addItem(item));
-    console.log(itemsToAdd);
+    if(this.validateItems(itemsToAdd)) {
+      this.cartService.addCartOrder(itemsToAdd);
+      console.log(itemsToAdd);
+      this.router.navigate(['/carrito']);
+    }
     
     /*const currentData = this.orderDataService.getSnapshot();
     this.orderDataService.setAll({
@@ -229,6 +246,45 @@ export class OrderDetailsComponent {
       quantityId: null
     });*/
   }
+
+  private validateItems(items: CartItem[]): boolean {
+    let total = 0;
+    for (const item of items) {
+      if (
+        item.username == null ||
+        item.serviceName == null ||
+        item.urls == null ||
+        item.urlType == null ||
+        item.unitQuantity == null ||
+        item.price == null ||
+        (this.platform?.automaticPaymentAllowed && this.quality?.automaticPayment && ( item.serviceId == null || item.provider == null))
+      ) {
+        alert('Hubo un error al cargar los datos, por favor vuelva a generar la compra.');
+        this.router.navigate(['/']);
+        return false;
+      }
+      if (!Number.isInteger(item.unitQuantity)) {
+        alert('Las cantidades deben ser números enteros.');
+        return false;
+      }
+      if (this.platform?.automaticPaymentAllowed && this.quality?.automaticPayment){
+        if (item.unitQuantity < this.quality!.minimum) {
+          alert(`La cantidad minima permitida es de ${this.quality!.minimum}.`);
+          return false;
+        }
+      } else if (item.unitQuantity < 10) {
+          alert(`La cantidad minima permitida es de 10.`);
+          return false;
+      }
+      total += item.unitQuantity;
+      if (total > this.quantity!.quantity) {
+        alert(`La suma total excede el máximo permitido de ${this.quantity!.quantity}.`);
+        return false;
+      }
+    }
+    return true;
+  }
+
 
 
 }

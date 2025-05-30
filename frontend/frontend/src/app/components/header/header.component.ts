@@ -8,6 +8,7 @@ import { TreeNode } from '../panel/tree-node/tree-node.component';
 import { CommonModule } from '@angular/common';
 import { ExtraNode } from '../../core/models/panel-nodes';
 import { OrderDataService } from '../../services/order-data.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -34,9 +35,12 @@ export class HeaderComponent {
 
   selectedNode!: TreeNode;
 
+  cartItemCount: number = 0;
+
   constructor(
     private services: ServicesService,
     private orderDataService: OrderDataService,
+    private cartService: CartService,
     private router: Router
   ) {}
 
@@ -44,6 +48,9 @@ export class HeaderComponent {
     this.servicios$ = this.services.getServices();
     this.servicios$.subscribe(tree => {
       this.servicesList = tree.flatMap(node => node.children ?? []).filter(child => (child as any).active);
+    });
+    this.cartService.getCartItems$().subscribe(items => {
+      this.cartItemCount = items.length;
     });
   }
 

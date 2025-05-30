@@ -13,7 +13,7 @@
                 <img [src]="getImageUrl(m.picUrl)" alt="Imagen" />
                 <div class="media-input" *ngIf="isSelected(m.url)">
                     <ng-container *ngIf="!isAutoDistribution; else autoValue">
-                        <input #manualQtyInput [attr.data-url]="m.url" type="number" [min]="quality?.minimum" (click)="$event.stopPropagation()" />
+                        <input #manualQtyInput [attr.data-url]="m.url" type="number" [min]="quality?.minimum" [value]="0" (click)="$event.stopPropagation()" />
                     </ng-container>
                     <ng-template #autoValue>
                         <span>{{ '+' + getAutoDistributedValue() + ' ' + product?.product?.toLowerCase() }}</span>
