@@ -1,39 +1,27 @@
 export class CartItem {
     username!: string;
-    serviceId!: number;
-    serviceName!: string;
+    platformId!: number;
+    productId!: number;
+    qualityId!: number;
+    quantityId!: number;
     urls!: string[];
-    urlType!: string | null;
-    provider!: string;
     unitQuantity!: number;
-    price!: number;
-    totalQuantity!: number;
-    qualityName!: string;
-    picUrl!: string;
 
     constructor(
         username: string,
-        serviceId: number,
-        serviceName: string,
+        platformId: number,
+        productId: number,
+        qualityId: number,
+        quantityId: number,
         urls: string[],
-        urlType: string,
-        provider: string,
-        unitQuantity: number,
-        price: number,
-        totalQuantity: number,
-        qualityName: string,
-        picUrl: string
+        unitQuantity: number
     ){
         this.username = username;
-        this.serviceId = serviceId;
-        this.serviceName = serviceName;
+        this.platformId = platformId;
+        this.productId = productId;
+        this.qualityId = qualityId;
+        this.quantityId = quantityId;
         this.urls = urls;
-        this.urlType = urlType;
-        this.provider = provider;
         this.unitQuantity = unitQuantity;
-        this.price = price;
-        this.totalQuantity = totalQuantity;
-        this.qualityName = qualityName;
-        this.picUrl = picUrl;
     }
 }

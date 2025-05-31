@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { IgUserInfo } from '../../../core/models/ig-user-info';
 import { CartService } from '../../../services/cart.service';
-import { CartItem } from '../../../core/models/cart-item';
 import { UserInfoService } from '../../../services/temporary/user-info.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

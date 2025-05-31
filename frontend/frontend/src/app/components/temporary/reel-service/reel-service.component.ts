@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { UserInfoService } from '../../../services/temporary/user-info.service';
 import { CartService } from '../../../services/cart.service';
-import { CartItem } from '../../../core/models/cart-item';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IGClipsService, IGReelClipDTO } from '../../../services/backend/instagram/retrieve-reels.service';

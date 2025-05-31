@@ -186,16 +186,12 @@ export class OrderDetailsComponent {
         const distributedQty = this.getAutoDistributedValue();
         const item = new CartItem(
           this.orderData.username!,
-          this.quality?.providerServiceId!,
-          this.product?.name || '',
+          this.platform?.id!,
+          this.product?.id!,
+          this.quality?.id!,
+          this.quantity?.id!,
           [...this.selectedUrls],
-          this.mediaType,
-          this.quality?.provider!,
-          distributedQty,
-          this.quantity?.withDiscount ? this.quantity.finalPrice : this.quantity?.basePrice!,
-          this.quantity?.quantity!,
-          this.quality?.name!,
-          this.platform?.imgUrl!
+          distributedQty
         );
         itemsToAdd.push(item);
       } else {
@@ -211,33 +207,25 @@ export class OrderDetailsComponent {
           const qty = manualQtyMap.get(url) ?? 0;
           const item = new CartItem(
             this.orderData.username!,
-            this.quality?.providerServiceId!,
-            this.product?.name || '',
+            this.platform?.id!,
+            this.product?.id!,
+            this.quality?.id!,
+            this.quantity?.id!,
             [url],
-            this.mediaType,
-            this.quality?.provider!,
-            qty,
-            this.quantity?.withDiscount ? this.quantity.finalPrice : this.quantity?.basePrice!,
-            this.quantity?.quantity!,
-            this.quality?.name!,
-            this.platform?.imgUrl!
+            qty
           );
           itemsToAdd.push(item);
         }
       }
     } else {
       itemsToAdd.push(new CartItem(
-        this.orderData.username!,
-        this.quality?.providerServiceId!,
-        this.product?.name || '',
-        [this.orderData.username!],
-        this.product?.type!,
-        this.quality?.provider!,
-        this.quantity?.quantity!,
-        this.quantity?.withDiscount ? this.quantity.finalPrice : this.quantity?.basePrice!,
-        this.quantity?.quantity!,
-        this.quality?.name!,
-        this.platform?.imgUrl!
+          this.orderData.username!,
+          this.platform?.id!,
+          this.product?.id!,
+          this.quality?.id!,
+          this.quantity?.id!,
+          [this.orderData.username!],
+          this.quantity?.quantity!
       ));
     }
     if(this.validateItems(itemsToAdd)) {
@@ -245,15 +233,6 @@ export class OrderDetailsComponent {
       console.log(itemsToAdd);
       this.router.navigate(['/carrito']);
     }
-    
-    /*const currentData = this.orderDataService.getSnapshot();
-    this.orderDataService.setAll({
-      ...currentData,
-      serviceId: null,
-      productId: null,
-      qualityId: null,
-      quantityId: null
-    });*/
   }
 
   private validateItems(items: CartItem[]): boolean {
@@ -261,12 +240,11 @@ export class OrderDetailsComponent {
     for (const item of items) {
       if (
         item.username == null ||
-        item.serviceName == null ||
-        item.urls == null ||
-        item.urlType == null ||
-        item.unitQuantity == null ||
-        item.price == null ||
-        (this.platform?.automaticPaymentAllowed && this.quality?.automaticPayment && ( item.serviceId == null || item.provider == null))
+        item.platformId == null ||
+        item.productId == null ||
+        item.qualityId == null ||
+        item.quantityId == null ||
+        item.unitQuantity == null
       ) {
         alert('Hubo un error al cargar los datos, por favor vuelva a generar la compra.');
         this.router.navigate(['/']);

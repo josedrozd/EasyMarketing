@@ -1,6 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Component, inject, makeStateKey, PLATFORM_ID, TransferState } from '@angular/core';
-import { CartItem } from '../../../core/models/cart-item';
 import { CartService } from '../../../services/cart.service';
 import { Router, RouterModule } from '@angular/router';
 import { CreatePurchaseService } from '../../../services/backend/purchases/create-purchase.service';

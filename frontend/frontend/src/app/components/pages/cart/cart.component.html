@@ -1,1 +1,14 @@
-<p>cart works!</p>
+<div *ngIf="!isLoading; else loading">
+  <ul>
+    <li *ngFor="let item of cartItemsData">
+      <strong>Producto:</strong> {{ item.product.name }} <br>
+      <strong>Calidad:</strong> {{ item.quality.name }} <br>
+      <strong>Cantidad:</strong> {{ item.quantity.quantity }} <br>
+      <strong>Precio Final:</strong> {{ item.quantity.finalPrice }}
+    </li>
+  </ul>
+</div>
+
+<ng-template #loading>
+  <p>Cargando...</p>
+</ng-template>

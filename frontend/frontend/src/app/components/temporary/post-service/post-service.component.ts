@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { IGMediaPostDTO, IGMediaService } from '../../../services/backend/instagram/retrieve-media.service';
 import { UserInfoService } from '../../../services/temporary/user-info.service';
 import { CartService } from '../../../services/cart.service';
-import { CartItem } from '../../../core/models/cart-item';
 import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 
