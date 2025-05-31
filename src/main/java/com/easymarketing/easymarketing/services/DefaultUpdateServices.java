@@ -133,8 +133,7 @@ public class DefaultUpdateServices implements IUpdateServices {
         List<Integer> extraIds = extrasToSave.stream().map(ExtraService::getId).toList();
         extraServiceRepository.deleteAll(extraServiceRepository.findAll().stream()
                         .filter(e -> !extraIds.contains(e.getId()))
-                        .toList() );
-
+                        .toList());
 
         servicePlatformRepository.saveAll(platformsToSave);
         serviceRepository.saveAll(servicesToSave);

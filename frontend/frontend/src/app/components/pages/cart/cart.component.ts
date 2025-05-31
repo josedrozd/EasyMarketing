@@ -1,84 +1,59 @@
 import { Component } from '@angular/core';
 import { CartService } from '../../../services/cart.service';
-import { Router } from '@angular/router';
-import { ServicesService } from '../../../services/backend/services/services.service';
+import { Router, RouterLink } from '@angular/router';
 import { CartItem } from '../../../core/models/cart-item';
-import { PlatformNode, QualityNode, QuantityNode, ServiceNode } from '../../../core/models/panel-nodes';
 import { CommonModule } from '@angular/common';
-
-export class CartItemData {
-    platform!: PlatformNode;
-    product!: ServiceNode;
-    quality!: QualityNode;
-    quantity!: QuantityNode;
-    constructor(
-      platform: PlatformNode,
-      product: ServiceNode,
-      quality: QualityNode,
-      quantity: QuantityNode
-    ){
-      this.platform = platform;
-      this.product = product;
-      this.quality = quality;
-      this.quantity = quantity;
-    }
-}
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CartItemData } from '../../../core/models/cart-item-data';
+import { OrderData, OrderDataService } from '../../../services/order-data.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
   imports: [
-    CommonModule
+    RouterLink,
+    CommonModule,
+    MatIconModule,
+    MatButtonModule
   ],
   templateUrl: './cart.component.html',
-  styleUrl: './cart.component.css'
+  styleUrls: ['./cart.component.css', '../main/main.component.css']
 })
 export class CartComponent {
 
   isLoading: boolean = true;
   cartItems: CartItem[][] = [];
   cartItemsData: CartItemData[] = [];
+  orderData!: OrderData;
+  total!: number;
 
   constructor(
       private cartService: CartService,
-      private servicesService: ServicesService,
+      private orderDataService: OrderDataService,
       private router: Router
   ) {
   }
 
   ngOnInit() {
-    this.isLoading = true;
-    this.cartService.getCartItems$().subscribe(res => {
-      this.cartItems = res;
-      this.loadService();
+    this.cartService.cartItemsData$.subscribe(data => {
+      this.cartItemsData = data;
+      this.updateTotal();
+      this.orderDataService.orderData$.pipe(take(1)).subscribe(data => {
+        this.orderData = data;
+        this.isLoading = false;
+      })
     });
   }
 
-  loadService() {
-    this.cartItems.forEach(cartItem => {
-      this.servicesService.getServices().subscribe(tree => {
-        const platformGroup = tree[0];
-        const foundService = platformGroup.children!.find(child => child.id === cartItem[0].platformId);
-        const serviceGroup = foundService?.children![0];
-        const foundProduct = serviceGroup?.children!.find(child => child.id === cartItem[0].productId);
-        const qualityGroup = foundProduct?.children![0];
-        const foundQuality = qualityGroup?.children!.find(child => child.id === cartItem[0].qualityId);
-        const quantityGroup = foundQuality?.children![0];
-        const foundQuantity = quantityGroup?.children!.find(child => child.id === cartItem[0].quantityId);
+  removeItem(index: number) {
+    this.cartService.removeCartItemByOrderIndex(index);
+    this.updateTotal();
+  }
 
-        if (!foundService || !foundProduct || !foundQuality || !foundQuantity) {
-          this.router.navigate(['/404']);
-          return;
-        }
-        
-        this.cartItemsData.push(new CartItemData(
-          foundService as PlatformNode,
-          foundProduct as ServiceNode,
-          foundQuality as QualityNode,
-          foundQuantity as QuantityNode
-        ))
-      });
-      this.isLoading = false;
-    });
+  updateTotal() {
+    this.total = this.cartItemsData.reduce((sum, item) =>
+      sum + (item.quantity.withDiscount ? item.quantity.finalPrice : item.quantity.basePrice), 0);
   }
 
 }

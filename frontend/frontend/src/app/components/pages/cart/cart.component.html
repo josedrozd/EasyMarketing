@@ -1,14 +1,62 @@
-<div *ngIf="!isLoading; else loading">
-  <ul>
-    <li *ngFor="let item of cartItemsData">
-      <strong>Producto:</strong> {{ item.product.name }} <br>
-      <strong>Calidad:</strong> {{ item.quality.name }} <br>
-      <strong>Cantidad:</strong> {{ item.quantity.quantity }} <br>
-      <strong>Precio Final:</strong> {{ item.quantity.finalPrice }}
-    </li>
-  </ul>
+<div *ngIf="!isLoading; else loading" class="cart-container">
+  <div *ngIf="cartItemsData.length !== 0; else emptyList">
+    <div class="top">
+      <div class="cart-title"><strong>Tu carrito:</strong></div>
+      <div class="add-more">
+        <button class="button main-button" routerLink="/servicios">Agregar producto</button>
+      </div>
+    </div>
+    <ul>
+      <li *ngFor="let item of cartItemsData; let i = index">
+        <div class="item-row">
+          <img 
+            [src]="$any(item).platform?.imgUrl" 
+            class="service-image"
+          />
+          <div class="item-attributes">
+            <strong>Producto:</strong> {{ item.product.name }} <br>
+            <strong>Calidad:</strong> {{ item.quality.name }} <br>
+            <strong>Cantidad:</strong> {{ item.quantity.quantity }} <br>
+            <strong>Precio:</strong> {{ '$' + (item.quantity.withDiscount ? item.quantity.finalPrice : item.quantity.basePrice) + ' ARS' }} <br>
+            <strong>Nombre de usuario:</strong> {{ item.username }} <br>
+          </div>
+
+          <button class="delete-btn" mat-icon-button color="warn" (click)="removeItem(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </li>
+    </ul>
+    <div class="total">
+      <span>Precio total: ${{ total }}</span>
+    </div>
+
+    <div *ngIf="orderData" class="user-info">
+      <div class="title">
+        <strong>Datos de usuario:</strong>
+      </div>
+      <div class="user-data">
+        <div class="user-attribute">Mail: <a>{{ orderData.mail }}</a></div>
+        <div class="user-attribute">Nombre: <a>{{ orderData.name }}</a></div>
+        <div class="user-attribute">Apellido: <a>{{ orderData.lastname }}</a></div>
+      </div>
+    </div>
+    
+    <div class="buy">
+      <button class="button main-button" routerLink="/servicios">Comprar</button>
+    </div>
+  </div>
+  <ng-template #emptyList>
+    <div class="empty-container">
+      <div class="cart-title"><strong>Tu carrito:</strong></div>
+      <span>Aun no agregaste items al carrito</span>
+      <div class="add-more">
+        <button class="button main-button" routerLink="/servicios">Agregar producto</button>
+      </div>
+    </div>
+  </ng-template>
 </div>
 
 <ng-template #loading>
-  <p>Cargando...</p>
+    <img src="loading.gif" alt="Cargando..." style="height: 50px;" />
 </ng-template>
