@@ -144,7 +144,7 @@ export class PanelComponent {
             this.formData.product,
             this.formData.imgUrl,
             this.formData.activated || false,
-            this.formData.descripcion
+            this.formData.description
           );
           break;
         case 'quality':

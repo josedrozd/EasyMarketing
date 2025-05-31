@@ -11,6 +11,8 @@ public class PublicMethodsUtil {
             return String.format("https://www.instagram.com/%s/", url);
         } else if (type == UrlTypeEnum.REEL){
             return String.format("https://www.instagram.com/reel/%s/", url);
+        } else if (type == UrlTypeEnum.OTHER){
+            return url;
         } else {
             throw new RuntimeException("Invalid urlType");
         }

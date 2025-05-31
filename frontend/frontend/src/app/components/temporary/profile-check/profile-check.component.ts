@@ -16,7 +16,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class ProfileCheckComponent {
 
-  @Output() igVerified = new EventEmitter<void>();
+  /*@Output() igVerified = new EventEmitter<void>();
   private userinfoService = inject(UserInfoService);
   private usernameCheckService = inject(UsernameCheckService);
   locked = false;
@@ -61,5 +61,6 @@ export class ProfileCheckComponent {
   getImageUrl(): string {
     return environment.imgProxy+this.profilePicUrl;
   }
+    */
 
 }

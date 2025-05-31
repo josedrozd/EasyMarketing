@@ -17,7 +17,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class PostServiceComponent {
   
-  private router = inject(Router);
+  /*private router = inject(Router);
   private userinfoService = inject(UserInfoService);
   private cartService = inject(CartService);
   userId!: number;
@@ -77,7 +77,10 @@ export class PostServiceComponent {
         "POST",
         this.provider,
         this.quantity, 
-        0)
+        0,
+        this.quantity,
+        "quality_name",
+        "undefined")
     );
     this.router.navigate(["/manual-processing"]);
   }
@@ -91,4 +94,5 @@ export class PostServiceComponent {
     this.selectedUrls = [];
   }
 
+  */
 }

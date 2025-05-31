@@ -1,10 +1,7 @@
 package com.easymarketing.easymarketing.model.dto;
 
-import com.easymarketing.easymarketing.model.enums.ServiceProviderEnum;
-import com.easymarketing.easymarketing.model.enums.UrlTypeEnum;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -15,12 +12,11 @@ import java.util.List;
 public class CartItemDTO {
 
     private String username;
-    private Integer serviceId;
-    private String serviceName;
+    private Integer platformId;
+    private Integer productId;
+    private Integer qualityId;
+    private Integer quantityId;
     private List<String> urls;
-    private UrlTypeEnum urlType;
-    private ServiceProviderEnum provider;
     private Integer unitQuantity;
-    private BigDecimal servicePrice;
 
 }

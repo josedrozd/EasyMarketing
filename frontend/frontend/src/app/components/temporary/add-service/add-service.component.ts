@@ -23,7 +23,7 @@ import { ReelServiceComponent } from '../reel-service/reel-service.component';
 })
 export class AddServiceComponent {
 
-  postServiceVisible: boolean = false;
+  /*postServiceVisible: boolean = false;
   profileServiceVisible: boolean = false;
   reelServiceVisible: boolean = false;
   visible: boolean = false;
@@ -49,5 +49,5 @@ export class AddServiceComponent {
   becomeVisible() {
     this.visible = true;
   }
-
+  */
 }

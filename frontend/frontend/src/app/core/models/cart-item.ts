@@ -7,6 +7,9 @@ export class CartItem {
     provider!: string;
     unitQuantity!: number;
     price!: number;
+    totalQuantity!: number;
+    qualityName!: string;
+    picUrl!: string;
 
     constructor(
         username: string,
@@ -16,7 +19,10 @@ export class CartItem {
         urlType: string,
         provider: string,
         unitQuantity: number,
-        price: number
+        price: number,
+        totalQuantity: number,
+        qualityName: string,
+        picUrl: string
     ){
         this.username = username;
         this.serviceId = serviceId;
@@ -26,5 +32,8 @@ export class CartItem {
         this.provider = provider;
         this.unitQuantity = unitQuantity;
         this.price = price;
+        this.totalQuantity = totalQuantity;
+        this.qualityName = qualityName;
+        this.picUrl = picUrl;
     }
 }

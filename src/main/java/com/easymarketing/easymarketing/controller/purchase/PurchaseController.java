@@ -23,15 +23,15 @@ public class PurchaseController {
     private IProcessPurchaseCart processPurchaseCart;
     @Autowired
     private IUpdatePurchaseStatus updatePurchaseStatus;
-    @Autowired
-    private ITemporaryCreatePurchase temporaryCreatePurchase;
+    /*@Autowired
+    private ITemporaryCreatePurchase temporaryCreatePurchase;*/
     @Autowired
     private IRetrievePurchaseStatus retrievePurchaseStatus;
 
-    @PostMapping
+    /*@PostMapping
     public ResponseEntity<String> temporaryCreatePurchase(@Valid @NotNull @RequestBody PurchaseDTO purchaseDTO){
         return ResponseEntity.ok(temporaryCreatePurchase.apply(purchaseDTO));
-    }
+    }*/
 
     @GetMapping("/tokens/{tokenId}")
     public ResponseEntity<Long> getIdByToken(@Valid @NotBlank @PathVariable String tokenId){

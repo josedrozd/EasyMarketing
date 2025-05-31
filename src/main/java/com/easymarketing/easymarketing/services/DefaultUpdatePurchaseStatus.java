@@ -6,9 +6,12 @@ import com.easymarketing.easymarketing.model.dto.FailedCartItemDTO;
 import com.easymarketing.easymarketing.model.dto.PurchaseStatusDTO;
 import com.easymarketing.easymarketing.model.entity.Cart;
 import com.easymarketing.easymarketing.model.entity.Purchase;
+import com.easymarketing.easymarketing.model.entity.ServiceQuality;
 import com.easymarketing.easymarketing.repository.api.IRetrieveMPPaymentStatusById;
 import com.easymarketing.easymarketing.repository.api.ISESEmailService;
 import com.easymarketing.easymarketing.repository.jpa.PurchaseRepository;
+import com.easymarketing.easymarketing.repository.jpa.ServiceQualityRepository;
+import com.easymarketing.easymarketing.repository.jpa.ServiceRepository;
 import com.easymarketing.easymarketing.services.interfaces.IUpdatePurchaseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +33,10 @@ public class DefaultUpdatePurchaseStatus implements IUpdatePurchaseStatus {
     private PurchaseRepository purchaseRepository;
     @Autowired
     private ISESEmailService sesEmailService;
+    @Autowired
+    private ServiceQualityRepository serviceQualityRepository;
+    @Autowired
+    private ServiceRepository serviceRepository;
 
     @Override
     public PurchaseStatusDTO apply(Model model) {
@@ -79,15 +86,21 @@ public class DefaultUpdatePurchaseStatus implements IUpdatePurchaseStatus {
 
     private List<CartItemUnitDTO> buildItemsList(List<Cart> cartItems) {
         return cartItems.stream()
-                .map(item -> CartItemUnitDTO.builder()
+                .map(item -> {
+                    ServiceQuality quality = serviceQualityRepository.findById(item.getQualityId())
+                            .orElseThrow(() -> new NotFoundException("Quality does not exist anymore."));
+                    com.easymarketing.easymarketing.model.entity.Service product = serviceRepository.findById(item.getProductId())
+                            .orElseThrow(() -> new NotFoundException("Product does not exist anymore."));
+                    return CartItemUnitDTO.builder()
                         .username(item.getUsername())
-                        .serviceId(item.getServiceId())
-                        .serviceName("undefined")
-                        .url(buildLink(item.getUrl(), item.getUrlType()))
-                        .provider(item.getProvider().toString())
-                        .quantity(item.getQuantity())
+                        .serviceId(quality.getProviderServiceId())
+                        .serviceName(product.getName())
+                        .url(buildLink(item.getUrl(), product.getType()))
+                        .provider(quality.getProvider().toString())
+                        .quantity(item.getUnitQuantity())
                         .processed(item.getProcessed())
-                        .build())
+                        .build();
+                })
                 .toList();
     }
 

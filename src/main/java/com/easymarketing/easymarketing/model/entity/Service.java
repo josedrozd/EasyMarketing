@@ -1,6 +1,7 @@
 package com.easymarketing.easymarketing.model.entity;
 
 import com.easymarketing.easymarketing.model.enums.ServiceProductEnum;
+import com.easymarketing.easymarketing.model.enums.UrlTypeEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,7 +27,7 @@ public class Service {
     private ServicePlatform platform;
 
     @Column(nullable = false)
-    private String type;
+    private UrlTypeEnum type;
 
     @Column(nullable = false)
     private String product;

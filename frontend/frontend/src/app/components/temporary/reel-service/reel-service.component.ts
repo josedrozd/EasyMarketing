@@ -16,7 +16,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class ReelServiceComponent {
 
-  private router = inject(Router);
+  /*private router = inject(Router);
   private userinfoService = inject(UserInfoService);
   private cartService = inject(CartService);
   userId!: number;
@@ -76,7 +76,10 @@ export class ReelServiceComponent {
         "REEL",
         this.provider,
         this.quantity, 
-        0)
+        0,
+        this.quantity,
+        "quality_name",
+        "undefined")
     );
     this.router.navigate(["/manual-processing"]);
   }
@@ -89,5 +92,6 @@ export class ReelServiceComponent {
     this.igClipsService.clearReelClips();
     this.selectedUrls = [];
   }
+    */
 
 }

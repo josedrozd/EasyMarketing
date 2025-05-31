@@ -13,9 +13,9 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Service
-public class TemporaryCreatePurchase implements ITemporaryCreatePurchase {
+public class TemporaryCreatePurchase { //implements ITemporaryCreatePurchase {
 
-    @Autowired
+    /*@Autowired
     private PurchaseRepository purchaseRepository;
 
     @Override
@@ -54,6 +54,6 @@ public class TemporaryCreatePurchase implements ITemporaryCreatePurchase {
                         .toList());
 
         return purchase;
-    }
+    }*/
 
 }

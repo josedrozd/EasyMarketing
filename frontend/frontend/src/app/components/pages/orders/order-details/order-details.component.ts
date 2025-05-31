@@ -192,7 +192,10 @@ export class OrderDetailsComponent {
           this.mediaType,
           this.quality?.provider!,
           distributedQty,
-          this.quantity?.withDiscount ? this.quantity.finalPrice : this.quantity?.basePrice!
+          this.quantity?.withDiscount ? this.quantity.finalPrice : this.quantity?.basePrice!,
+          this.quantity?.quantity!,
+          this.quality?.name!,
+          this.platform?.imgUrl!
         );
         itemsToAdd.push(item);
       } else {
@@ -214,7 +217,10 @@ export class OrderDetailsComponent {
             this.mediaType,
             this.quality?.provider!,
             qty,
-            this.quantity?.withDiscount ? this.quantity.finalPrice : this.quantity?.basePrice!
+            this.quantity?.withDiscount ? this.quantity.finalPrice : this.quantity?.basePrice!,
+            this.quantity?.quantity!,
+            this.quality?.name!,
+            this.platform?.imgUrl!
           );
           itemsToAdd.push(item);
         }
@@ -228,7 +234,10 @@ export class OrderDetailsComponent {
         this.product?.type!,
         this.quality?.provider!,
         this.quantity?.quantity!,
-        this.quantity?.withDiscount ? this.quantity.finalPrice : this.quantity?.basePrice!
+        this.quantity?.withDiscount ? this.quantity.finalPrice : this.quantity?.basePrice!,
+        this.quantity?.quantity!,
+        this.quality?.name!,
+        this.platform?.imgUrl!
       ));
     }
     if(this.validateItems(itemsToAdd)) {

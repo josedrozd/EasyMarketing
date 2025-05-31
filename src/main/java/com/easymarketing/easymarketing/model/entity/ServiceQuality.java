@@ -1,5 +1,6 @@
 package com.easymarketing.easymarketing.model.entity;
 
+import com.easymarketing.easymarketing.model.enums.ServiceProviderEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,7 +25,7 @@ public class ServiceQuality {
     @Column(nullable = false, length = 50)
     private String name;
 
-    private String provider;
+    private ServiceProviderEnum provider;
 
     @Column(name = "provider_service_id")
     private Integer providerServiceId;

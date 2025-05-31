@@ -19,7 +19,7 @@ const AUTH_KEY = makeStateKey<boolean>('auth');
 })
 export class ProcessPuchaseComponent {
 
-  private platformId = inject(PLATFORM_ID);
+  /*private platformId = inject(PLATFORM_ID);
   processData!: PurchaseProcessData;
   cartItems: CartItem[] = [];
   visible: boolean = false;
@@ -112,10 +112,14 @@ export class ProcessPuchaseComponent {
         "",
         failedItem.provider,
         failedItem.quantity,
-        0
+        0,
+        failedItem.quantity,
+        "quality_name",
+        "undefined"
       );
       return cartItem;
     });
   }
+    */
 
 }

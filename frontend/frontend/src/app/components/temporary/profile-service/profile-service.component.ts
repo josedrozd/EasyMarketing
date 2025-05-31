@@ -14,9 +14,9 @@ import { IGMediaService } from '../../../services/backend/instagram/retrieve-med
   templateUrl: './profile-service.component.html',
   styleUrl: './profile-service.component.css'
 })
-export class ProfileServiceComponent implements OnInit{
+export class ProfileServiceComponent {
 
-  private router = inject(Router);
+  /*private router = inject(Router);
   private cartService = inject(CartService);
   private userinfoService = inject(UserInfoService);
   username!: string;
@@ -36,7 +36,10 @@ export class ProfileServiceComponent implements OnInit{
         "PROFILE", 
         this.provider,
         this.quantity, 
-        0)
+        0,
+        this.quantity,
+        "quality_name",
+        "undefined")
     );
     this.router.navigate(["/manual-processing"]);
   }
@@ -46,5 +49,6 @@ export class ProfileServiceComponent implements OnInit{
       this.username = value;
     });
   }
+    */
 
 }

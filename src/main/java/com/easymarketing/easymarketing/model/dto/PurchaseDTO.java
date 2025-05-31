@@ -14,7 +14,6 @@ public class PurchaseDTO {
     private String email;
     private String name;
     private String lastName;
-    private Double totalPrice;
-    private List<CartItemDTO> cartItems;
+    private List<List<CartItemDTO>> cartItems;
 
 }

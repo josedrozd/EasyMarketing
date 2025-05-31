@@ -1,5 +1,6 @@
 package com.easymarketing.easymarketing.model.dto.services;
 
+import com.easymarketing.easymarketing.model.enums.ServiceProviderEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class QualityDTO extends NodeDTO {
 
-    private String provider;
+    private ServiceProviderEnum provider;
     private Integer providerServiceId;
     private Integer minimum;
     private Integer priority;

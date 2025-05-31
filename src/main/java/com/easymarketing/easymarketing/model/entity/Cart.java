@@ -1,9 +1,9 @@
 package com.easymarketing.easymarketing.model.entity;
 
-import com.easymarketing.easymarketing.model.enums.ServiceProviderEnum;
-import com.easymarketing.easymarketing.model.enums.UrlTypeEnum;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.OffsetDateTime;
 
 @Getter
 @Entity
@@ -24,21 +24,27 @@ public class Cart {
 
     private String username;
 
-    @Column(name = "service_id")
-    private Integer serviceId;
+    @Column(name = "platform_id")
+    private Integer platformId;
+
+    @Column(name = "product_id")
+    private Integer productId;
+
+    @Column(name = "quality_id")
+    private Integer qualityId;
+
+    @Column(name = "quantity_id")
+    private Integer quantityId;
 
     private String url;
 
-    private Integer quantity;
-
-    @Column(name = "url_type")
-    @Enumerated(EnumType.STRING)
-    private UrlTypeEnum urlType;
-
-    @Enumerated(EnumType.STRING)
-    private ServiceProviderEnum provider;
+    private Integer unitQuantity;
 
     private Boolean processed;
+
+    private OffsetDateTime dateCreated;
+
+    private OffsetDateTime lastUpdate;
 
     public void process(){
         processed = Boolean.TRUE;

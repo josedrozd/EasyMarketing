@@ -113,6 +113,29 @@ public class DefaultUpdateServices implements IUpdateServices {
                     extrasToSave.add(extra);
                 });
 
+
+        List<Integer> platformIds = platformsToSave.stream().map(ServicePlatform::getId).toList();
+        servicePlatformRepository.deleteAll(servicePlatformRepository.findAll().stream()
+                        .filter(p -> !platformIds.contains(p.getId()))
+                        .toList());
+        List<Integer> serviceIds = servicesToSave.stream().map(com.easymarketing.easymarketing.model.entity.Service::getId).toList();
+        serviceRepository.deleteAll(serviceRepository.findAll().stream()
+                        .filter(s -> !serviceIds.contains(s.getId()))
+                        .toList());
+        List<Integer> qualityIds = qualitiesToSave.stream().map(ServiceQuality::getId).toList();
+        serviceQualityRepository.deleteAll(serviceQualityRepository.findAll().stream()
+                        .filter(q -> !qualityIds.contains(q.getId()))
+                        .toList());
+        List<Integer> tierIds = tiersToSave.stream().map(ServiceTier::getId).toList();
+        serviceTierRepository.deleteAll(serviceTierRepository.findAll().stream()
+                        .filter(t -> !tierIds.contains(t.getId()))
+                        .toList());
+        List<Integer> extraIds = extrasToSave.stream().map(ExtraService::getId).toList();
+        extraServiceRepository.deleteAll(extraServiceRepository.findAll().stream()
+                        .filter(e -> !extraIds.contains(e.getId()))
+                        .toList() );
+
+
         servicePlatformRepository.saveAll(platformsToSave);
         serviceRepository.saveAll(servicesToSave);
         serviceQualityRepository.saveAll(qualitiesToSave);
