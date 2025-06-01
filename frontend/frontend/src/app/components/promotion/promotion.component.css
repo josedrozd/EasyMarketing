@@ -39,3 +39,9 @@ a:hover {
 .prom-button:hover {
   background-color: gray;
 }
+
+@media (max-width: 768px) {
+  .explaining {
+    display: none;
+  }
+}

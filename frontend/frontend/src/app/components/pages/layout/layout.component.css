@@ -20,3 +20,8 @@ main {
   flex-direction: column;
   justify-content: center;
 }
+
+.whatsapp-img:hover {
+  width: 38px;
+  height: 38px;
+}
