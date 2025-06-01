@@ -8,7 +8,6 @@ import {
   ViewChild
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import * as THREE from 'three';
 
 @Component({
   selector: 'app-background',
@@ -28,13 +27,14 @@ export class BackgroundComponent implements AfterViewInit, OnDestroy {
   }
 
   async loadVantaEffect() {
+    await this.loadScript('https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.min.js');
     await this.loadScript('https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js');
 
     setTimeout(() => {
-      if ((window as any).VANTA && this.vantaRef?.nativeElement) {
+      if ((window as any).VANTA && (window as any).THREE && this.vantaRef?.nativeElement) {
         this.vantaEffect = (window as any).VANTA.NET({
           el: this.vantaRef.nativeElement,
-          THREE,
+          THREE: (window as any).THREE,
           mouseControls: true,
           touchControls: true,
           gyroControls: false,
@@ -49,7 +49,6 @@ export class BackgroundComponent implements AfterViewInit, OnDestroy {
           spacing: 20.0,
           backgroundColor: 0x000000
         });
-
       }
     }, 50);
   }
