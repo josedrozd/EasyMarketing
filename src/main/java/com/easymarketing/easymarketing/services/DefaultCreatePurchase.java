@@ -95,10 +95,10 @@ public class DefaultCreatePurchase implements ICreatePurchase {
                             .orElseThrow(() -> new NotFoundException("Quantity tier does not exist anymore."));
                     return PreferenceItemRequest.builder()
                             .id(cartOrder.get(0).getProductId().toString())
-                            .title(product.getName())
+                            .title(product.getName() + " x" + tier.getQuantity())
                             .pictureUrl(PICTURE_URL)
                             .categoryId(product.getName())
-                            .quantity(tier.getQuantity())
+                            .quantity(1)
                             .currencyId("ARS")
                             .unitPrice(BigDecimal.valueOf(tier.getWithDiscount() ? tier.getFinalPrice() : tier.getBasePrice()))
                             .build();

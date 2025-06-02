@@ -1,7 +1,8 @@
 declare global {
-  var mpCheckout: {
-    initializeMercadoPago(preferenceId: string, publicKey: string): void;
-  };
+  interface Window {
+    mpCheckout: {
+      initializeMercadoPago(preferenceId: string, publicKey: string): Promise<void>;
+    };
+  }
 }
-
 export {};

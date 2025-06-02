@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
 import { PingComponent } from './components/ping/ping.component';
-import { SuccessComponent } from './components/success/success.component';
-import { importProvidersFrom } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UnauthorizedComponent } from './components/pages/exceptions/unauthorized/unauthorized.component';
 import { NotFoundComponent } from './components/pages/exceptions/not-found/not-found.component';
@@ -23,6 +21,7 @@ import { OrderDetailsComponent } from './components/pages/orders/order-details/o
 import { OrderLayoutComponent } from './components/pages/orders/order-layout/order-layout.component';
 import { PurchaseLayoutComponent } from './components/pages/purchases/purchase-layout/purchase-layout.component';
 import { PaymentMethodComponent } from './components/pages/purchases/payment-method/payment-method.component';
+import { SuccessComponent } from './components/pages/purchases/success/success.component';
 
 export const routes: Routes = [
     { path: 'ping', component: PingComponent, runGuardsAndResolvers: 'always' },

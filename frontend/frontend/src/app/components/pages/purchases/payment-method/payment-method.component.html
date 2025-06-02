@@ -1,3 +1,82 @@
-<p>payment-method works!!!</p>
+<div *ngIf="!isLoading; else loading" class="payment-method-container">
+    <div class="methods-container">
+        <p>SELECCIONA TU FORMA DE PAGO:</p>
+        <div class="payment-options">
+            <label *ngIf="isMercadoPagoDisabled && isHoveringMp" class="warning-tooltip" [style.top.px]="hoverY + 10" [style.left.px]="hoverX + 10">
+                Los pagos automáticos no están disponibles para uno o más productos seleccionados.
+            </label>
+            <label class="payment-option"
+                [class.selected]="selectedPayment === 'mercadoPago'"
+                (mouseenter)="onMpHover($event)"
+                (mousemove)="onMpHover($event)"
+                (mouseleave)="onMpLeave()">
+                <input type="radio" name="paymentMethod" [(ngModel)]="selectedPayment" value="mercadoPago" [disabled]="isMercadoPagoDisabled" />
+                <div class="radio-text-wrapper">
+                    <span class="custom-radio"></span><span class="payment-text">Mercado Pago</span>
+                </div>
+                <div class="selected-payment-text" *ngIf="selectedPayment === 'mercadoPago'">
+                    Aquí va el texto que quieres mostrar cuando seleccionas Mercado Pago.
+                </div>
+            </label>
 
-<div id="wallet_container"></div>
+            <label class="payment-option" [class.selected]="selectedPayment === 'transferencia'">
+                <input type="radio" name="paymentMethod" [(ngModel)]="selectedPayment" value="transferencia" />
+                <div class="radio-text-wrapper">
+                    <span class="custom-radio"></span><span class="payment-text">Transferencia</span>
+                </div>
+                <div class="selected-payment-text" *ngIf="selectedPayment === 'transferencia'">
+                    Aquí va el texto para la opción Transferencia.
+                </div>
+            </label>
+
+
+        </div>
+        <div *ngIf="orderData" class="user-info">
+            <div class="title">
+                <strong>Datos de usuario:</strong>
+            </div>
+            <div class="user-data">
+                <div class="user-attribute">Mail: <a>{{ orderData.mail }}</a></div>
+                <div class="user-attribute">Nombre: <a>{{ orderData.name }}</a></div>
+                <div class="user-attribute">Apellido: <a>{{ orderData.lastname }}</a></div>
+            </div>
+        </div>
+        <div class="payment-buttons">
+            <div class="mp-button" >
+                <div id="wallet_container" [hidden]="selectedPayment !== 'mercadoPago'"></div>
+            </div>
+            <button class="action-button" [hidden]="selectedPayment === 'mercadoPago'">
+                Pagar
+            </button>
+        </div>
+    </div>
+    <div class="cart-details">
+        <ul>
+            <li *ngFor="let item of cartItemsData; let i = index">
+                <div class="item-row">
+                    <img 
+                        [src]="$any(item).platform?.imgUrl" 
+                        class="service-image"
+                    />
+                    <div class="item-attributes">
+                        <div class="item-details">
+                            <strong>{{ item.product.name }}</strong> <br>
+                            <strong>Calidad:</strong> {{ item.quality.name }} <br>
+                            <strong>Cantidad:</strong> {{ item.quantity.quantity }} <br>
+                            <strong>Usuario:</strong> {{ item.username }} <br>
+                        </div>
+                        <div class="price">
+                            {{ '$' + (item.quantity.withDiscount ? item.quantity.finalPrice : item.quantity.basePrice) + ' ARS' }}
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="total">
+            <span>Total: ARS ${{ total }}</span>
+        </div>
+    </div>
+</div>
+<ng-template #loading>
+    <div class="loading-container"><img src="loading.gif" alt="Cargando..." style="height: 50px;" /></div>
+</ng-template>

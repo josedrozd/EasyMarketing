@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
+import { OrderDataService } from '../../../../services/order-data.service';
 
 @Component({
   selector: 'app-purchase-layout',
@@ -10,5 +11,15 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './purchase-layout.component.css'
 })
 export class PurchaseLayoutComponent {
+
+  constructor(
+    private router: Router,
+    private orderDataService: OrderDataService
+  ) {}
+
+  goIndex() {
+    this.orderDataService.reset();
+    this.router.navigate(['/']);
+  }
 
 }

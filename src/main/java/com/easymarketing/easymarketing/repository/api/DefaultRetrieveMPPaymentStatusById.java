@@ -1,6 +1,8 @@
 package com.easymarketing.easymarketing.repository.api;
 
+import com.easymarketing.easymarketing.model.domain.MPAccessData;
 import com.easymarketing.easymarketing.model.domain.MPPaymentResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -12,18 +14,18 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class DefaultRetrieveMPPaymentStatusById implements IRetrieveMPPaymentStatusById{
 
-    @Value("${mp.access.token}")
-    private String accessToken;
+    @Autowired
+    private IAccessTokenService accessTokenService;
 
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
     public Boolean apply(Model model) {
-        return Boolean.TRUE;
-        /*String url = "https://api.mercadopago.com/v1/payments/" + model.getPaymentId();
+        MPAccessData accessData = accessTokenService.get();
+        String url = "https://api.mercadopago.com/v1/payments/" + model.getPaymentId();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(accessToken);
+        headers.setBearerAuth(accessData.getAcccessToken());
         HttpEntity<Void> entity = new HttpEntity<>(headers);
 
         ResponseEntity<MPPaymentResponse> response = restTemplate.exchange(
@@ -39,7 +41,7 @@ public class DefaultRetrieveMPPaymentStatusById implements IRetrieveMPPaymentSta
                     && model.getToken().equals(body.getExternalReference());
         }
 
-        return Boolean.FALSE;*/
+        return Boolean.FALSE;
     }
 
 }

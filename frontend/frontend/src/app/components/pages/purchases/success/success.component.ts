@@ -1,17 +1,19 @@
 import { ChangeDetectorRef, Component, Injector, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { PurchaseStatus, StatusService } from '../../services/backend/purchases/status.service';
+import { PurchaseStatus, StatusService } from '../../../../services/backend/purchases/status.service';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { ProcessPurchaseService } from '../../services/backend/purchases/process-purchase.service';
+import { ProcessPurchaseService } from '../../../../services/backend/purchases/process-purchase.service';
 import { interval, Subscription, switchMap } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-success',
   imports: [CommonModule,
+    MatIconModule,
     RouterModule
   ],
   templateUrl: './success.component.html',
-  styleUrl: './success.component.css'
+  styleUrls: ['./success.component.css', '../purchase-layout/purchase-layout.component.css']
 })
 export class SuccessComponent implements OnInit {
 
