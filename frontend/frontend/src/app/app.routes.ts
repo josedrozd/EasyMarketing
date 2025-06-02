@@ -21,6 +21,8 @@ import { DetailsComponent } from './components/pages/services/products/details/d
 import { OrderDataComponent } from './components/pages/orders/order-data/order-data.component';
 import { OrderDetailsComponent } from './components/pages/orders/order-details/order-details.component';
 import { OrderLayoutComponent } from './components/pages/orders/order-layout/order-layout.component';
+import { PurchaseLayoutComponent } from './components/pages/purchases/purchase-layout/purchase-layout.component';
+import { PaymentMethodComponent } from './components/pages/purchases/payment-method/payment-method.component';
 
 export const routes: Routes = [
     { path: 'ping', component: PingComponent, runGuardsAndResolvers: 'always' },
@@ -48,17 +50,22 @@ export const routes: Routes = [
         ]
 
     },
-    { path: 'process-purchase', component: SuccessComponent},
-    { path: 'mp', 
-        loadComponent: () => import('./components/mp-checkout/mp-checkout.component').then(m => m.MercadoPagoButtonComponent), 
-        providers: [importProvidersFrom(CommonModule)]
+    { path: 'compras', component: PurchaseLayoutComponent,
+        children: [
+            { path: 'metodos-de-pago', component: PaymentMethodComponent},
+            { path: 'procesar', component: SuccessComponent }
+        ]
     },
+    //{ path: 'mp', 
+    //    loadComponent: () => import('./components/mp-checkout/mp-checkout.component').then(m => m.MercadoPagoButtonComponent), 
+    //    providers: [importProvidersFrom(CommonModule)]
+    //},
     //{ path: 'manual-processing', component: ProcessPuchaseComponent},
     //{ path: 'add-service', component: AddServiceComponent},
     {
         path: 'admin',
         children: [
-          { path: 'services-panel', component: PanelComponent }
+            { path: 'services-panel', component: PanelComponent }
         ]
     }
 ];

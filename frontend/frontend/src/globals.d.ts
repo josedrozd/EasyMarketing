@@ -1,6 +1,6 @@
 declare global {
   var mpCheckout: {
-    initializeMercadoPago(preferenceId: string): void;
+    initializeMercadoPago(preferenceId: string, publicKey: string): void;
   };
 }
 

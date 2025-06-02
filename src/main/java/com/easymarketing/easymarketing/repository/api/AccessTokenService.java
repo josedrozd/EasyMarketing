@@ -1,5 +1,6 @@
 package com.easymarketing.easymarketing.repository.api;
 
+import com.easymarketing.easymarketing.model.domain.MPAccessData;
 import com.easymarketing.easymarketing.repository.api.IAccessTokenService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ public class AccessTokenService implements IAccessTokenService {
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public String get() {
+    public MPAccessData get() {
         String url = "https://blue-cloud-ed60.drozd-jose.workers.dev/";
 
         try {
@@ -21,7 +22,10 @@ public class AccessTokenService implements IAccessTokenService {
 
             if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
                 JsonNode jsonNode = objectMapper.readTree(response.getBody());
-                return jsonNode.get("accessToken").asText();
+                return MPAccessData.builder()
+                        .acccessToken(jsonNode.get("accessToken").asText())
+                        .publicKey(jsonNode.get("publicKey").asText())
+                        .build();
             } else {
                 throw new RuntimeException("No se pudo obtener el token desde el endpoint");
             }

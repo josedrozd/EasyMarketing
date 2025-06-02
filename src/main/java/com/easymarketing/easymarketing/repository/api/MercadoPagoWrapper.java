@@ -1,5 +1,8 @@
 package com.easymarketing.easymarketing.repository.api;
 
+import com.easymarketing.easymarketing.model.domain.MPAccessData;
+import com.easymarketing.easymarketing.model.domain.PreferenceResponseData;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mercadopago.resources.preference.Preference;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +19,15 @@ public class MercadoPagoWrapper implements IMercadoPagoWrapper {
     private IAccessTokenService accessTokenService;
 
     private final RestTemplate restTemplate = new RestTemplate();
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper()
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-    public Preference apply(Map<String, Object> preferenceData) {
-        String accessToken = accessTokenService.get();
+    public PreferenceResponseData apply(Map<String, Object> preferenceData) {
+        MPAccessData accessData = accessTokenService.get();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(accessToken);
+        headers.setBearerAuth(accessData.getAcccessToken());
 
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(preferenceData, headers);
 
@@ -33,7 +37,11 @@ public class MercadoPagoWrapper implements IMercadoPagoWrapper {
 
         if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
             try {
-                return objectMapper.readValue(response.getBody(), Preference.class);
+                return PreferenceResponseData.builder()
+                        .preference(objectMapper.readValue(response.getBody(), Preference.class))
+                        .accessToken(accessData.getAcccessToken())
+                        .publicKey(accessData.getPublicKey())
+                        .build();
             } catch (Exception e) {
                 throw new RuntimeException("Error al parsear la respuesta de Mercado Pago", e);
             }

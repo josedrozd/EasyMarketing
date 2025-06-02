@@ -10,9 +10,9 @@
     document.body.appendChild(script);
   }
 
-  function initializeMercadoPago(preferenceId) {
+  function initializeMercadoPago(preferenceId, publicKey) {
     loadMercadoPagoScript(function() {
-      const mp = new MercadoPago('APP_USR-cef738f2-e262-49a4-ba18-506a75387e77');
+      const mp = new MercadoPago(publicKey);
       mp.bricks().create('wallet', 'wallet_container', {
         initialization: {preferenceId: preferenceId,},
         customization: {texts: {valueProp: 'smart_option',},},

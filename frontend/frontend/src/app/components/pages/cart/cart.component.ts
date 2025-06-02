@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CartItemData } from '../../../core/models/cart-item-data';
 import { OrderData, OrderDataService } from '../../../services/order-data.service';
 import { take } from 'rxjs';
+import { MpPreferenceService, PreferenceDTO, PurchaseDTO } from '../../../services/backend/mp/mp-preference.service';
 
 @Component({
   selector: 'app-cart',
@@ -27,10 +28,13 @@ export class CartComponent {
   cartItemsData: CartItemData[] = [];
   orderData!: OrderData;
   total!: number;
+  creatingPurchase: boolean = false;
+  preference!: PreferenceDTO;
 
   constructor(
       private cartService: CartService,
       private orderDataService: OrderDataService,
+      private createPurchaseService: MpPreferenceService,
       private router: Router
   ) {
   }
@@ -41,6 +45,7 @@ export class CartComponent {
       this.updateTotal();
       this.orderDataService.orderData$.pipe(take(1)).subscribe(data => {
         this.orderData = data;
+        this.cartItems = this.cartService.getCartByOrders();
         this.isLoading = false;
       })
     });
@@ -54,6 +59,21 @@ export class CartComponent {
   updateTotal() {
     this.total = this.cartItemsData.reduce((sum, item) =>
       sum + (item.quantity.withDiscount ? item.quantity.finalPrice : item.quantity.basePrice), 0);
+  }
+
+  createPurchase() {
+    this.creatingPurchase = true;
+    const purchase: PurchaseDTO = {
+      email: this.orderData.mail!,
+      name: this.orderData.name!,
+      lastName: this.orderData.lastname!,
+      cartItems: this.cartItems
+    };
+    this.createPurchaseService.createPreference(purchase).subscribe(res => {
+      this.preference = res;
+      this.creatingPurchase = false;
+      this.router.navigate(['/compras/metodos-de-pago']);
+    });
   }
 
 }

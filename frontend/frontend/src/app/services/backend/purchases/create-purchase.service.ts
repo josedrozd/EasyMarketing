@@ -8,8 +8,7 @@ export interface PurchaseDTO {
   name: string;
   lastName: string;
   email: string;
-  totalPrice: number;
-  cartItems: CartItem[];
+  cartItems: CartItem[][];
 }
 
 @Injectable({

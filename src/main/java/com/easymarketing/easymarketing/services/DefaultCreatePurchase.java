@@ -3,12 +3,15 @@ package com.easymarketing.easymarketing.services;
 import com.easymarketing.easymarketing.exception.NotFoundException;
 import com.easymarketing.easymarketing.exception.UnauthorizedException;
 import com.easymarketing.easymarketing.model.domain.PreferenceRequestData;
+import com.easymarketing.easymarketing.model.dto.CartItemDTO;
 import com.easymarketing.easymarketing.model.dto.PurchaseDTO;
 import com.easymarketing.easymarketing.model.entity.Cart;
 import com.easymarketing.easymarketing.model.entity.Purchase;
+import com.easymarketing.easymarketing.model.entity.ServiceQuality;
 import com.easymarketing.easymarketing.model.entity.ServiceTier;
 import com.easymarketing.easymarketing.model.enums.PurchaseStatusEnum;
 import com.easymarketing.easymarketing.repository.jpa.PurchaseRepository;
+import com.easymarketing.easymarketing.repository.jpa.ServiceQualityRepository;
 import com.easymarketing.easymarketing.repository.jpa.ServiceRepository;
 import com.easymarketing.easymarketing.repository.jpa.ServiceTierRepository;
 import com.easymarketing.easymarketing.services.interfaces.ICreatePurchase;
@@ -31,6 +34,8 @@ public class DefaultCreatePurchase implements ICreatePurchase {
     private ServiceTierRepository serviceTierRepository;
     @Autowired
     private ServiceRepository serviceRepository;
+    @Autowired
+    private ServiceQualityRepository serviceQualityRepository;
 
     @Override
     public PreferenceRequestData apply(PurchaseDTO purchaseDTO) {
@@ -107,6 +112,10 @@ public class DefaultCreatePurchase implements ICreatePurchase {
                     if (order.isEmpty() || !(order.stream().allMatch(e -> e.getQuantityId().equals(order.get(0).getQuantityId()))))
                         throw new UnauthorizedException("Someone is editing the order.");
                     ServiceTier tier = serviceTierRepository.findById(order.get(0).getQuantityId()).orElseThrow(() -> new NotFoundException("Quantity does not exist anymore."));
+                    ServiceQuality quality = serviceQualityRepository.findById(order.get(0).getQualityId()).orElseThrow(() -> new NotFoundException("Quality does not exist anymore."));
+                    if (order.stream().anyMatch(e -> quality.getAutomaticPayment() && (e.getUnitQuantity() < quality.getMinimum())) ||
+                            (order.stream().mapToInt(CartItemDTO::getUnitQuantity).sum() >  tier.getQuantity()))
+                        throw new UnauthorizedException("Someone is editing the order.");
                     return tier.getWithDiscount() ? tier.getFinalPrice() : tier.getBasePrice();
                 })
                 .sum();

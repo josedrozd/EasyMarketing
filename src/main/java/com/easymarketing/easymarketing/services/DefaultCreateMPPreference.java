@@ -1,6 +1,8 @@
 package com.easymarketing.easymarketing.services;
 
 import com.easymarketing.easymarketing.model.domain.PreferenceRequestData;
+import com.easymarketing.easymarketing.model.domain.PreferenceResponseData;
+import com.easymarketing.easymarketing.model.dto.PreferenceDTO;
 import com.easymarketing.easymarketing.model.dto.PurchaseDTO;
 import com.easymarketing.easymarketing.repository.api.IMercadoPagoWrapper;
 import com.easymarketing.easymarketing.services.interfaces.ICreateMPPreference;
@@ -32,7 +34,7 @@ public class DefaultCreateMPPreference implements ICreateMPPreference {
     private IMercadoPagoWrapper mercadoPagoWrapper;
 
     @Override
-    public Preference apply(PurchaseDTO purchase) {
+    public PreferenceDTO apply(PurchaseDTO purchase) {
         try {
             PreferenceRequestData preferenceRequestData = createPurchase.apply(purchase);
 
@@ -48,13 +50,19 @@ public class DefaultCreateMPPreference implements ICreateMPPreference {
                     "external_reference", preferenceRequestData.getToken(),
                     "expires", true,
                     "expiration_date_from", OffsetDateTime.now().minusDays(2).toString(),
-                    "expiration_date_to", OffsetDateTime.now().plusHours(1).toString()
+                    "expiration_date_to", OffsetDateTime.now().plusHours(5).toString()
             );
 
-            return mercadoPagoWrapper.apply(preferenceData);
+            PreferenceResponseData preferenceResponseData = mercadoPagoWrapper.apply(preferenceData);
+            return PreferenceDTO.builder()
+                    .preferenceId(preferenceResponseData.getPreference().getId())
+                    .purchaseToken(preferenceRequestData.getToken())
+                    .accessToken(preferenceResponseData.getAccessToken())
+                    .publicKey(preferenceResponseData.getPublicKey())
+                    .build();
 
         } catch (Exception e) {
-            throw new RuntimeException("Error al crear preferencia de MP", e);
+            throw new RuntimeException("Error al crear preferencia de MP: " + e.getMessage(), e);
         }
     }
 

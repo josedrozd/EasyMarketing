@@ -1,5 +1,6 @@
 package com.easymarketing.easymarketing.controller.mp;
 
+import com.easymarketing.easymarketing.model.dto.PreferenceDTO;
 import com.easymarketing.easymarketing.model.dto.PurchaseDTO;
 import com.easymarketing.easymarketing.services.interfaces.ICreateMPPreference;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,8 @@ public class MPController {
     private ICreateMPPreference iCreateMPPreference;
 
     @PostMapping("/preferences/create")
-    public ResponseEntity<String> createPreference(@RequestBody PurchaseDTO purchase) {
-        String id = iCreateMPPreference.apply(purchase).getId();
-        System.out.println(OffsetDateTime.now().toString() + ": " + id);
-        return ResponseEntity.status(HttpStatus.CREATED).body(id);
+    public ResponseEntity<PreferenceDTO> createPreference(@RequestBody PurchaseDTO purchase) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(iCreateMPPreference.apply(purchase));
     }
 
 }

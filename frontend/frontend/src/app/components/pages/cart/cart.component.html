@@ -43,7 +43,14 @@
     </div>
     
     <div class="buy">
-      <button class="button main-button" routerLink="/servicios">Comprar</button>
+      <button class="main-button" (click)="createPurchase()" [disabled]="creatingPurchase">
+        <ng-container *ngIf="!creatingPurchase; else loading">
+          Comprar
+        </ng-container>
+        <ng-template #loading>
+          <img src="loading.gif" alt="Procesando..." style="height: 20px;" />
+        </ng-template>
+      </button>
     </div>
   </div>
   <ng-template #emptyList>
