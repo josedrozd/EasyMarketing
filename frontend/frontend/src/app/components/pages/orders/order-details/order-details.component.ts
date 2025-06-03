@@ -91,7 +91,7 @@ export class OrderDetailsComponent {
   }
 
   getImageUrl(picUrl: string | undefined): string {
-    return picUrl && environment.production
+    return picUrl && environment.production && this.isInstagram
       ? environment.imgProxy + picUrl
       : '/dev_img.jpg';
   }
@@ -120,6 +120,7 @@ export class OrderDetailsComponent {
       this.quality = foundQuality as QualityNode;
       this.quantity = foundQuantity as QuantityNode;
       if (this.isInstagram) this.loadIgData();
+      else this.isLoading = false;
     });
   }
 
@@ -170,7 +171,7 @@ export class OrderDetailsComponent {
   }
 
   isDisabled(): boolean {
-    return ["POST", "REEL"].includes(this.mediaType) && this.selectedUrls.length === 0;
+    return this.isInstagram && ["POST", "REEL"].includes(this.mediaType) && this.selectedUrls.length === 0;
   }
 
   getAutoDistributedValue(): number {

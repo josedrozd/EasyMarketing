@@ -63,6 +63,9 @@ export class OrderDataComponent {
 
   ngOnInit() {
     this.orderSub = this.orderDataService.orderData$.subscribe(data => {
+      this.formData.mail = data.mail ?? '';
+      this.formData.name = data.name ?? '';
+      this.formData.lastname = data.lastname ?? '';
       this.serviceRef = data.serviceId;
       this.productRef = data.productId;
       this.qualityRef = data.qualityId;

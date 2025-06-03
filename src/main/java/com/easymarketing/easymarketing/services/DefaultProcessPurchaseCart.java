@@ -5,10 +5,12 @@ import com.easymarketing.easymarketing.exception.UnauthorizedException;
 import com.easymarketing.easymarketing.model.domain.PurchaseProcessData;
 import com.easymarketing.easymarketing.model.dto.FailedCartItemDTO;
 import com.easymarketing.easymarketing.model.entity.Cart;
+import com.easymarketing.easymarketing.model.entity.Purchase;
 import com.easymarketing.easymarketing.model.entity.ServiceQuality;
 import com.easymarketing.easymarketing.repository.api.IHonestSMMClient;
 import com.easymarketing.easymarketing.repository.api.ISMMCostClient;
 import com.easymarketing.easymarketing.repository.jpa.CartRepository;
+import com.easymarketing.easymarketing.repository.jpa.PurchaseRepository;
 import com.easymarketing.easymarketing.repository.jpa.ServiceQualityRepository;
 import com.easymarketing.easymarketing.repository.jpa.ServiceRepository;
 import com.easymarketing.easymarketing.services.interfaces.ICompletePurchase;
@@ -24,6 +26,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
+import static com.easymarketing.easymarketing.model.enums.PurchaseStatusEnum.CANCELED;
 import static com.easymarketing.easymarketing.utils.PublicMethodsUtil.buildLink;
 
 @Slf4j
@@ -44,6 +47,8 @@ public class DefaultProcessPurchaseCart implements IProcessPurchaseCart {
     private ServiceRepository serviceRepository;
     @Autowired
     private ServiceQualityRepository serviceQualityRepository;
+    @Autowired
+    private PurchaseRepository purchaseRepository;
 
     @Async
     @Override
@@ -51,9 +56,15 @@ public class DefaultProcessPurchaseCart implements IProcessPurchaseCart {
         if(redisService.isProcessing(purchaseId))
             throw new UnauthorizedException(String.format("Another process is being executed for purchase id: %s.", purchaseId));
 
+        redisService.setProcessing(purchaseId);
+        Purchase purchase = purchaseRepository.findById(purchaseId).orElseThrow(() -> new NotFoundException("Purchase was not found"));
+        if (CANCELED.equals(purchase.getStatus())) {
+            log.warn("Se esta intentando procesar un envio cancelado.");
+            redisService.removeKey(purchaseId);
+            throw new UnauthorizedException("Canceled purchases can not be processed.");
+        }
         PurchaseProcessData response = PurchaseProcessData.builder().completed(Boolean.FALSE).build();
         List<Cart> cartList = cartRepository.findByPurchase_IdAndProcessed(purchaseId, Boolean.FALSE);
-        redisService.setProcessing(purchaseId);
         ExecutorService executor = Executors.newFixedThreadPool(4);
 
         List<CompletableFuture<Void>> futures = cartList

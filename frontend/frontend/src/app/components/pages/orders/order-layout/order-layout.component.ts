@@ -48,10 +48,7 @@ export class OrderLayoutComponent {
         productId: currentData.productId,
         qualityId: currentData.qualityId,
         quantityId: currentData.quantityId,
-        username: null,
-        mail: null,
-        name: null,
-        lastname: null
+        username: null
       });
       this.router.navigate(['/ordenes/ingresar-datos']);
     } else {
@@ -61,7 +58,9 @@ export class OrderLayoutComponent {
   }
 
   goIndex() {
-    this.orderDataService.reset();
+    this.orderDataService.setAll({
+        username: null
+    });
     this.router.navigate(['/']);
   }
 

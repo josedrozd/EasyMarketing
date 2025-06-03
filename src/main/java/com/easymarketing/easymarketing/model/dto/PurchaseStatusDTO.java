@@ -20,6 +20,7 @@ public class PurchaseStatusDTO {
     private Boolean isCompleted;
     private Boolean isProcessing;
     private Boolean isStarted;
+    private Boolean isCanceled;
     @Builder.Default
     private List<CartItemUnitDTO> items = new ArrayList<>();
 

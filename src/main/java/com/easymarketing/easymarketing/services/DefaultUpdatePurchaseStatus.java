@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static com.easymarketing.easymarketing.model.enums.PurchaseStatusEnum.CANCELED;
 import static com.easymarketing.easymarketing.model.enums.PurchaseStatusEnum.COMPLETED;
 import static com.easymarketing.easymarketing.utils.PublicMethodsUtil.buildLink;
 
@@ -51,6 +52,7 @@ public class DefaultUpdatePurchaseStatus implements IUpdatePurchaseStatus {
                 .isCompleted(Boolean.FALSE)
                 .isProcessing(Boolean.FALSE)
                 .isStarted(Boolean.FALSE)
+                .isCanceled(Boolean.FALSE)
                 .build();
 
         Purchase purchase = purchaseRepository.findByToken(model.getToken()).orElseThrow(() ->
@@ -62,8 +64,22 @@ public class DefaultUpdatePurchaseStatus implements IUpdatePurchaseStatus {
                 .isCompleted(Boolean.TRUE)
                 .isProcessing(Boolean.FALSE)
                 .isStarted(Boolean.TRUE)
+                .isCanceled(Boolean.FALSE)
                 .items(buildItemsList(purchase.getCartItems()))
                 .build();
+
+        if(CANCELED.equals(purchase.getStatus())) {
+            redisService.removeKey(purchase.getId());
+            return PurchaseStatusDTO.builder()
+                .id(null)
+                .isApproved(Boolean.TRUE)
+                .isCompleted(Boolean.FALSE)
+                .isProcessing(Boolean.FALSE)
+                .isStarted(redisService.isStarted(purchase.getId()))
+                .isCanceled(Boolean.TRUE)
+                .items(buildItemsList(purchase.getCartItems()))
+                .build();
+        }
 
         if(purchase.pay()) {
             purchaseRepository.save(purchase);
@@ -80,6 +96,7 @@ public class DefaultUpdatePurchaseStatus implements IUpdatePurchaseStatus {
                 .isCompleted(Boolean.FALSE)
                 .isProcessing(redisService.isProcessing(purchase.getId()))
                 .isStarted(redisService.isStarted(purchase.getId()))
+                .isCanceled(Boolean.FALSE)
                 .items(buildItemsList(purchase.getCartItems()))
                 .build();
     }

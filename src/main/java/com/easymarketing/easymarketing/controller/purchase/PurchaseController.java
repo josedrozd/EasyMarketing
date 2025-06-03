@@ -27,6 +27,8 @@ public class PurchaseController {
     private ITemporaryCreatePurchase temporaryCreatePurchase;*/
     @Autowired
     private IRetrievePurchaseStatus retrievePurchaseStatus;
+    @Autowired
+    private ICancelPurchase cancelPurchase;
 
     /*@PostMapping
     public ResponseEntity<String> temporaryCreatePurchase(@Valid @NotNull @RequestBody PurchaseDTO purchaseDTO){
@@ -48,14 +50,19 @@ public class PurchaseController {
     }
 
     @PostMapping("/{purchaseId}/process")
-    public ResponseEntity<Void> processPurchaseById(@Valid @NotNull @PathVariable Long purchaseId){
+    public ResponseEntity<Void> processPurchaseById(@Valid @NotNull @PathVariable Long purchaseId) {
         processPurchaseCart.accept(purchaseId);
         return ResponseEntity.accepted().build();
     }
 
     @GetMapping("/{purchaseId}/status")
-    public ResponseEntity<PurchaseStatusDTO> getStatusById(@Valid @NotNull @PathVariable Long purchaseId){
+    public ResponseEntity<PurchaseStatusDTO> getStatusById(@Valid @NotNull @PathVariable Long purchaseId) {
         return ResponseEntity.ok(retrievePurchaseStatus.apply(purchaseId));
+    }
+
+    @PutMapping("/{purchaseId}/cancel")
+    public ResponseEntity<Boolean> cancelById(@Valid @NotNull @PathVariable Long purchaseId) {
+        return ResponseEntity.ok(cancelPurchase.apply(purchaseId));
     }
 
 }

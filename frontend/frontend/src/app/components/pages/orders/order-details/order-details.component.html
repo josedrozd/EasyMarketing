@@ -32,12 +32,12 @@
             </button>
         </div>
     </div>
-    <div *ngIf="mediaVisible" class="checkout" [ngClass]="{'small-window': mediaVisible}" (click)="addToCart()">
-        <button class="action-button" [disabled]="isDisabled()">Añadir al carrito</button>
+    <div *ngIf="mediaVisible" class="checkout" [ngClass]="{'small-window': mediaVisible}">
+        <button class="action-button" [disabled]="isDisabled()" (click)="addToCart()">Añadir al carrito</button>
     </div>
     <div class="profile-container card" [ngClass]="{'big-window': mediaVisible}">
         <div class="user-info">
-            <div><img [src]="getImageUrl(profilePicUrl)" alt="Foto de perfil" class="profile-pic" /></div>
+            <div *ngIf="isInstagram"><img [src]="getImageUrl(profilePicUrl)" alt="Foto de perfil" class="profile-pic" /></div>
             <div class="username-display">
                 <span>{{'@' + orderData.username }}</span>
                 <a [routerLink]="['/ordenes/ingresar-datos']">Cambiar usuario</a>
@@ -49,8 +49,8 @@
             <a [routerLink]="['/ordenes/ingresar-datos']">Cambiar</a>
             <span class="price">{{ '$' + (quantity?.withDiscount ? quantity?.finalPrice : quantity?.basePrice) }}</span>
         </div>
-        <div class="checkout" (click)="addToCart()">
-            <button class="action-button" [disabled]="isDisabled()">Añadir al carrito</button>
+        <div class="checkout">
+            <button class="action-button" [disabled]="isDisabled()" (click)="addToCart()">Añadir al carrito</button>
         </div>
     </div>
 </div>

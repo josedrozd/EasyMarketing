@@ -19,6 +19,7 @@ export interface PurchaseStatus {
   isCompleted: boolean;
   isProcessing: boolean;
   isStarted: boolean;
+  isCanceled: boolean;
   items: CartItemUnit[];
 }
 
@@ -43,10 +44,12 @@ export class StatusService {
     return this.http.put<PurchaseStatus>(url, {}, { params: { paymentId } }).pipe(
       tap((status) => {
         let msg = '';
-        if (!status.isApproved) {
+        if (status.isCanceled) {
+          msg = 'Tu compra fue cancelada. Comunicate con nosotros para mas información.'
+        } else if (!status.isApproved) {
           msg = 'Aun no pudimos confirmar el pago. Espera unos segundos y refresca la página. Si el problema persiste contactate con nosotros!';
         } else if (status.isCompleted) {
-          msg = 'Tu compra ya fue procesada. Gracias por confiar en nosotros! ❤️';
+          msg = 'Tu compra ya fue procesada, en breves deberias ver tus productos reflejados. ¡Gracias por confiar en nosotros! ❤️';
         } else if (status.isStarted && !status.isProcessing) {
           msg = 'Hubo un error al procesar algunos items de la compra. Por favor vuelva a reprocesar. Si el problema persiste, contactese con nosotros.'; 
         } else {
@@ -68,6 +71,7 @@ export class StatusService {
               isCompleted: status.isCompleted,
               isProcessing: status.isProcessing,
               isStarted: status.isStarted,
+              isCanceled: status.isCanceled,
               items: status.items
       }))
     );

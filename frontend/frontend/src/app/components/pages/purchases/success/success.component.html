@@ -31,7 +31,7 @@
         <div *ngIf="processing" class="disclaimer">
             Estamos procesando tu pedido, esto podria durar unos minutos.
         </div>
-        <div *ngIf="!purchaseStatus.isCompleted">
+        <div *ngIf="!purchaseStatus.isCompleted && !purchaseStatus.isCanceled">
             <button class="action-button" style="margin-top:1rem; margin-bottom: 1rem;" (click)="processPurchase()" [disabled]="processing">
                 <ng-container *ngIf="!processing; else loading">
                     Procesar compra

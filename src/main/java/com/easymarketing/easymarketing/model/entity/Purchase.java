@@ -47,8 +47,16 @@ public class Purchase {
     }
 
     public boolean pay(){
-        if(!PurchaseStatusEnum.COMPLETED.equals(status) && !PurchaseStatusEnum.PAYED.equals(status)){
+        if(!PurchaseStatusEnum.COMPLETED.equals(status) && !PurchaseStatusEnum.PAYED.equals(status) && !PurchaseStatusEnum.CANCELED.equals(status)){
             status = PurchaseStatusEnum.PAYED;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean cancel() {
+        if (PurchaseStatusEnum.PAYED.equals(status)) {
+            status = PurchaseStatusEnum.CANCELED;
             return true;
         }
         return false;

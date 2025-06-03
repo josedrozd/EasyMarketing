@@ -4,6 +4,8 @@ public enum PurchaseStatusEnum {
 
     CREATED,
     PAYED,
-    COMPLETED
+    COMPLETED,
+
+    CANCELED
 
 }
