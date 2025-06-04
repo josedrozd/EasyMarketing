@@ -77,6 +77,11 @@ export class StatusService {
     );
   }
 
+  cancelPurchase(purchaseId: number): Observable<boolean> {
+    const url = `${this.baseUrl}/api/purchases/${purchaseId}/cancel`;
+    return this.http.put<boolean>(url, {});
+  }
+
   getMessageFromState(): string {
     const msg = this.state.get(MESSAGE_KEY, '');
     return msg;

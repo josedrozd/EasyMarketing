@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static com.easymarketing.easymarketing.model.enums.PurchaseStatusEnum.COMPLETED;
+import static com.easymarketing.easymarketing.model.enums.PurchaseStatusEnum.*;
 import static com.easymarketing.easymarketing.utils.PublicMethodsUtil.buildLink;
 
 @Service
@@ -38,10 +38,11 @@ public class DefaultRetrievePurchaseStatus implements IRetrievePurchaseStatus {
                 .orElseThrow(()-> new RuntimeException(""));
         return PurchaseStatusDTO.builder()
                 .id(purchaseId)
-                .isApproved(Boolean.TRUE)
+                .isApproved(CREATED.equals(purchase.getStatus()) ? Boolean.FALSE : Boolean.TRUE)
                 .isCompleted(COMPLETED.equals(purchase.getStatus()))
                 .isProcessing(redisService.isProcessing(purchaseId))
                 .isStarted(redisService.isStarted(purchaseId))
+                .isCanceled(CANCELED.equals(purchase.getStatus()))
                 .items(buildItemsList(purchase.getCartItems()))
                 .build();
     }

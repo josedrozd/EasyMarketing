@@ -12,13 +12,16 @@ import java.util.Optional;
 public class DefaultCancelPurchase implements ICancelPurchase {
 
     @Autowired
+    private RedisService redisService;
+    @Autowired
     private PurchaseRepository purchaseRepository;
 
     @Override
     public Boolean apply(Long purchaseId) {
         Optional<Purchase> purchase = purchaseRepository.findById(purchaseId);
 
-        if (purchase.isEmpty()) return Boolean.FALSE;
+        if (purchase.isEmpty() || redisService.isProcessing(purchaseId))
+            return Boolean.FALSE;
 
         if (purchase.get().cancel()) {
             purchaseRepository.save(purchase.get());

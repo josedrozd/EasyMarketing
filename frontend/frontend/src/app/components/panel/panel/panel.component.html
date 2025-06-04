@@ -25,6 +25,62 @@
                   </linearGradient>
               </defs>
               <text x="50%" y="50%" font-family="Arial" font-size="3rem" fill="url(#grad1)" text-anchor="middle" alignment-baseline="central" dominant-baseline="central">
+                  ADMINISTRACION DE COMPRAS
+              </text>
+          </svg>
+      </div>
+      <div class="purchase-container">
+        <div class="purchase-search">
+          <input class="id-input" type="number" [(ngModel)]="purchaseId" placeholder="ID" />
+          <button class="btn btn-admin" (click)="getPurchase()" [disabled]="loadingPurchase">Consultar</button>
+        </div>
+        <div *ngIf="purchaseStatus" class="purchase-data">
+          <p><strong>Estado de la compra:</strong> {{ getPurchaseStatus() }}</p>
+          <h3><strong>Productos:</strong></h3>
+          <table class="purchase-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Username</th>
+                <th>URL</th>
+                <th>Proveedor</th>
+                <th>ID Servicio</th>
+                <th>Cantidad</th>
+                <th>Procesado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of purchaseStatus.items; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ item.serviceName }}</td>
+                <td>{{ item.username }}</td>
+                <td>{{ item.url }}</td>
+                <td>{{ item.provider }}</td>
+                <td>{{ item.serviceId }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.processed ? 'Sí' : 'No' }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="purchase-cancel">
+            <button class="btn btn-admin warning" (click)="cancelPurchase()" [disabled]="!purchaseStatus || purchaseStatus.isCanceled || purchaseStatus.isProcessing || purchaseStatus.isCompleted || !purchaseStatus.isApproved">
+              Cancelar Compra
+            </button>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="container-box" *ngIf="visible">
+      <div class="top-bar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1000 100">
+              <defs>
+                  <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" style="stop-color:#393e45;stop-opacity:1" />
+                      <stop offset="100%" style="stop-color:#454f50;stop-opacity:1" />
+                  </linearGradient>
+              </defs>
+              <text x="50%" y="50%" font-family="Arial" font-size="3rem" fill="url(#grad1)" text-anchor="middle" alignment-baseline="central" dominant-baseline="central">
                   CONFIGURACION SERVICIOS
               </text>
           </svg>

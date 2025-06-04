@@ -11,6 +11,7 @@ import { ExtraNode, GroupNode, PlatformNode, QualityNode, QuantityNode, ServiceN
 import { FormsModule } from '@angular/forms';
 import { ServicesService } from '../../../services/backend/services/services.service'
 import { ConfirmationBoxComponent } from '../confirmation-box/confirmation-box.component';
+import { PurchaseStatus, StatusService } from '../../../services/backend/purchases/status.service';
 
 function calculateDiscount(basePrice: number, finalPrice: number): number {
   if (!basePrice || !finalPrice || basePrice === 0) {
@@ -54,10 +55,15 @@ export class PanelComponent {
   historyStack: any[] = [];
   nodeToRemove!: TreeNode | null;
 
+  purchaseId!: number;
+  purchaseStatus: PurchaseStatus | null = null;
+  loadingPurchase: boolean = false;
+
   constructor(
       private checkPassword: CheckPasswordService,
       private router: Router,
-      private panelService: ServicesService
+      private panelService: ServicesService,
+      private statusService: StatusService
   ){
     if (isPlatformBrowser(this.platformId)) {
       const authPassed = sessionStorage.getItem('auth_passed') === 'true';
@@ -366,6 +372,48 @@ export class PanelComponent {
         this.isSaving = false;
         console.error('Error al guardar los cambios:', err);
         alert('Ocurrió un error al guardar los cambios.');
+      }
+    });
+  }
+
+  getPurchase(): void {
+    if(this.purchaseId) {
+      this.loadingPurchase = true;
+      this.statusService.retrievePurchaseStatus(this.purchaseId).subscribe(res => {
+        this.purchaseStatus = res;
+        this.loadingPurchase = false;
+        console.log(this.purchaseStatus);
+      });
+    }
+  }
+
+  getPurchaseStatus(): string {
+    return this.purchaseStatus?.isCanceled ? "CANCELADA" 
+    : (this.purchaseStatus?.isCompleted ? "COMPLETADA"
+      : (this.purchaseStatus?.isProcessing ? "PROCESANDO"
+        : this.purchaseStatus?.isApproved ? "PAGADA" : "CREADA"
+      )
+    );
+  }
+
+  cancelPurchase(): void {
+    if (!this.purchaseId) return;
+
+    const confirmCancel = confirm('¿Estás seguro que querés cancelar esta compra?');
+    if (!confirmCancel) return;
+
+    this.statusService.cancelPurchase(this.purchaseId).subscribe({
+      next: (result) => {
+        if (result) {
+          alert('Compra cancelada exitosamente.');
+          this.getPurchase();
+        } else {
+          alert('No se pudo cancelar la compra. Solo de pueden cancelar en estado PAGADA.');
+        }
+      },
+      error: (err) => {
+        console.error('Error al cancelar la compra:', err);
+        alert('Ocurrió un error al cancelar la compra.');
       }
     });
   }

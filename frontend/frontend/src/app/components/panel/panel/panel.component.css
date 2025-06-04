@@ -159,3 +159,73 @@ input[type="checkbox"] {
     flex: 1;
     background-color: #ffffff3a;
 }
+
+.purchase-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
+}
+
+.purchase-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.purchase-data > h3,
+.purchase-data > p {
+    margin: 0;
+    padding: 0;
+}
+
+.purchase-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.purchase-table th, .purchase-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+
+.purchase-table thead {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.warning {
+    background-color: rgba(190, 127, 140, 0.815);
+    background-image: linear-gradient(to left, 
+    rgba(173, 104, 118, 0.815) 10%, 
+    transparent 100%);
+}
+
+.warning:disabled {
+    background-color: rgba(189, 189, 189, 0.815);
+    background-image: linear-gradient(to left, 
+    rgba(138, 138, 138, 0.815) 10%, 
+    transparent 100%);
+}
+
+.purchase-search, .purchase-cancel {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+}
+
+input.id-input {
+    text-align: center;
+    width: 20ch;
+}
+
+input.id-input::-webkit-outer-spin-button,
+input.id-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
