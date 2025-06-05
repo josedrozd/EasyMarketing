@@ -23,6 +23,9 @@
     max-width: unset;
     padding: 0;
   }
+  h1 {
+    text-align: center;
+  }
 }
 
 .service-col {
@@ -34,7 +37,7 @@
   padding: 24px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: white;
+  background-color: transparent;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
@@ -45,8 +48,9 @@
 }
 
 .service-card:hover {
-  transform: translateY(-4px);
   cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.657);
+  transform: translateY(-4px);
 }
 
 .service-image {
@@ -54,6 +58,8 @@
   height: clamp(140px, 30vw, 240px);
   object-fit: contain;
   margin-bottom: 16px;
+  background-color: transparent;
+  border-radius: 10px;
 }
 
 .service-name {
@@ -73,12 +79,63 @@ h1 {
   font-size: clamp(18px, 4vw, 30px);
   color: #333;
   text-align: justify;
+  text-align-last: center;
+  filter: drop-shadow(-1px 2px 1px rgba(0, 0, 0, 0.173));
 }
 
 .services-container {
-  max-width: 800px;
+  max-width: 900px;
   padding: 2rem;
-  margin-bottom: 2rem;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 30px;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.079);
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.799) 0%,
+    transparent 100%);
 }
+
+.shine-wrapper {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.shine-wrapper img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.shine {
+  position: absolute;
+  top: 0;
+  right: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 20%,
+    rgba(255, 255, 255, 0.048) 35%,
+    rgba(255, 255, 255, 0.286) 50%,
+    rgba(255, 255, 255, 0.048) 65%,
+    rgba(255, 255, 255, 0) 80%
+  );
+  animation: shine 4s ease-in-out infinite;
+  animation-direction: alternate;
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+

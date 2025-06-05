@@ -21,13 +21,13 @@
     <div #customSelect class="custom-select">
       <div class="selected" (click)="toggleDropdown()">
         <span>{{ quantity?.quantity }} {{ product?.name }}</span>
-        <span class="right-price">${{ quantity?.basePrice }}</span>
+        <span class="right-price">${{ quantity?.withDiscount ? quantity?.finalPrice : quantity?.basePrice }}</span>
       </div>
 
       <div class="dropdown" *ngIf="dropdownOpen">
         <div *ngFor="let q of quantities" (click)="selectQuantity(q)" class="dropdown-item">
           <span>{{ q.quantity }} {{ product?.name}}</span>
-          <span class="drop-right-price">${{ q.basePrice }}</span>
+          <span class="drop-right-price">${{ q.withDiscount ? q.finalPrice : q.basePrice }}</span>
         </div>
       </div>
     </div>

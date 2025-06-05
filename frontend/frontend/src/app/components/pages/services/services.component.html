@@ -1,13 +1,16 @@
 <div class="services-container">
-  <!--<h1>Selecciona la plataforma que deseas potenciar y descubre nuestros servicios especializados.</h1> -->
+  <h1>Selecciona la plataforma que deseas potenciar y descubre nuestros servicios especializados.</h1>
   <div class="services-grid">
     <div *ngFor="let node of servicesList" class="service-col">
       <div class="service-card" (click)="redirectToService(node)">
-        <img 
-          [src]="$any(node).imgUrl" 
-          alt="{{ $any(node).name }}" 
-          class="service-image"
-        />
+        <div class="shine-wrapper">
+          <img 
+            [src]="$any(node).imgUrl" 
+            alt="{{ $any(node).name }}" 
+            class="service-image"
+          />
+          <div class="shine"></div>
+        </div>
         <div class="service-name">{{ node.name }}</div>
       </div>
     </div>

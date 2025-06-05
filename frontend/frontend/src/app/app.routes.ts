@@ -22,6 +22,7 @@ import { OrderLayoutComponent } from './components/pages/orders/order-layout/ord
 import { PurchaseLayoutComponent } from './components/pages/purchases/purchase-layout/purchase-layout.component';
 import { PaymentMethodComponent } from './components/pages/purchases/payment-method/payment-method.component';
 import { SuccessComponent } from './components/pages/purchases/success/success.component';
+import { TransferMethodComponent } from './components/pages/purchases/transfer-method/transfer-method.component';
 
 export const routes: Routes = [
     { path: 'ping', component: PingComponent, runGuardsAndResolvers: 'always' },
@@ -52,7 +53,8 @@ export const routes: Routes = [
     { path: 'compras', component: PurchaseLayoutComponent,
         children: [
             { path: 'metodos-de-pago', component: PaymentMethodComponent},
-            { path: 'procesar', component: SuccessComponent }
+            { path: 'procesar', component: SuccessComponent },
+            { path: 'transferencia', component: TransferMethodComponent}
         ]
     },
     //{ path: 'mp', 

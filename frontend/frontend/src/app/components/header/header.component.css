@@ -6,16 +6,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.246);
   z-index: 10;
   left: 0;
   right: 0;
+  background-color: white;
 }
 
 .menu-toggle {
   position: static;
   left: 1rem;
-  font-size: 2rem;
+  font-size: 1.8rem;
   background: none;
   border: none;
   cursor: pointer;
@@ -24,7 +25,7 @@
 
 .logo {
   position: absolute;
-  height: clamp(15px, 10vw, 50px);
+  height: clamp(15px, 10vw, 39px);
   display: flex;
   align-items: center;
   margin-left: 10px;
@@ -82,10 +83,10 @@
 
   .dropdown-list.open {
     display: block;
-    padding-left: 1.5rem;
+    padding-left: 1rem;
     position: relative;
     width: 100%;
-    background-color: rgb(230, 230, 230);
+    background-color: rgb(245, 245, 245);
   }
 
   .dropdown-list.open::before {
@@ -136,15 +137,15 @@
   font-size: clamp(12px, 1.5vw, 20px);
   cursor: pointer;
   user-select: none;
+  transition: color 300ms ease-in-out;
 }
 
 .dropdown-label:hover {
-  color: white;
-  background-color: black;
+  color: rgb(120, 48, 229);
 }
 
 .dropdown-label:hover span {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .dropdown-label mat-icon {
@@ -192,18 +193,21 @@
   display: flex;
   align-items: center;
   text-decoration: none;
+  transition: color 300ms ease-in-out;
 }
 
 .dropdown-list li:hover {
-  background-color: black;
-  color: white;
-  text-decoration: underline;
+  color: rgb(120, 48, 229);
 }
 
 .cart-button {
   position: absolute;
   right: 10px;
   font-size: 24px;
+}
+
+.cart-button:hover {
+  color: rgb(118, 58, 208);
 }
 
 .nav-links a {
@@ -214,12 +218,11 @@
   height: 100%;
   padding: 0 0.5rem;
   font-size: clamp(12px, 1.5vw, 20px);
+  transition: color 300ms ease-in-out;
 }
 
 .nav-links a:hover {
-  color: white;
-  text-decoration: underline;
-  background-color: black;
+  color: rgb(120, 48, 229);
 }
 
 .cart-badge {

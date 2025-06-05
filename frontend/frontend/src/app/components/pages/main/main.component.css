@@ -4,10 +4,9 @@
 
 .welcome-container {
   position: relative;
-  background-image: linear-gradient(to top, 
-    rgba(71, 94, 119, 0.275) 10%, 
-    transparent 100%);
+  background-color: rgb(22, 20, 23);
   width: 100vw;
+  padding: 2rem;
 }
 
 .welcome-message {
@@ -23,6 +22,10 @@
   box-sizing: border-box;
   margin-left: auto;
   margin-right: auto;
+  padding-top: 0;
+  text-shadow: 
+      0 0 1px rgba(255, 255, 255, 0.474),
+      0 0 8px rgba(255, 255, 255, 0.147);
 }
 
 .welcome-message p {
@@ -31,15 +34,22 @@
   margin: 0.5em 0;
   word-wrap: break-word;
   font-size: clamp(12px, 2vw, 20px);
+  color: #f4f4f4;
 }
 
 .welcome-message h1 {
   font-size: clamp(30px, 4vw, 60px);
   filter: drop-shadow(-1px 2px 1px rgba(0, 0, 0, 0.322));
+  color: #f4f4f4;
 }
 
 .gradient-text {
-  background: linear-gradient(90deg, #33deca 0%, #c619e8 100%);
+  background: linear-gradient(
+    90deg,
+    hsl(180, 100%, 40%) 0%,
+    hsl(220, 92%, 46%) 33%,
+    hsl(280, 100%, 42%) 66%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -63,6 +73,7 @@
         0 0 1px rgb(255, 255, 255),
         0 0 8px rgba(255, 255, 255, 0.543);
     margin: 2px;
+    margin-top: 0.5rem;
 }
 
 .main-button:hover {

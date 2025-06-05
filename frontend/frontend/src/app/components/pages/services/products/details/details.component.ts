@@ -94,6 +94,10 @@ export class DetailsComponent {
   getDiscount(quantity: any): string {
     return quantity.discount + '% OFF';
   }
+
+  getType(product: any): string {
+    return product.product;
+  }
   
   selectQuantity(quantity: TreeNode) {
     this.selectedQuantity = quantity as QuantityNode;
@@ -125,6 +129,32 @@ export class DetailsComponent {
 
   getDescription(node: TreeNode): string {
     return (node as QualityNode).description || 'No hay descripción disponible.';
+  }
+
+  getTabClass(index: number): string {
+    switch (index) {
+      case 0:
+        return 'tab-bg-1';
+      case 1:
+        return 'tab-bg-2';
+      case 2:
+        return 'tab-bg-3';
+      default:
+        return 'tab-bg-default';
+    }
+  }
+
+  getTabBorderClass(): string {
+    switch (this.selectedTab) {
+      case 0:
+        return 'border-tab-1';
+      case 1:
+        return 'border-tab-2';
+      case 2:
+        return 'border-tab-3';
+      default:
+        return 'border-tab-default';
+    }
   }
 
 }

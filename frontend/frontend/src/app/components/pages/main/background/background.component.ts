@@ -27,27 +27,23 @@ export class BackgroundComponent implements AfterViewInit, OnDestroy {
   }
 
   async loadVantaEffect() {
-    await this.loadScript('https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.min.js');
-    await this.loadScript('https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js');
+    await this.loadScript('https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js');
+    await this.loadScript('https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.trunk.min.js');
 
     setTimeout(() => {
-      if ((window as any).VANTA && (window as any).THREE && this.vantaRef?.nativeElement) {
-        this.vantaEffect = (window as any).VANTA.NET({
+      if ((window as any).VANTA && this.vantaRef?.nativeElement) {
+        this.vantaEffect = (window as any).VANTA.TRUNK({
           el: this.vantaRef.nativeElement,
-          THREE: (window as any).THREE,
           mouseControls: true,
           touchControls: true,
           gyroControls: false,
-          minHeight: 200,
-          minWidth: 200,
+          minHeight: 200.0,
+          minWidth: 200.0,
           scale: 1.0,
           scaleMobile: 1.0,
-          color: 0x888888,
-          backgroundAlpha: 0.0,
-          points: 10.0,
-          maxDistance: 25.0,
-          spacing: 20.0,
-          backgroundColor: 0x000000
+          color: 0x4f339d,
+          backgroundColor: 0x242226,
+          chaos: 1.5
         });
       }
     }, 50);

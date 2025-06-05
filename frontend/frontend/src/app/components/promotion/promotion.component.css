@@ -10,7 +10,7 @@ header {
   position: relative;
   z-index: 11;
   transform: translate(0, 0);
-  background-color: black;
+  background-color: rgb(36, 34, 38);
   color: white;
 }
 
@@ -30,14 +30,23 @@ a:hover {
 
 .prom-button {
   border-radius: 6px;
-  background-color: white;
+  background-color: rgb(255, 255, 255);
+  color: rgb(79, 51, 157);
   border: none;
   margin: 4px;
   padding: 2px;
+  padding-inline: 6px;
+  font-weight: 500;
+  transition: color 500ms ease-in-out;
+  transition: background-color 500ms ease-in-out;
 }
 
 .prom-button:hover {
-  background-color: gray;
+    background-color: rgb(79, 51, 157);
+    color: white;
+    box-shadow: 
+        0 0 1px rgba(255, 255, 255, 0.137),
+        0 0 8px rgba(255, 255, 255, 0.027);
 }
 
 @media (max-width: 768px) {
