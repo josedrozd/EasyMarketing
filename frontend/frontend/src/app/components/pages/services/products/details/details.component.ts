@@ -144,6 +144,32 @@ export class DetailsComponent {
     }
   }
 
+  getCardClass(): string {
+    switch (this.selectedTab) {
+      case 0:
+        return 'tab-bg-1';
+      case 1:
+        return 'tab-bg-2';
+      case 2:
+        return 'tab-bg-3';
+      default:
+        return 'tab-bg-default';
+    }
+  }
+
+  getFontClass(): string {
+    switch (this.selectedTab) {
+      case 0:
+        return 'font-1';
+      case 1:
+        return 'font-2';
+      case 2:
+        return 'font-3';
+      default:
+        return 'font-default';
+    }
+  }
+
   getTabBorderClass(): string {
     switch (this.selectedTab) {
       case 0:
@@ -154,6 +180,19 @@ export class DetailsComponent {
         return 'border-tab-3';
       default:
         return 'border-tab-default';
+    }
+  }
+
+  getSavingClass(): string {
+    switch (this.selectedTab) {
+      case 0:
+        return 'saving-1';
+      case 1:
+        return 'saving-2';
+      case 2:
+        return 'saving-3';
+      default:
+        return 'saving-default';
     }
   }
 

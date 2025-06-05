@@ -6,13 +6,15 @@ import { CartService } from '../../../../services/cart.service';
 import { CartItemData } from '../../../../core/models/cart-item-data';
 import { OrderData, OrderDataService } from '../../../../services/order-data.service';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-payment-method',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
   templateUrl: './payment-method.component.html',
   styleUrls: ['./payment-method.component.css', '../purchase-layout/purchase-layout.component.css']

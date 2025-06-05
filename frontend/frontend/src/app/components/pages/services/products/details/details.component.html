@@ -6,7 +6,7 @@
       *ngFor="let quality of qualities; let i = index"
       (click)="setTab(i)"
       [class.active]="selectedTab === i"
-      [ngClass]="[getTabClass(i), selectedTab === i ? getTabBorderClass() : '']"
+      [ngClass]="[i !== 0 ? getTabClass(i) : '', selectedTab === i  ? getTabBorderClass() : '']"
     >
       {{ quality.name }}
     </button>
@@ -18,8 +18,8 @@
         <div class="quantities" *ngIf="quality.children && selectedQuantity; else noQuantities">
           <div *ngFor="let group of quality.children">
             <ng-container *ngIf="group.nodeType === 'quantity-group'">
-              <div class="quantity-card" *ngFor="let quantity of group.children; let i = index" [class.selected]="selectedQuantity.refId === quantity.refId" (click)="selectQuantity(quantity)">
-                <div class="card">
+              <div class="quantity-card" *ngFor="let quantity of group.children; let i = index" [class.selected]="selectedQuantity.refId === quantity.refId" [ngClass]="getFontClass()" (click)="selectQuantity(quantity)">
+                <div class="card" [ngClass]="[selectedQuantity.refId === quantity.refId ? getCardClass() : '']">
                   <div>
                     <p>{{ getQuantity(quantity) }}</p>
                     <small *ngIf="i === 0">{{ getType(product) }}</small>
@@ -37,8 +37,8 @@
                     <span class="base-price-old">{{ selectedQuantity.basePrice }}</span>
                 </span>
               </div>
-              <button class="buy-button" (click)="buy()">Comprar ahora</button>
-              <small *ngIf="isWithDiscount(selectedQuantity)" class="saving">{{ getSaving(selectedQuantity) }}</small>
+              <button class="buy-button" [ngClass]="getTabClass(selectedTab)" (click)="buy() ">Comprar ahora</button>
+              <small *ngIf="isWithDiscount(selectedQuantity)" class="saving" [ngClass]="getSavingClass()">{{ getSaving(selectedQuantity) }}</small>
             </ng-container>
           </div>
         </div>
@@ -52,7 +52,7 @@
   <div class="quality-descriptions-wrapper">
     <div class="quality-descriptions">
         <div *ngFor="let quality of qualities; let i = index" class="description-card" [class.active]="selectedTab === i" [ngClass]="selectedTab === i ? getTabBorderClass() : ''" (click)="setTab(i)">
-            <div class="tabs"><button class="desc-button" [ngClass]="getTabClass(i)">{{ quality.name }}</button></div>
+            <div class="tabs"><button class="desc-button" [ngClass]="[i !== 0 ? getTabClass(i) : '', ]">{{ quality.name }}</button></div>
             <p class="description-text">{{ getDescription(quality) }}</p>
         </div>
     </div>

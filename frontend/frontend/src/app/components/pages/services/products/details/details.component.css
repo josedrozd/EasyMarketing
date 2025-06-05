@@ -48,7 +48,7 @@ h1 {
   border-right: 1px solid #ccc;
   border-top: 1px solid #ccc;
   border-left: 1px solid #ccc;
-  border-bottom: none;
+  border-bottom: none !important;
   text-align: center;
   font-weight: bold;
   border-top-left-radius: 8px;
@@ -56,28 +56,30 @@ h1 {
   font-size: clamp(8px, 1.5vw, 12px);
   box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.079);
   margin-bottom: -2px;
+  background-color: white;
 }
 
 .tab-bg-1 {
   --active-border-color: #ccc;
-  background: white;
+  background: linear-gradient(to right, #54dada 0%, #759aff 35%, #9837ff 100%) !important;
+  color: white;
 }
 
 .tab-bg-2 {
   --active-border-color: #2da4ff;
-  background: linear-gradient(to right, #2575fc 0%, #5fb8e1 60%, #6ed5de 100%);
+  background: linear-gradient(to right, #2575fc 0%, #5fb8e1 60%, #6ed5de 100%) !important;
   color: white;
 }
 
 .tab-bg-3 {
   --active-border-color: #c331e0f0;
-  background: linear-gradient(to right, #8f27d8 0%, #e15fba 60%, #f3a79c 100%);
+  background: linear-gradient(to right, #8f27d8 0%, #e15fba 60%, #f3a79c 100%) !important;
   color: white;
 }
 
 .tab-bg-default {
   --active-border-color: #c331e0f0;
-  background: linear-gradient(to right, #8f27d8 0%, #e15fba 60%, #f3a79c 100%);
+  background: linear-gradient(to right, #8f27d8 0%, #e15fba 60%, #f3a79c 100%) !important;
   color: white;
 }
 
@@ -124,24 +126,40 @@ h1 {
   padding-right: 1rem;
   margin: 0 auto;
   box-sizing: border-box;
-  background-color: rgba(255, 255, 255, 0.483);
+  background-color: rgba(255, 255, 255, 0.501);
   box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.079);
 }
 
 .border-tab-1 {
-  border: 2px solid #ccc;
+  border: 2px solid #5d79e99c !important;
 }
 
 .border-tab-2 {
-  border: 2px solid #2da4ff;
+  border: 2px solid #2da4ff !important;
 }
 
 .border-tab-3 {
-  border: 2px solid #c331e0f0;
+  border: 2px solid #c331e0f0 !important;
 }
 
 .border-tab-default {
-  border: 2px solid #c331e0f0;
+  border: 2px solid #c331e0f0 !important;
+}
+
+.quantity-card:not(.selected).font-1 small {
+  color: #6333d3;
+}
+
+.quantity-card:not(.selected).font-2 small {
+  color: #2da4ff;
+}
+
+.quantity-card:not(.selected).font-3 small {
+  color: #c331e0f0;
+}
+
+.quantity-card:not(.selected).font-default small {
+  color: #c331e0f0;
 }
 
 .quantity-card:hover {
@@ -149,9 +167,7 @@ h1 {
 }
 
 .quantity-card.selected .card {
-  border: 2px solid #4dab95;
-  background-color: #e0f7f4;
-  box-shadow: 0 0 5px rgba(77, 171, 149, 0.5);
+  box-shadow: 0 0 5px rgba(81, 81, 81, 0.5);
 }
 
 .quantity-card {
@@ -238,14 +254,15 @@ h1 {
     justify-content: center;
     text-align: center;
     height: 3rem;
-    background: rgb(23, 24, 33);
+    background: linear-gradient(to right, #54dada 0%, #759aff 15%, #8c5aff 60%, #9837ff 100%);
     color: #ffffff;
     border-radius: 32px;          
     font-size: 22px;     
     padding: 20px;
     cursor: pointer;
     border: none;
-    transition: background-color 0.6s; 
+    transition: transform 0.15s ease-in-out; 
+    will-change: transform;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.662);
     text-shadow: 
         0 0 1px rgb(255, 255, 255),
@@ -253,11 +270,10 @@ h1 {
 }
 
 .buy-button:hover {
-    background: rgba(80, 9, 202, 0.785);
+    transform: scale(1.01);
 }
 
 .buy-button:active {
-    background: rgba(7, 197, 207, 0.785);
     border: none;
     transform: scale(0.995);
 }
@@ -287,7 +303,7 @@ h1 {
   max-width: 60vw;
   box-sizing: border-box;
   cursor: pointer;
-  background-color: rgba(255, 255, 255, 0.483);
+  background-color: rgba(255, 255, 255, 0.501);
 }
 
 .description-card.active {
@@ -295,7 +311,7 @@ h1 {
 }
 
 .description-card.border-tab-1 {
-  border: 2px solid #ccc;
+  border: 2px solid #5d79e99c;
 }
 .description-card.border-tab-2 {
   border: 2px solid #2da4ff;
@@ -331,4 +347,20 @@ h1 {
 
 .saving {
     font-size: 1rem;
+}
+
+.saving-1 {
+  color: #6333d3;
+}
+
+.saving-2 {
+  color: #2da4ff;
+}
+
+.saving-3 {
+  color: #c331e0f0;
+}
+
+.saving-default {
+  color: #c331e0f0;
 }
