@@ -1,20 +1,21 @@
 <div class="form-container">
   <form #f="ngForm" class="order-form card" (ngSubmit)="checkAndSubmit(f)">
+    <div class="form-title">Empecemos</div>
     <div class="input-icon-wrapper">
-      <img [src]="isInstagram ? '/socialmedia/icons8-instagram-48.png' : '/socialmedia/icons8-user-48.png'" class="icon" />
+      <img [src]="isInstagram ? '/socialmedia/icons8-instagram-48.png' : '/socialmedia/icons8-user-48.png'" class="icon" [ngStyle]="{ filter: logoFilter }"/>
       <input name="username" [(ngModel)]="formData.username" required type="text" placeholder="Nombre de usuario" />
     </div>
     <div class="input-icon-wrapper">
-      <img src="/socialmedia/icons8-email-48.png" class="icon" />
+      <img src="/socialmedia/icons8-email-48.png" class="icon" [ngStyle]="{ filter: logoFilter }"/>
       <input name="mail" [(ngModel)]="formData.mail" required type="email" pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$" title="Correo inválido." placeholder="Correo electrónico" />
     </div>
     <div class="name-lastname-row">
       <div class="input-icon-wrapper">
-        <img src="/socialmedia/icons8-user-48.png" class="icon" />
+        <img src="/socialmedia/icons8-user-48.png" class="icon" [ngStyle]="{ filter: logoFilter }"/>
         <input name="name" [(ngModel)]="formData.name" required pattern="^[a-zA-ZÀ-ÿ\s]+$" title="Solo letras y espacios." type="text" placeholder="Nombre" />
       </div>
       <div class="input-icon-wrapper">
-        <img src="/socialmedia/icons8-user-48.png" class="icon" />
+        <img src="/socialmedia/icons8-user-48.png" class="icon" [ngStyle]="{ filter: logoFilter }"/>
         <input name="lastname" [(ngModel)]="formData.lastname" required pattern="^[a-zA-ZÀ-ÿ\s]+$" title="Solo letras y espacios." type="text" placeholder="Apellido" />
       </div>
     </div>

@@ -17,7 +17,7 @@
 
 .profile-container {
     flex-shrink: 0;
-    max-width: 400px;
+    width: 400px;
     gap: 2rem;
 }
 
@@ -44,10 +44,11 @@
     position: relative;
     border-radius: 8px;
     transition: border 0.3s;
+    max-width: 130px;
 }
 
 .media-item.selected {
-    border-color: #007bff;
+    border-color: #4336b5;
 }
 
 .media-item img {
@@ -91,7 +92,8 @@
 
 a {
     text-decoration: none;
-    color: rgb(87, 87, 87);
+    color: #5063c1;
+    font-weight: 450;
 }
 
 a:hover {
@@ -104,8 +106,12 @@ a:hover {
     gap: 0.2rem;
 }
 
+.order-details span {
+  margin-right: 4px;
+}
+
 .order-details img {
-    width: 28px;
+    width: 22px;
     height: 100%;
 }
 
@@ -114,7 +120,13 @@ a:hover {
 }
 
 .title span {
-    font-weight: 500;
+    font-size: clamp(30px, 2vw, 50px);
+    filter: drop-shadow(-1px 2px 1px rgba(0, 0, 0, 0.173));
+    color: #4d4e68;
+    font-family: 'Outfit', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
 }
 
 .checkout {
@@ -150,6 +162,28 @@ a:hover {
   .media-item img {
     height: clamp(80px, 2vw, 100px);
   }
+
+  .profile-container {
+    width: auto;
+  }
+
+  .order-details > a {
+    display: none;
+  }
+
+  .toggle-label {
+    justify-content: center !important;
+    align-items: center !important;
+    display: flex;
+    flex-direction: column !important;
+    gap: 0.5rem;
+  }
+
+  .toggle-label > span{
+    text-align: center;
+    align-items: center !important;
+    justify-content: flex-start !important;
+  }
 }
 
 .toggle-label {
@@ -162,6 +196,9 @@ a:hover {
   font-size: 1.2rem;
   font-weight: 500;
   color: #333;
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: #eff5ffc6;
 }
 
 .toggle-label span {
@@ -169,15 +206,15 @@ a:hover {
 }
 
 ::ng-deep mat-slide-toggle {
-  --mdc-switch-selected-track-color: #000000 !important;
+  --mdc-switch-selected-track-color: #5063c1 !important;
   --mdc-switch-selected-thumb-color: #ffffff !important;
-  --mdc-switch-selected-focus-track-color: #000000 !important;
+  --mdc-switch-selected-focus-track-color: #5063c1 !important;
   --mdc-switch-selected-hover-track-color: #5e5e5e !important;
-  --mdc-switch-selected-pressed-track-color: #000000 !important;
+  --mdc-switch-selected-pressed-track-color: #5063c1 !important;
   --mdc-switch-selected-focus-thumb-color: #ffffff !important;
   --mdc-switch-selected-hover-thumb-color: #ffffff !important;
   --mdc-switch-selected-pressed-thumb-color: #ffffff !important;
-  --mdc-switch-selected-icon-color: #000000 !important;
+  --mdc-switch-selected-icon-color: #5063c1 !important;
   --mdc-switch-selected-hover-state-layer-color: transparent !important;
   --mdc-switch-selected-focus-state-layer-color: transparent !important;
 }
@@ -200,7 +237,7 @@ a:hover {
 
 ::ng-deep .mdc-switch .mdc-switch__ripple::before,
 ::ng-deep .mdc-switch .mdc-switch__ripple::after {
-  background-color: rgba(0, 0, 0, 0.727) !important;
+  background-color: #5063c1 !important;
 }
 
 ::ng-deep .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked .mdc-switch__handle::after {

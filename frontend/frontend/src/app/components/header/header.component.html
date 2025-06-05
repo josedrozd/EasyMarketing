@@ -2,7 +2,7 @@
   <div class="content">
     <button class="menu-toggle" (click)="toggleMenu($event)">☰</button>
 
-    <a class="logo" routerLink="/">
+    <a class="logo" routerLink="/" [ngStyle]="{ filter: logoFilter }">
       <img src="bannertransparent2.png" alt="Logo" />
     </a>
 

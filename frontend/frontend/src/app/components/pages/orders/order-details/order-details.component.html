@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="order-details">
-            <img src="/socialmedia/icons8-heart-48.png" />
+            <img src="/socialmedia/icons8-heart-48.png" [ngStyle]="{ filter: logoFilter }"/>
             <span>{{ quantity?.quantity + ' ' + product?.name?.toLowerCase() }}</span>
             <a [routerLink]="['/ordenes/ingresar-datos']">Cambiar</a>
             <span class="price">{{ '$' + (quantity?.withDiscount ? quantity?.finalPrice : quantity?.basePrice) }}</span>

@@ -2,13 +2,10 @@
   <div *ngIf="cartItemsData.length !== 0; else emptyList">
     <div class="top">
       <div class="cart-title"><strong>Tu carrito:</strong></div>
-      <div class="add-more">
-        <button class="button main-button" routerLink="/servicios">Agregar producto</button>
-      </div>
     </div>
     <ul>
       <li *ngFor="let item of cartItemsData; let i = index">
-        <div class="item-row">
+        <div class="item-row card">
           <img 
             [src]="$any(item).platform?.imgUrl" 
             class="service-image"
@@ -31,7 +28,7 @@
       <span>Precio total: ${{ total }}</span>
     </div>
 
-    <div *ngIf="orderData" class="user-info">
+    <div *ngIf="orderData" class="user-info card">
       <div class="title">
         <strong>Datos de usuario:</strong>
       </div>
@@ -43,6 +40,9 @@
     </div>
     
     <div class="buy">
+      <div class="add-more">
+        <button class="button main-button" routerLink="/servicios">Agregar más</button>
+      </div>
       <button class="main-button" (click)="createPurchase()" [disabled]="creatingPurchase">
         <ng-container *ngIf="!creatingPurchase; else loading">
           Comprar

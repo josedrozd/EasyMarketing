@@ -37,6 +37,8 @@ export class HeaderComponent {
 
   cartItemCount: number = 0;
 
+  logoFilter = '';
+
   constructor(
     private services: ServicesService,
     private orderDataService: OrderDataService,

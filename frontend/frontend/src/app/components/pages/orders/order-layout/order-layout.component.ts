@@ -5,10 +5,12 @@ import { OrderData, OrderDataService } from '../../../../services/order-data.ser
 import { ServicesService } from '../../../../services/backend/services/services.service';
 import { Observable } from 'rxjs';
 import { TreeNode } from '../../../panel/tree-node/tree-node.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-order-layout',
   imports: [
+    CommonModule,
     RouterOutlet,
     MatIconModule
   ],
@@ -17,11 +19,29 @@ import { TreeNode } from '../../../panel/tree-node/tree-node.component';
 })
 export class OrderLayoutComponent {
 
+  progressWidth = '0%';
+
   constructor(
     private router: Router,
     private orderDataService: OrderDataService,
     private servicesService: ServicesService
-  ) {}
+  ) {
+    this.router.events.subscribe(() => {
+      this.setProgressBar();
+    });
+    this.setProgressBar();
+  }
+
+  setProgressBar() {
+    const url = this.router.url;
+    if (url === '/ordenes/ingresar-datos') {
+      this.progressWidth = '50%';
+    } else if (url === '/ordenes/detalles') {
+      this.progressWidth = '100%';
+    } else {
+      this.progressWidth = '0%';
+    }
+  }
 
   goBack() {
     const currentUrl = this.router.url;

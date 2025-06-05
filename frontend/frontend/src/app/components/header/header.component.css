@@ -128,7 +128,7 @@
 }
 
 .dropdown-label {
-  color: black;
+  color: #4d4e68;
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -141,7 +141,7 @@
 }
 
 .dropdown-label:hover {
-  color: rgb(120, 48, 229);
+  color: #5063c1;
 }
 
 .dropdown-label:hover span {
@@ -186,7 +186,7 @@
 }
 
 .dropdown-list li {
-  color: black;
+  color: #4d4e68;
   padding: 0.5rem 1rem;
   cursor: pointer;
   font-size: clamp(12px, 1.5vw, 20px);
@@ -197,7 +197,7 @@
 }
 
 .dropdown-list li:hover {
-  color: rgb(120, 48, 229);
+  color: #5063c1;
 }
 
 .cart-button {
@@ -207,11 +207,11 @@
 }
 
 .cart-button:hover {
-  color: rgb(118, 58, 208);
+  color: #5063c1;
 }
 
 .nav-links a {
-  color: black;
+  color: #4d4e68;
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -222,7 +222,7 @@
 }
 
 .nav-links a:hover {
-  color: rgb(120, 48, 229);
+  color: #5063c1;
 }
 
 .cart-badge {

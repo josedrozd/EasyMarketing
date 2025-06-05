@@ -61,7 +61,7 @@ h1 {
 
 .tab-bg-1 {
   --active-border-color: #ccc;
-  background: linear-gradient(to right, #54dada 0%, #759aff 35%, #9837ff 100%) !important;
+    background: linear-gradient(to right, #629cd6 0%, #6483d9 30%, #774dda 100%) !important;
   color: white;
 }
 
@@ -92,6 +92,11 @@ h1 {
 .tabs button:last-child {
   border-right: 1px solid #ccc;
 }
+
+.tabs button:first-child {
+  color: #4d4e68;
+}  
+
 
 .tabs button.active {
   position: relative;
@@ -147,7 +152,7 @@ h1 {
 }
 
 .quantity-card:not(.selected).font-1 small {
-  color: #6333d3;
+  color: #5063c1;
 }
 
 .quantity-card:not(.selected).font-2 small {
@@ -199,6 +204,10 @@ h1 {
 .card p, .card small {
   margin: 0;
   padding: 0;
+}
+
+.quantity-card:not(.selected) p {
+  color: #4d4e68;
 }
 
 .card small {
@@ -254,7 +263,7 @@ h1 {
     justify-content: center;
     text-align: center;
     height: 3rem;
-    background: linear-gradient(to right, #54dada 0%, #759aff 15%, #8c5aff 60%, #9837ff 100%);
+    background: linear-gradient(to right, #629cd6 0%, #6483d9 15%, #774dda 60%, #7e2ed4 100%);
     color: #ffffff;
     border-radius: 32px;          
     font-size: 22px;     
@@ -350,7 +359,7 @@ h1 {
 }
 
 .saving-1 {
-  color: #6333d3;
+  color: #5063c1;
 }
 
 .saving-2 {
@@ -363,4 +372,11 @@ h1 {
 
 .saving-default {
   color: #c331e0f0;
+}
+
+.gradient-text {
+  background: linear-gradient(to right, #6ebcf0 0%, #6483d9 25%, #cc3fff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

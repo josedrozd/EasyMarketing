@@ -49,6 +49,8 @@ export class OrderDetailsComponent {
   media: IGReelClipDTO[] | IGMediaPostDTO[] = [];
   selectedUrls: string[] = [];
   
+  logoFilter = 'invert(17%) sepia(78%) saturate(1918%) hue-rotate(233deg) brightness(90%) contrast(104%)';
+  
   @ViewChildren('manualQtyInput') manualInputs!: QueryList<ElementRef<HTMLInputElement>>;
 
   constructor(
@@ -60,9 +62,7 @@ export class OrderDetailsComponent {
     private igClipsService: IGClipsService,
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {
-
-  }
+  ) {}
 
   ngOnInit() {
     this.isLoading = true;

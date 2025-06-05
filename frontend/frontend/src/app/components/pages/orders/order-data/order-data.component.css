@@ -2,6 +2,27 @@
   .product-name {
     display: none;
   }
+
+  form.order-form {
+    padding: 0.5rem;
+  }
+
+}
+
+.form-title {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  text-align: center;
+  font-size: clamp(30px, 3vw, 50px);
+  width: 100%;
+  font-weight: 500;
+  filter: drop-shadow(-1px 2px 1px rgba(0, 0, 0, 0.173));
+  color: #4d4e68;
+  font-family: 'Outfit', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
 }
 
 .form-container {
@@ -14,15 +35,15 @@
   padding: 1rem;
 }
 
-
 form.order-form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-width: 400px;
+  max-width: 600px;
   width: 100%;   
   margin-left: auto;
   margin-right: auto;
+  padding: 2rem;
 }
 
 form.order-form > input {
@@ -49,6 +70,7 @@ form.order-form .name-lastname-row > input {
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
+  padding: 1.5rem;
 }
 
 
@@ -83,25 +105,33 @@ form.order-form .name-lastname-row > input {
 .custom-select {
   position: relative;
   width: 100%;
-  max-width: 400px;
   cursor: pointer;
 }
 
 .selected {
+  position: relative;
   border: 1px solid #ccc;
   border-radius: 4px;
   height: 2.5rem;
   line-height: 2.5rem;
-  padding: 0 10px;
+  padding-left: 35px;
+  padding-right: 10px;
   font-size: 1rem;
   background: white;
   user-select: none;
-  position: relative;
+}
+
+.selected::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
   background-image: url('/socialmedia/icons8-heart-48.png');
-  background-repeat: no-repeat;
-  background-position: 8px center;
-  background-size: 20px 20px;
-  padding-left: 35px;
+  background-size: cover;
+  filter: var(--logo-filter);
 }
 
 .selected::after {
@@ -165,4 +195,25 @@ form.order-form .name-lastname-row > input {
   display: flex;
   justify-content: center;
   margin: 0.5rem 0;
+}
+
+.selected,
+.dropdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.selected span:first-child,
+.dropdown-item span:first-child {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+.right-price,
+.drop-right-price {
+  flex-shrink: 0;
+  margin-left: 8px;
 }

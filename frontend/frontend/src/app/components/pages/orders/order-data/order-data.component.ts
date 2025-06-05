@@ -51,6 +51,8 @@ export class OrderDataComponent {
     name: '',
     lastname: ''
   };
+  
+  logoFilter = 'invert(17%) sepia(78%) saturate(1918%) hue-rotate(233deg) brightness(90%) contrast(104%)';
 
   constructor(
     private servicesService: ServicesService,
@@ -77,6 +79,7 @@ export class OrderDataComponent {
       }
     });
     if (typeof window !== 'undefined') {
+      document.documentElement.style.setProperty('--logo-filter', this.logoFilter);
       (window as any)['recaptchaResolved'] = (token: string) => {
         this.recaptchaToken = token;
         this.recaptchaOk = true;
