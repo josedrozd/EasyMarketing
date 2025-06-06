@@ -42,7 +42,7 @@ export class BackgroundComponent implements AfterViewInit, OnDestroy {
           scale: 1.0,
           scaleMobile: 1.0,
           color: 0x4f339d,
-          backgroundColor: 0x242226,
+          backgroundColor: null,
           chaos: 1.5
         });
       }

@@ -77,10 +77,14 @@
 
 h1 {
   font-size: clamp(18px, 4vw, 30px);
-  color: #333;
+  color: #4d4e68;
   text-align: justify;
-  text-align-last: center;
   filter: drop-shadow(-1px 2px 1px rgba(0, 0, 0, 0.173));
+  font-family: 'Outfit', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+  text-align: center;
 }
 
 .services-container {

@@ -47,6 +47,10 @@ mat-icon {
     font-weight: 500;
     filter: drop-shadow(-1px 2px 1px rgba(0, 0, 0, 0.173));
     color: #3e3f5e;
+    font-family: 'Outfit', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 650;
+    font-style: normal;
 }
 
 .item-row {
@@ -83,6 +87,10 @@ mat-icon {
     justify-content: flex-end;
     margin-bottom: 2rem;
     color: #3e3f5e;
+    font-family: 'Outfit', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 650;
+    font-style: normal;
 }
 
 .user-info {

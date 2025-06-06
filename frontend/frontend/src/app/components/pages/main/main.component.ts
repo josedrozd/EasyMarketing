@@ -3,6 +3,7 @@ import { HeaderComponent } from '../../header/header.component';
 import { RouterModule } from '@angular/router';
 import { ServicesComponent } from '../services/services.component';
 import { BackgroundComponent } from './background/background.component';
+import { ParticlesComponent } from './particles/particles.component';
 
 @Component({
   selector: 'app-main',

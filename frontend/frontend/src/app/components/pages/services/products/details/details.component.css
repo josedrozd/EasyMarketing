@@ -27,7 +27,14 @@
 
 h1 {
   filter: drop-shadow(-1px 2px 1px rgba(0, 0, 0, 0.173));
+  max-width: 600px;
   margin-bottom: 1rem;
+  font-family: 'Outfit', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+  text-align: center;
+  color: #4d4e68;
 }
 
 .tabs {
@@ -175,7 +182,7 @@ h1 {
 }
 
 .quantity-card.selected .card {
-  box-shadow: 0 0 5px rgba(81, 81, 81, 0.5);
+  box-shadow: 0 0 5px rgba(38, 86, 158, 0.5);
 }
 
 .quantity-card {
@@ -324,15 +331,19 @@ h1 {
 
 .description-card.border-tab-1 {
   border: 2px solid #5d79e99c;
+  box-shadow: 0 0 5px rgba(38, 86, 158, 0.5);
 }
 .description-card.border-tab-2 {
   border: 2px solid #2da4ff;
+  box-shadow: 0 0 5px rgba(38, 86, 158, 0.5);
 }
 .description-card.border-tab-3 {
   border: 2px solid #c331e0f0;
+  box-shadow: 0 0 5px rgba(38, 86, 158, 0.5);
 }
 .description-card.border-tab-default {
   border: 2px solid #c331e0f0;
+  box-shadow: 0 0 5px rgba(38, 86, 158, 0.5);
 }
 
 .description-text {
@@ -359,6 +370,7 @@ h1 {
 
 .saving {
     font-size: 1rem;
+    font-weight: 600;
 }
 
 .saving-1 {
@@ -382,4 +394,12 @@ h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.card p {
+  font-size: 20px;
+}
+
+.card small {
+  font-size: 12px;
 }
