@@ -4,10 +4,10 @@
 
 .welcome-container {
   position: relative;
-  background-color: #242226;
   width: 100vw;
   padding: 2rem;
   /* background: linear-gradient(to bottom, #5063c17c 0%, #30315546 50%, #242226 100%); */
+  background-color: #242226;
   background: radial-gradient(circle, #161417 0%, #242226 50%, #1e182b 100%);
 }
 .bg {
