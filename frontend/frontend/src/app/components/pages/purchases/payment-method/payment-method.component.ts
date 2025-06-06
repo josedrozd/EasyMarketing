@@ -31,6 +31,7 @@ export class PaymentMethodComponent {
   preference!: PreferenceDTO;
   cartItemsData: CartItemData[] = [];
   orderData!: OrderData;
+  private static mpInitialized = false;
 
   constructor(
     private mpPreferenceService: MpPreferenceService,
@@ -43,22 +44,31 @@ export class PaymentMethodComponent {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.mpPreferenceService.preference$
-        .pipe(filter((p): p is PreferenceDTO => !!p), take(1))
-        .subscribe({
-          next: async (preference: PreferenceDTO) => {
-            this.preference = preference;
-            try {
-              await window.mpCheckout.initializeMercadoPago(preference.preferenceId, preference.publicKey);
-              this.isLoading = false;
-            } catch (err) {
-              console.error('Error al cargar MercadoPago:', err);
+      if (PaymentMethodComponent.mpInitialized) {
+        console.log('MercadoPago ya inicializado, no hago nada');
+        this.isLoading = false;
+      } else {
+        this.mpPreferenceService.preference$
+          .pipe(filter((p): p is PreferenceDTO => !!p), take(1))
+          .subscribe({
+            next: async (preference: PreferenceDTO) => {
+              this.preference = preference;
+              PaymentMethodComponent.mpInitialized = true;
+              try {
+                const container = document.getElementById('wallet_container');
+                if (container) container.innerHTML = '';
+                await window.mpCheckout.initializeMercadoPago(preference.preferenceId, preference.publicKey);
+                console.log('MercadoPago inicializado');
+                this.isLoading = false;
+              } catch (err) {
+                console.error('Error al cargar MercadoPago:', err);
+              }
+            },
+            error: (err) => {
+              console.error('Error obteniendo preferencia:', err);
             }
-          },
-          error: (err) => {
-            console.error('Error obteniendo preferencia:', err);
-          }
-        });
+          });
+      }
 
       this.cartService.cartItemsData$.subscribe(data => {
         this.cartItemsData = data;

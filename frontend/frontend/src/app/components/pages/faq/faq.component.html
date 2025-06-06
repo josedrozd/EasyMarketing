@@ -1,1 +1,24 @@
-<p>¡En construcción! 👷‍♂️</p>
+<div class="faq-container">
+    <div class="title">
+        Preguntas frecuentes 🗨️
+    </div>
+    <div class="content-container">
+        <div class="faq-section">
+            <div class="section-header">
+                <div>General</div>
+                <div class="icon-circle"> <mat-icon>chevron_right</mat-icon> </div>
+            </div>
+        </div>
+        <div class="list-container">
+            <div *ngFor="let faq of faqs" class="faq-item" (click)="toggle(faq)">
+                <div class="faq-question" [class.expanded]="faq.expanded">
+                    <span>{{ faq.question }}</span>
+                    <mat-icon [class.expanded]="faq.expanded">chevron_right</mat-icon>
+                </div>
+                <div class="faq-answer" *ngIf="faq.expanded">
+                    {{ faq.answer }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

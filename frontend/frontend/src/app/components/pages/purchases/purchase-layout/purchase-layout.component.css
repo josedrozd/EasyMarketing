@@ -21,7 +21,7 @@
 
 .logo {
   position: absolute;
-  height: clamp(15px, 10vw, 50px);
+  height: clamp(15px, 10vw, 39px);
   display: flex;
   align-items: center;
   left: 50%;
@@ -83,7 +83,9 @@
     flex-direction: column;
     flex: 1;
     overflow-y: auto;
-    background-color: #e3e3e351;
+    background-image: linear-gradient(to bottom, 
+    #7b87c21b 5%, 
+    rgba(142, 161, 189, 0.072) 100%);
 }
 
 .ro-wrapper {

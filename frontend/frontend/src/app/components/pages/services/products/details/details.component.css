@@ -74,13 +74,13 @@ h1 {
 
 .tab-bg-2 {
   --active-border-color: #2da4ff;
-  background: linear-gradient(to right, #2575fc 0%, #5fb8e1 60%, #6ed5de 100%) !important;
+  background: linear-gradient(to right, #2575fc 0%, #4daedb 60%, #61cce9 100%) !important;
   color: white;
 }
 
 .tab-bg-3 {
   --active-border-color: #c331e0f0;
-  background: linear-gradient(to right, #8f27d8 0%, #e15fba 60%, #f3a79c 100%) !important;
+  background: linear-gradient(to right, #8f27d8 0%, #e24bb4 60%, #ea8373 100%) !important;
   color: white;
 }
 

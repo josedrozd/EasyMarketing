@@ -1,7 +1,7 @@
 <div *ngIf="!isLoading; else loading" class="payment-method-container">
     <div class="methods-container">
         <p>SELECCIONA TU FORMA DE PAGO:</p>
-        <div class="payment-options">
+        <div class="payment-options card">
             <label *ngIf="isMercadoPagoDisabled && isHoveringMp" class="warning-tooltip" [style.top.px]="hoverY + 10" [style.left.px]="hoverX + 10">
                 Los pagos automáticos no están disponibles para uno o más productos seleccionados.
             </label>
@@ -31,7 +31,7 @@
 
 
         </div>
-        <div *ngIf="orderData" class="user-info">
+        <div *ngIf="orderData" class="user-info card">
             <div class="title">
                 <strong>Datos de usuario:</strong>
             </div>
@@ -53,11 +53,14 @@
     <div class="cart-details">
         <ul>
             <li *ngFor="let item of cartItemsData; let i = index">
-                <div class="item-row">
-                    <img 
+                <div class="item-row card">
+                    <div class="shine-wrapper">
+                        <img 
                         [src]="$any(item).platform?.imgUrl" 
                         class="service-image"
-                    />
+                        />
+                        <div class="shine"></div>
+                    </div>
                     <div class="item-attributes">
                         <div class="item-details">
                             <strong>{{ item.product.name }}</strong> <br>

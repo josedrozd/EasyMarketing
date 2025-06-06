@@ -1,0 +1,130 @@
+.faq-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3rem;
+    margin: 2rem;
+}
+
+.title {
+    font-size: clamp(30px, 3vw, 50px);
+    font-family: 'Outfit', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 650;
+    font-style: normal;
+    text-align: center;
+}
+
+.content-container {
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.faq-section .section-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  border-radius: 12px;
+  padding: 6px 8px;
+  background-color: #5c73e5;
+  color: white;
+  font-size: 1.2rem;
+  gap:10px
+}
+
+.icon-circle {
+  background-color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px;
+}
+
+.icon-circle mat-icon {
+  color: #5c73e5;
+  font-size: 14px;
+  line-height: 1;
+  width: 14px;
+  height: 14px;
+}
+
+
+.list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.faq-item {
+  width: 800px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease;
+  background-color: #fff;
+}
+
+.faq-item:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+mat-icon {
+  transition: transform 0.2s ease;
+}
+
+mat-icon.expanded {
+  transform: rotate(90deg);
+}
+
+.faq-answer {
+  margin-top: 0.5rem;
+  color: #555;
+  font-size: 18px;
+}
+
+.faq-question.expanded span {
+    color: #5c73e5;
+}
+
+.faq-question span {
+    transition: color 0.1s ease;
+}
+
+@media (max-width:1024px) {
+
+    .content-container {
+        gap: 0;
+    }
+
+    .faq-container {
+        gap: 1rem;
+    }
+
+    .faq-item {
+        width: clamp(300px, 50vw, 800px);
+    }
+
+    .faq-section .section-header {
+        display: none;
+    }
+
+    .faq-question {
+        font-size: clamp(14px,6vw, 20px);;
+    }
+}
