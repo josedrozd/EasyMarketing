@@ -89,14 +89,17 @@ h1 {
   border-left: none !important;
 }
 
+.quality-descriptions .tabs .desc-button {
+  color: white;
+}
+
 .tabs button:last-child {
   border-right: 1px solid #ccc;
 }
 
-.tabs button:first-child {
-  color: #4d4e68;
-}  
-
+.first-tab {
+  color: #4d4e68 !important;
+}
 
 .tabs button.active {
   position: relative;

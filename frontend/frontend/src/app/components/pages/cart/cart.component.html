@@ -6,10 +6,13 @@
     <ul>
       <li *ngFor="let item of cartItemsData; let i = index">
         <div class="item-row card">
-          <img 
-            [src]="$any(item).platform?.imgUrl" 
-            class="service-image"
-          />
+          <div class="shine-wrapper">
+            <img 
+              [src]="$any(item).platform?.imgUrl" 
+              class="service-image"
+            />
+            <div class="shine"></div>
+          </div>
           <div class="item-attributes">
             <strong>Producto:</strong> {{ item.product.name }} <br>
             <strong>Calidad:</strong> {{ item.quality.name }} <br>

@@ -1,5 +1,5 @@
 <div class="product-container">
-  <h1>{{ "Compra " + product.name + " con " }}
+  <h1>{{ "Comprá " + product.name + " con " }}
     <span class="gradient-text">entrega inmediata.</span>
   </h1>
 
@@ -54,7 +54,7 @@
   <div class="quality-descriptions-wrapper">
     <div class="quality-descriptions">
         <div *ngFor="let quality of qualities; let i = index" class="description-card" [class.active]="selectedTab === i" [ngClass]="selectedTab === i ? getTabBorderClass() : ''" (click)="setTab(i)">
-            <div class="tabs"><button class="desc-button" [ngClass]="[i !== 0 ? getTabClass(i) : '', ]">{{ quality.name }}</button></div>
+            <div class="tabs"><button class="desc-button" [class.first-tab]="i === 0" [ngClass]="[i !== 0 ? getTabClass(i) : '', ]">{{ quality.name }}</button></div>
             <p class="description-text">{{ getDescription(quality) }}</p>
         </div>
     </div>

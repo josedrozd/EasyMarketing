@@ -92,7 +92,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px solid #ccc;
+    border: 2px solid rgba(29, 29, 74, 0.303);
     border-radius: 0.25rem;
     padding: 0.5rem;
     position: relative;
@@ -142,4 +142,45 @@ body { margin: 0;
 .product-container {
   padding-left: var(--safe-padding-inline);
   padding-right: var(--safe-padding-inline);
+}
+
+.shine-wrapper {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.shine-wrapper img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.shine {
+  position: absolute;
+  top: 0;
+  right: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 20%,
+    rgba(255, 255, 255, 0.048) 35%,
+    rgba(255, 255, 255, 0.286) 50%,
+    rgba(255, 255, 255, 0.048) 65%,
+    rgba(255, 255, 255, 0) 80%
+  );
+  animation: shine 4s ease-in-out infinite;
+  animation-direction: alternate;
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
 }
