@@ -17,6 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class SuccessComponent implements OnInit {
 
+  isLoading: boolean = true;
   pollingSubscription!: Subscription;
   msg: string = "Cargando...";
   expanded: boolean = false;
@@ -48,6 +49,7 @@ export class SuccessComponent implements OnInit {
           this.msg = this.statusService.getMessageFromState();
           if(this.purchaseStatus.isProcessing) 
             this.startPolling();
+          this.isLoading = false;
         },
         error: (err) => {
           console.error("Error loading purchase status", err);

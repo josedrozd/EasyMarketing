@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, PLATFORM_ID, QueryList, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Inject, PLATFORM_ID, QueryList, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { UsernameCheckService } from '../../../../services/backend/instagram/username-check.service';
 import { OrderData, OrderDataService } from '../../../../services/order-data.service';
 import { IgUserInfo } from '../../../../core/models/ig-user-info';
@@ -61,7 +61,8 @@ export class OrderDetailsComponent {
     private igMediaService: IGMediaService,
     private igClipsService: IGClipsService,
     private router: Router,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -273,6 +274,32 @@ export class OrderDetailsComponent {
     return true;
   }
 
+  getRemainingQuantity(): string {
+    if (!this.quantity?.quantity) return "0";
 
+    let totalManual = 0;
+    this.manualInputs?.forEach(inputRef => {
+      const value = parseFloat(inputRef.nativeElement.value);
+      if (!isNaN(value)) {
+        totalManual += value;
+      }
+    });
+
+    const result = this.quantity.quantity - totalManual
+
+    return ( result >= 0) 
+    ? 'Aún quedan ' + result + (' ' + this.product?.product?.toLowerCase()) + ' por asignar.' 
+    : "Excediste la cantidad permitida.";
+  }
+
+  onManualQtyChange() {
+    this.cdr.detectChanges();
+  }
+
+  get capitalizedProductType(): string {
+    const type = this.product?.type;
+    if (!type) return '';
+    return type.charAt(0).toUpperCase() + type.slice(1).toLowerCase();
+  }
 
 }

@@ -3,17 +3,25 @@
         <div class="title">
             <span>{{ 'SELECCIONAR ' + (product?.type?.toUpperCase()) + 'S' }}</span>
         </div>
-        <label class="toggle-label">
-            <span>{{ 'Distribución de cantidades automática: ' }}</span>
-            <mat-slide-toggle [(ngModel)]="isAutoDistribution"></mat-slide-toggle>
-        </label>
+        <div class="auto-options">
+            <label class="toggle-label">
+                <span>{{ 'Distribución de cantidades automática: ' }}</span>
+                <mat-slide-toggle [(ngModel)]="isAutoDistribution"></mat-slide-toggle>
+            </label>
+            <div *ngIf="isAutoDistribution; else autoDist" class="selected-quantity">
+                {{ capitalizedProductType + 's seleccionados: ' + selectedUrls.length }}
+            </div>
+            <ng-template #autoDist>
+                <div class="selected-quantity">{{ getRemainingQuantity() }}</div>
+            </ng-template>
+        </div>
         <div class="media-grid">
             <div class="media-item" *ngFor="let m of media" (click)="toggleSelection(m.url)" [class.selected]="isSelected(m.url)">
                 <input type="checkbox" class="card-check" [checked]="isSelected(m.url)" tabindex="-1" readonly />
                 <img [src]="getImageUrl(m.picUrl)" alt="Imagen" />
                 <div class="media-input" *ngIf="isSelected(m.url)">
                     <ng-container *ngIf="!isAutoDistribution; else autoValue">
-                        <input #manualQtyInput [attr.data-url]="m.url" type="number" [min]="quality?.minimum" [value]="0" (click)="$event.stopPropagation()" />
+                        <input #manualQtyInput [attr.data-url]="m.url" type="number" [min]="quality?.minimum" [value]="0" (input)="onManualQtyChange()" (click)="$event.stopPropagation()" />
                     </ng-container>
                     <ng-template #autoValue>
                         <span>{{ '+' + getAutoDistributedValue() + ' ' + product?.product?.toLowerCase() }}</span>

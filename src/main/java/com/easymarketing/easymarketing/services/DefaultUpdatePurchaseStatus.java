@@ -46,8 +46,11 @@ public class DefaultUpdatePurchaseStatus implements IUpdatePurchaseStatus {
                 .paymentId(model.getPaymentId())
                 .build());
 
+        Purchase purchase = purchaseRepository.findByToken(model.getToken()).orElseThrow(() ->
+                new NotFoundException(String.format("Purchase not found with token: %s", model.getToken())));
+
         if(!isApproved) return PurchaseStatusDTO.builder()
-                .id(null)
+                .id(purchase.getId())
                 .isApproved(Boolean.FALSE)
                 .isCompleted(Boolean.FALSE)
                 .isProcessing(Boolean.FALSE)
@@ -55,11 +58,8 @@ public class DefaultUpdatePurchaseStatus implements IUpdatePurchaseStatus {
                 .isCanceled(Boolean.FALSE)
                 .build();
 
-        Purchase purchase = purchaseRepository.findByToken(model.getToken()).orElseThrow(() ->
-                new NotFoundException(String.format("Purchase not found with token: %s", model.getToken())));
-
         if(COMPLETED.equals(purchase.getStatus())) return PurchaseStatusDTO.builder()
-                .id(null)
+                .id(purchase.getId())
                 .isApproved(Boolean.TRUE)
                 .isCompleted(Boolean.TRUE)
                 .isProcessing(Boolean.FALSE)
@@ -71,7 +71,7 @@ public class DefaultUpdatePurchaseStatus implements IUpdatePurchaseStatus {
         if(CANCELED.equals(purchase.getStatus())) {
             redisService.removeKey(purchase.getId());
             return PurchaseStatusDTO.builder()
-                .id(null)
+                .id(purchase.getId())
                 .isApproved(Boolean.TRUE)
                 .isCompleted(Boolean.FALSE)
                 .isProcessing(Boolean.FALSE)
